@@ -1,4 +1,5 @@
 import Listeners.Listener;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -6,8 +7,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import javax.security.auth.login.LoginException;
 
 public class Winston {
-    public static void main(String[] args) throws LoginException {
+    private JDA jda;
 
+    public Winston() throws LoginException {
         JDABuilder.createDefault(Config.get("TOKEN"))
                 .setActivity(Activity.playing("Overwatch"))
                 .addEventListeners(new Listener())
@@ -19,5 +21,13 @@ public class Winston {
                         GatewayIntent.GUILD_EMOJIS,
                         GatewayIntent.GUILD_MESSAGE_REACTIONS)
                 .build();
+    }
+
+    public Winston(JDA jda) {
+        this.jda = jda;
+    }
+
+    public JDA getJDA() {
+        return jda;
     }
 }
