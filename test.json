@@ -1,0 +1,35 @@
+{
+  "competitiveStats": {
+    "awards": {
+      "cards": 0,
+      "medals": 4,
+      "medalsBronze": 2,
+      "medalsSilver": 1,
+      "medalsGold": 1
+    },
+    "games": {
+      "played": 1,
+      "won": 0
+    }
+  },
+  "gamesWon": 646,
+  "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/cf1ce27b995348cc9b426d06f5519e4a90d0ff82d9630a8b23a7d15de3ff3e25.png",
+  "level": 61,
+  "levelIcon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/e8b7df4b88998380658d49d00e7bc483c740432ac417218e94fab4137bec4ae0.png",
+  "name": "Hammy#21436",
+  "prestige": 2,
+  "prestigeIcon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/755825d4a6768a22de17b48cfbe66ad85a54310ba5a8f8ab1e9c9a606b389354.png",
+  "quickPlayStats": {
+    "awards": {
+      "cards": 225,
+      "medals": 1240,
+      "medalsBronze": 348,
+      "medalsSilver": 393,
+      "medalsGold": 499
+    },
+    "games": {
+      "played": 638,
+      "won": 310
+    }
+  }
+}

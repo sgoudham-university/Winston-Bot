@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws LoginException, IOException {
-        new Winston();
         Overwatch overwatch = new Overwatch();
         overwatch.getPlayerStats();
+        new Winston();
     }
 }
