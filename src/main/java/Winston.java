@@ -10,7 +10,7 @@ public class Winston {
     private JDA jda;
 
     public Winston() throws LoginException {
-        JDABuilder.createDefault(System.getenv("JAVA_TOKEN"))
+        JDABuilder.createDefault(Config.get("TOKEN"))
                 .setActivity(Activity.playing("Overwatch"))
                 .addEventListeners(new Listener())
                 .setEnabledIntents(
