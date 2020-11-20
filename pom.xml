@@ -22,7 +22,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>Main</mainClass>
+                                    <mainClass>Winston.Main</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
@@ -103,10 +103,11 @@
             <version>4.5.10</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.2.0</version>
+            <groupId>me.duncte123</groupId>
+            <artifactId>botCommons</artifactId>
+            <version>2.0.119</version>
         </dependency>
+
     </dependencies>
 
 </project>
