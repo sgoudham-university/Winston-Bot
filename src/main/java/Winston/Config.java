@@ -1,3 +1,5 @@
+package Winston;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class Config {
