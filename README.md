@@ -28,8 +28,6 @@ Listed below are the tasks that I will set out to complete:
 - [x] Configuration file to store Environment variables
 - [x] Set up Logging for any commands / errors thrown
 - [x] Set bot activity to "Playing Overwatch"
-
-
 - [x] Display nicely formatted embeds that include Player Information
 - [ ] Display nicely formatted embeds for Overwatch Hero Information
 
