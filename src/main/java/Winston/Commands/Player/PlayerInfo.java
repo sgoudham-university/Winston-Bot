@@ -35,11 +35,11 @@ public class PlayerInfo implements ICommand {
         MessageEmbed playerInfoMenu = buildMenuEmbed(player, ctx);
         HashMap<String, Page> pages = new HashMap<>();
 
-        pages.put("1️⃣", new Page(PageType.EMBED, buildEndorsementEmbed(player)));
-        pages.put("2️⃣", new Page(PageType.EMBED, buildCompetitiveEmbed(player)));
+        pages.put("1️⃣", new Page(PageType.EMBED, buildEndorsementEmbed(player, ctx)));
+        pages.put("2️⃣", new Page(PageType.EMBED, buildCompetitiveEmbed(player, ctx)));
         pages.put("3️⃣", new Page(PageType.EMBED, playerInfoMenu));
 
-        ctx.getEvent().getChannel().sendMessage(playerInfoMenu).queue(success -> Pages.categorize(success, pages, 60, TimeUnit.SECONDS));
+        ctx.getEvent().getChannel().sendMessage(playerInfoMenu).queue(success -> Pages.categorize(success, pages, 120, TimeUnit.SECONDS));
         LOGGER.info("Player Statistics Sent For {}!", args);
     }
 
@@ -54,11 +54,11 @@ public class PlayerInfo implements ICommand {
                 .addField(":three:", "**Basic Information**", false)
                 .setColor(Color.BLUE)
                 .setTimestamp(new Date().toInstant())
-                .setFooter("Powered by Swagger-OWAPI", ctx.getSelfUser().getAvatarUrl())
+                .setFooter("Powered by Swagger", ctx.getSelfUser().getAvatarUrl())
                 .build();
     }
 
-    private static MessageEmbed buildCompetitiveEmbed(Player player) {
+    private static MessageEmbed buildCompetitiveEmbed(Player player, CommandContext ctx) {
 
         String tankValue = String.valueOf(player.getCompetitive().getTank().getSkillRating());
         String damageValue = String.valueOf(player.getCompetitive().getDamage().getSkillRating());
@@ -77,10 +77,11 @@ public class PlayerInfo implements ICommand {
                 .addField("Damage SR", damageSR, true)
                 .addField("Support SR", supportSR, true)
                 .setColor(Color.PINK)
-                .setFooter("Powered By Swagger-OWAPI").build();
+                .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
+                .build();
     }
 
-    private static MessageEmbed buildEndorsementEmbed(Player player) {
+    private static MessageEmbed buildEndorsementEmbed(Player player, CommandContext ctx) {
 
         String sportsmanship = String.valueOf((int) (player.getEndorsement().getDistribution().getSportsmanship() * 100));
         String shotcaller = String.valueOf((int) (player.getEndorsement().getDistribution().getShotcaller() * 100));
@@ -95,7 +96,8 @@ public class PlayerInfo implements ICommand {
                 .addField("Shotcaller", shotcaller, true)
                 .addField("Good Teammate", teammate, true)
                 .setColor(Color.RED)
-                .setFooter("Powered By Swagger-OWAPI").build();
+                .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
+                .build();
     }
 
     @Override
