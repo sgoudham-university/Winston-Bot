@@ -3,7 +3,7 @@ package Winston;
 import Command.CommandContext;
 import Command.ICommand;
 import Winston.Commands.Ping;
-import Winston.Commands.Player.BasicInfo;
+import Winston.Commands.Player.PlayerInfo;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import javax.annotation.Nullable;
@@ -16,7 +16,7 @@ public class CommandManager {
     private final List<ICommand> allCommands = new ArrayList<>();
 
     public CommandManager() {
-        addCommand(new Ping(), new BasicInfo());
+        addCommand(new Ping(), new PlayerInfo());
     }
 
     private void addCommand(ICommand... commands) {

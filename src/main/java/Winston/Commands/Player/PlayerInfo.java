@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class BasicInfo implements ICommand {
+public class PlayerInfo implements ICommand {
 
     private final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
 
