@@ -1,6 +1,9 @@
 package Listeners;
 
-import Models.Player;
+import Models.Hero.Ability;
+import Models.Hero.Hero;
+import Models.Player.Achievement.Achievements;
+import Models.Player.Player;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -10,19 +13,99 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 public class Overwatch {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
 
-    public Player getPlayerStats() throws IOException {
+    public Player getPlayerStats(List<String> args) throws Exception {
 
-        HttpGet request = new HttpGet("https://ow-api.com/v1/stats/pc/eu/Hammy-21436/profile");
+        String[] requestUrlInfo = determinePlatform(args, "/info?");
+        String[] requestUrlAchievements = determinePlatform(args, "/achievements?");
+
+        Player player = getPlayerInformation(requestUrlInfo);
+        getPlayerAchievements(requestUrlAchievements, player);
+
+        return player;
+    }
+
+    private void getPlayerAchievements(String[] requestUrlAchievements, Player player) throws IOException {
+
+        HttpGet request = new HttpGet(requestUrlAchievements[0]);
+        request.addHeader("Content-Type", "application/json");
         CloseableHttpResponse response = httpClient.execute(request);
 
         HttpEntity entity = response.getEntity();
         String result = EntityUtils.toString(entity);
 
-        return objectMapper.readValue(result, Player.class);
+        player.setAchievements(objectMapper.readValue(result, Achievements.class));
+
+    }
+
+    private Player getPlayerInformation(String[] requestUrlInfo) throws IOException {
+
+        HttpGet request = new HttpGet(requestUrlInfo[0]);
+        request.addHeader("Content-Type", "application/json");
+        CloseableHttpResponse response = httpClient.execute(request);
+
+        HttpEntity entity = response.getEntity();
+        String result = EntityUtils.toString(entity);
+
+        Player player = objectMapper.readValue(result, Player.class);
+        player.setOverbuffLink(requestUrlInfo[1]);
+
+        return player;
+    }
+
+    private static String[] determinePlatform(List<String> args, String requestType) {
+        String url;
+        String link;
+
+        String platform = args.get(0);
+        if (platform.equalsIgnoreCase("pc")) {
+            String[] battlenet = args.get(2).split("#");
+            url = "https://overwatch-api.tekrop.fr/player/"
+                    + battlenet[0] + "-" + battlenet[1]
+                    + requestType
+                    + "platform=" + platform
+                    + "&region=" + args.get(1);
+            link = "https://www.overbuff.com/players/"
+                    + platform + "/"
+                    + battlenet[0] + "-" + battlenet[1];
+        } else {
+            String user = args.get(1);
+            url = "https://overwatch-api.tekrop.fr/player/"
+                    + user
+                    + requestType
+                    + "platform=" + platform;
+            link = "https://www.overbuff.com/players/" + platform + "/" + user;
+        }
+
+        return new String[]{url, link};
+    }
+
+    public Hero getHero() throws IOException {
+
+        HttpGet request = new HttpGet("https://overwatch-api.tekrop.fr/hero/ana");
+        request.addHeader("Content-Type", "application/json");
+        CloseableHttpResponse response = httpClient.execute(request);
+
+        HttpEntity entity = response.getEntity();
+        String result = EntityUtils.toString(entity);
+
+        Hero hero = objectMapper.readValue(result, Hero.class);
+
+        hero.setPortraitUrl("https://d1u1mce87gyfbn.cloudfront.net/hero/"
+                + hero.getName().toLowerCase().replace(" ", "-")
+                + "/hero-select-portrait.png");
+
+        for (Ability ability : hero.getAbilities())
+            ability.setIcon("https://d1u1mce87gyfbn.cloudfront.net/hero/"
+                    + hero.getName().toLowerCase().replace(" ", "-") + "/ability-"
+                    + ability.getName().toLowerCase().replace(" ", "-")
+                    + "/icon-ability.png");
+
+        return hero;
     }
 }
