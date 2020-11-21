@@ -28,21 +28,32 @@ Listed below are the tasks that I will set out to complete:
 - [x] Configuration file to store Environment variables
 - [x] Set up Logging for any commands / errors thrown
 - [x] Set bot activity to "Playing Overwatch"
+
+
 - [x] Display nicely formatted embeds that include Player Information
+- [ ] Display nicely formatted embeds for Overwatch Hero Information
 
 #### Testing
 
 - [x] Use JUnit to successfully test
 - [x] Use Mockito to successfully Mock and test
 
-#### Frameworks
+#### Frameworks / Libraries
 
 - [x] Use JDA to connect to the Discord API
+- [x] Use Maven as a package manager to build, package and release
+- [x] Use Jackson to successfully match JSON -> POJO
+
+#### Misc
+
+- [x] Host bot on Virtual Private Server (Running Ubuntu 20.04) for 24/7 uptime
+
 
 ## Services / Libraries Used
 
 - [Discord JDA](https://github.com/DV8FromTheWorld/JDA)
+- [Swagger Overwatch API](https://swagger-owapi.tekrop.fr/)
+- [Jackson](https://github.com/FasterXML/jackson)
 - [Dotenv](https://github.com/cdimascio/dotenv-java)
 - [JUnit 5](https://junit.org/junit5/)
 - [Mockito](https://site.mockito.org/)
-- [Swagger Overwatch API](https://swagger-owapi.tekrop.fr/)
