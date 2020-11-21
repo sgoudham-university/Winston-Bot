@@ -52,7 +52,7 @@ public class PlayerInfo implements ICommand {
                 .addField(":one:", "**Endorsements**", false)
                 .addField(":two:", "**Competitive**", false)
                 .addField(":three:", "**Basic Information**", false)
-                .setColor(Color.PINK)
+                .setColor(Color.BLUE)
                 .setTimestamp(new Date().toInstant())
                 .setFooter("Powered by Swagger-OWAPI", ctx.getSelfUser().getAvatarUrl())
                 .build();
@@ -94,7 +94,7 @@ public class PlayerInfo implements ICommand {
                 .addField("Sportsmanship", sportsmanship, true)
                 .addField("Shotcaller", shotcaller, true)
                 .addField("Good Teammate", teammate, true)
-                .setColor(Color.PINK)
+                .setColor(Color.RED)
                 .setFooter("Powered By Swagger-OWAPI").build();
     }
 
