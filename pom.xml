@@ -47,6 +47,10 @@
             <name>jcenter-bintray</name>
             <url>https://jcenter.bintray.com</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -107,7 +111,11 @@
             <artifactId>botCommons</artifactId>
             <version>2.0.119</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.ygimenez</groupId>
+            <artifactId>Pagination-Utils</artifactId>
+            <version>1.3.0</version>
+        </dependency>
     </dependencies>
 
 </project>
