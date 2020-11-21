@@ -25,6 +25,6 @@ public class WinstonTest {
     @Test
     public void botTokenShouldNotBeValid() {
         Mockito.when(jda.getToken()).thenReturn("KJSDJF;LK29384KLSDFNlksjfl928034urlknsdf");
-        Assertions.assertEquals(dotenv.get("TOKEN"), winston.getJDA().getToken());
+        Assertions.assertFalse(Boolean.parseBoolean(dotenv.get("TOKEN")), winston.getJDA().getToken());
     }
 }
