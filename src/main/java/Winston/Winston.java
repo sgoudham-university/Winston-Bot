@@ -7,21 +7,27 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
+import java.util.Arrays;
 
 public class Winston {
     private JDA jda;
+    private GatewayIntent[] gatewayIntents;
 
-    public Winston() throws LoginException {
-        JDABuilder.createDefault(Config.get("TOKEN"))
+    public Winston() {
+        gatewayIntents = new GatewayIntent[]{
+                GatewayIntent.GUILD_MEMBERS,
+                GatewayIntent.GUILD_PRESENCES,
+                GatewayIntent.GUILD_MESSAGES,
+                GatewayIntent.GUILD_VOICE_STATES,
+                GatewayIntent.GUILD_EMOJIS,
+                GatewayIntent.GUILD_MESSAGE_REACTIONS};
+    }
+
+    void start(String token) throws LoginException {
+        JDABuilder.createDefault(token)
                 .setActivity(Activity.playing("Overwatch"))
                 .addEventListeners(new Listener())
-                .setEnabledIntents(
-                        GatewayIntent.GUILD_MEMBERS,
-                        GatewayIntent.GUILD_PRESENCES,
-                        GatewayIntent.GUILD_MESSAGES,
-                        GatewayIntent.GUILD_VOICE_STATES,
-                        GatewayIntent.GUILD_EMOJIS,
-                        GatewayIntent.GUILD_MESSAGE_REACTIONS)
+                .enableIntents(Arrays.asList(gatewayIntents))
                 .build();
     }
 
