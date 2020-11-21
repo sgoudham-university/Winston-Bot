@@ -10,7 +10,7 @@ Creating a Discord Bot within [Discord JDA](https://github.com/DV8FromTheWorld/J
 
 ## Description
 
-This project is part of my How To Learn a New Language Course. I decided on another discord bot but in a different language expose myself
+This project is part of my How To Learn a New Language Course. I decided on another discord bot but in a different language to expose myself
 to new languages and frameworks. Languages and frameworks that I will be using in the workplace.
 
 ## API Issues
@@ -33,6 +33,6 @@ Listed below are the tasks that I will set out to complete:
 
 - [Discord JDA](https://github.com/DV8FromTheWorld/JDA)
 - [Dotenv](https://github.com/cdimascio/dotenv-java)
-- [JUnit](https://junit.org/junit5/)
+- [JUnit 5](https://junit.org/junit5/)
 - [Mockito](https://site.mockito.org/)
 - [Swagger Overwatch API](https://swagger-owapi.tekrop.fr/)
