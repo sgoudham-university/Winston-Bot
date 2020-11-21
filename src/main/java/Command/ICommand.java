@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 public interface ICommand {
-    void handle(CommandContext ctx);
+    void handle(CommandContext ctx) throws Exception;
 
     String getName();
 
