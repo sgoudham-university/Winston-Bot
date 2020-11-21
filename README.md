@@ -15,19 +15,29 @@ to new languages and frameworks. Languages and frameworks that I will be using i
 
 ## API Issues
 
-Disappointingly, Blizzard does not have an official API for Overwatch (I have no idea why they don't) which results in a massive headache in using
-API's to retrieve data as they are all web-scraped and can take long to update, not to mention the extremely long response times. Due to this,
-The bot isn't as snappy and fast and only retrieves a limited amount of information.
+- Disappointingly, Blizzard does not have an official API for Overwatch (I have no idea why they don't) which results in a massive headache in using
+  API's to retrieve data as they are all web-scraped and can take long to update, not to mention the extremely long response times. 
+- Due to this, the bot isn't as snappy and fast and only retrieves a limited amount of information.
 
 ## Functionality
 
 Listed below are the tasks that I will set out to complete:
 
+#### Discord
+
 - [x] Configuration file to store Environment variables
-- [x] Set bot activity to "Playing Overwatch"
 - [x] Set up Logging for any commands / errors thrown
+- [x] Set bot activity to "Playing Overwatch"
+- [x] Display nicely formatted embeds that include Player Information
+
+#### Testing
+
+- [x] Use JUnit to successfully test
+- [x] Use Mockito to successfully Mock and test
+
+#### Frameworks
+
 - [x] Use JDA to connect to the Discord API
-- [x] Give responses out to the user based on input
 
 ## Services / Libraries Used
 
