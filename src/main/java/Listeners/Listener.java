@@ -1,7 +1,7 @@
 package Listeners;
 
-import Winston.CommandManager;
-import Winston.Config;
+import Command.CommandManager;
+import Winston.Bot.Config;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -32,30 +32,26 @@ public class Listener extends ListenerAdapter {
     }
 
     @Override
-    public void onReady(final ReadyEvent event) {
+    public void onReady(ReadyEvent event) {
         LOGGER.info("{} is ready", event.getJDA().getSelfUser().getAsTag());
     }
 
     @Override
-    public void onGuildMessageReceived(final GuildMessageReceivedEvent event) {
-        if (event.getAuthor().isBot() || event.isWebhookMessage()) {
-            return;
-        }
+    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+        if (event.getAuthor().isBot() || event.isWebhookMessage()) return;
 
-        if (event.getMessage().getContentRaw().startsWith(Config.get("PREFIX"))) {
-            try {
-                commandManager.handle(event);
-            } catch (final Exception e) {
-                e.printStackTrace();
-            }
+        if (event.getMessage().getContentRaw().startsWith(Config.get("PREFIX"))) try {
+            commandManager.handle(event);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @Override
-    public void onMessageReceived(final MessageReceivedEvent event) {
-        final int random = new Random().nextInt(voiceLines.size());
-        final String message = event.getMessage().getContentRaw();
-        final String randomVoiceLine = voiceLines.get(random);
+    public void onMessageReceived(MessageReceivedEvent event) {
+        int random = new Random().nextInt(voiceLines.size());
+        String message = event.getMessage().getContentRaw();
+        String randomVoiceLine = voiceLines.get(random);
 
         if (message.toLowerCase().contains("winston")) {
             event.getChannel().sendMessage(event.getAuthor().getAsMention() + " " + randomVoiceLine).queue();

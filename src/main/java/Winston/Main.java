@@ -1,5 +1,8 @@
 package Winston;
 
+import Winston.Bot.Config;
+import Winston.Bot.Winston;
+
 import javax.security.auth.login.LoginException;
 
 public class Main {

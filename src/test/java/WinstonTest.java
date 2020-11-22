@@ -1,4 +1,4 @@
-import Winston.Winston;
+import Winston.Bot.Winston;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
 import org.junit.jupiter.api.Assertions;
