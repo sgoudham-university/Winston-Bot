@@ -16,7 +16,7 @@ Creating a Discord Bot within [Discord JDA](https://github.com/DV8FromTheWorld/J
     - [Frameworks / Libraries](#Frameworks-/-Libraries)
     - [Misc](#Misc)
 - [API Issues](#API-Issues)
-- [Services / Libraries Used](#Services-/-Libraries-Used)
+- [Services / Libraries Used](#services--libraries-used)
 
 ## Description
 
