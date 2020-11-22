@@ -1,6 +1,9 @@
 package Winston.Bot;
 
+import Listeners.GuildMessageReceivedEvent;
 import Listeners.Listener;
+import Listeners.MessageReceivedEvent;
+import Listeners.ReadyEvent;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -26,7 +29,10 @@ public class Winston {
     public void start(String token) throws LoginException {
         JDABuilder.createDefault(token)
                 .setActivity(Activity.playing("Overwatch"))
-                .addEventListeners(new Listener())
+                .addEventListeners(new Listener(),
+                        new ReadyEvent(),
+                        new GuildMessageReceivedEvent(),
+                        new MessageReceivedEvent())
                 .enableIntents(Arrays.asList(gatewayIntents))
                 .build();
     }
