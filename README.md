@@ -1,6 +1,6 @@
 # Winston | Personal Project for HTLANL
 
-![version-shield](https://img.shields.io/badge/version-v1.0.1-informational)
+![version-shield](https://img.shields.io/badge/version-v0.1.2-informational)
 ![project-type-shield](https://img.shields.io/badge/project%20type-personal-blueviolet)
 ![last-commit-shield](https://img.shields.io/github/last-commit/sgoudham-university/Winston-Bot)
 ![issues-shield](https://img.shields.io/github/issues/sgoudham-university/Winston-Bot?label=issues)
