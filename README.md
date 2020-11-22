@@ -1,11 +1,20 @@
 # Winston | Personal Project for HTLANL
 
-![version-shield](https://img.shields.io/badge/version-v0.1.2-informational)
+![version-shield](https://img.shields.io/badge/version-v0.1--alpha-informational)
 ![project-type-shield](https://img.shields.io/badge/project%20type-personal-blueviolet)
 ![last-commit-shield](https://img.shields.io/github/last-commit/sgoudham-university/Winston-Bot)
 ![issues-shield](https://img.shields.io/github/issues/sgoudham-university/Winston-Bot?label=issues)
 
 Creating a Discord Bot within [Discord JDA](https://github.com/DV8FromTheWorld/JDA) For Real-Time Player Statistics in Overwatch.
+
+## Table of Contents
+
+- [Description](#Description)
+- [Functionality](#Functionality)
+    - [Commands](#Commands)
+    - [Testing](#Testing)
+    - [Frameworks / Libraries](#Frameworks-/-Libraries)
+    - [Misc](#Misc)
 - [API Issues I encountered](#API-Issues)
 
 ## Description
@@ -17,7 +26,7 @@ to new languages and frameworks. Languages and frameworks that I will be using i
 
 Listed below are the tasks that I will set out to complete:
 
-#### Discord
+#### Commands
 
 - [x] Set bot activity to "Playing Overwatch"
 - [x] Display nicely formatted embeds that include Player Information
@@ -40,6 +49,7 @@ Listed below are the tasks that I will set out to complete:
 
 - [x] Host bot on Virtual Private Server (Running Ubuntu 20.04) for 24/7 uptime
 - [x] Configuration file to store Environment variables
+- [ ] Include Asynchronous Programming Methods for API retrieval
 
 ## API Issues
 
@@ -51,6 +61,8 @@ Listed below are the tasks that I will set out to complete:
 ## Services / Libraries Used
 
 - [Discord JDA](https://github.com/DV8FromTheWorld/JDA)
+- [Discord Pagination Utils](https://github.com/ygimenez/Pagination-Utils)
+- [HTTPClient](https://hc.apache.org/)
 - [Swagger Overwatch API](https://swagger-owapi.tekrop.fr/)
 - [Jackson](https://github.com/FasterXML/jackson)
 - [Dotenv](https://github.com/cdimascio/dotenv-java)
