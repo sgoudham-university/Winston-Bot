@@ -40,7 +40,7 @@ public class Achievements implements ICommand {
         buildAchievementEmbeds(player, pages, ctx, args.get(0));
 
         ctx.getEvent().getChannel().sendMessage((MessageEmbed) pages.get(0).getContent()).queue(success -> Pages.paginate(success, pages, 60, TimeUnit.SECONDS, 1));
-        LOGGER.info("Player General Achievements Sent For {}!", args);
+        LOGGER.info("Player Achievements Sent For {}!", args);
 
     }
 
