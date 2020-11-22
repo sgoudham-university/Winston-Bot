@@ -85,9 +85,9 @@ public class Overwatch {
         return new String[]{url, link};
     }
 
-    public Hero getHero() throws IOException {
+    public Hero getHero(List<String> args) throws IOException {
 
-        HttpGet request = new HttpGet("https://overwatch-api.tekrop.fr/hero/ana");
+        HttpGet request = new HttpGet("https://overwatch-api.tekrop.fr/hero/" + args.get(0));
         request.addHeader("Content-Type", "application/json");
         CloseableHttpResponse response = httpClient.execute(request);
 
