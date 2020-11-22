@@ -65,8 +65,8 @@ public class PlayerInfo implements ICommand {
         String supportValue = String.valueOf(player.getCompetitive().getSupport().getSkillRating());
 
         String tankSR = !tankValue.equals("null") ? tankValue : "**N/A**";
-        String damageSR = !tankValue.equals("null") ? damageValue : "**N/A**";
-        String supportSR = !tankValue.equals("null") ? supportValue : "**N/A**";
+        String damageSR = !damageValue.equals("null") ? damageValue : "**N/A**";
+        String supportSR = !supportValue.equals("null") ? supportValue : "**N/A**";
 
         return new EmbedBuilder()
                 .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
