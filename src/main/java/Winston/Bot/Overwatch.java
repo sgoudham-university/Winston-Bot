@@ -1,4 +1,4 @@
-package Listeners;
+package Winston.Bot;
 
 import Models.Hero.Ability;
 import Models.Hero.Hero;
@@ -13,11 +13,14 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Overwatch {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
+    private Map<String, Hero> allHeroes = new HashMap<>();
 
     public Player getPlayerStats(List<String> args) throws Exception {
 
@@ -107,5 +110,8 @@ public class Overwatch {
                     + "/icon-ability.png");
 
         return hero;
+    }
+
+    public void startup() {
     }
 }
