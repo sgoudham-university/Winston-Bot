@@ -2,6 +2,7 @@ package Command;
 
 import Winston.Bot.Config;
 import Winston.Commands.Ping;
+import Winston.Commands.Player.Achievements;
 import Winston.Commands.Player.CompInfo;
 import Winston.Commands.Player.PlayerInfo;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -16,7 +17,7 @@ public class CommandManager {
     private final List<ICommand> allCommands = new ArrayList<>();
 
     public CommandManager() {
-        addCommand(new Ping(), new PlayerInfo(), new CompInfo());
+        addCommand(new Ping(), new PlayerInfo(), new CompInfo(), new Achievements());
     }
 
     private void addCommand(ICommand... commands) {
