@@ -1,7 +1,6 @@
-package Winston;
+package Command;
 
-import Command.CommandContext;
-import Command.ICommand;
+import Winston.Bot.Config;
 import Winston.Commands.Ping;
 import Winston.Commands.Player.CompInfo;
 import Winston.Commands.Player.PlayerInfo;

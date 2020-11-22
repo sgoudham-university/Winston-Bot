@@ -1,4 +1,4 @@
-package Winston;
+package Winston.Bot;
 
 import Listeners.Listener;
 import net.dv8tion.jda.api.JDA;
@@ -23,7 +23,7 @@ public class Winston {
                 GatewayIntent.GUILD_MESSAGE_REACTIONS};
     }
 
-    void start(String token) throws LoginException {
+    public void start(String token) throws LoginException {
         JDABuilder.createDefault(token)
                 .setActivity(Activity.playing("Overwatch"))
                 .addEventListeners(new Listener())
