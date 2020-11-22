@@ -15,7 +15,10 @@ Creating a Discord Bot within [Discord JDA](https://github.com/DV8FromTheWorld/J
     - [Testing](#Testing)
     - [Frameworks / Libraries](#Frameworks-/-Libraries)
     - [Misc](#Misc)
-- [API Issues I encountered](#API-Issues)
+- [Installation](#Installation)
+- [Configuration](#Configuration)
+- [API Issues](#API-Issues)
+- [Services / Libraries Used](#Services-/-Libraries Used)
 
 ## Description
 
@@ -50,6 +53,14 @@ Listed below are the tasks that I will set out to complete:
 - [x] Host bot on Virtual Private Server (Running Ubuntu 20.04) for 24/7 uptime
 - [x] Configuration file to store Environment variables
 - [ ] Include Asynchronous Programming Methods for API retrieval
+
+## Installation
+
+You can deploy an instance of Winston on your own server with the steps below! 
+
+## Configuration
+
+
 
 ## API Issues
 
