@@ -9,7 +9,6 @@ import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
 import com.github.ygimenez.type.PageType;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +27,8 @@ public class CompInfo implements ICommand {
     @Override
     public void handle(CommandContext ctx) throws Exception {
 
-        JDA bot = ctx.getJDA();
         List<String> args = ctx.getArgs();
         ArrayList<Page> pages = new ArrayList<>();
-        Pages.activate(bot);
 
         Player player = new Overwatch().getPlayerStats(args);
         pages.add(new Page(PageType.EMBED, buildTankEmbed(player, ctx)));
@@ -43,18 +40,22 @@ public class CompInfo implements ICommand {
 
     }
 
+    private EmbedBuilder getBaseEmbed(Player player, CommandContext ctx) {
+        return new EmbedBuilder()
+                .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
+                .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
+                .setTimestamp(new Date().toInstant());
+    }
+
     private MessageEmbed buildTankEmbed(Player player, CommandContext ctx) {
         String tankValue = String.valueOf(player.getCompetitive().getTank().getSkillRating());
         String tankSR = !tankValue.equals("null") ? tankValue : "**N/A**";
 
-        return new EmbedBuilder()
-                .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
+        return getBaseEmbed(player, ctx)
                 .setThumbnail(player.getCompetitive().getTank().getRank())
                 .setTitle("Tank Information")
                 .addField("Tank SR", tankSR, true)
                 .setColor(Color.MAGENTA)
-                .setTimestamp(new Date().toInstant())
-                .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
                 .build();
     }
 
@@ -62,14 +63,11 @@ public class CompInfo implements ICommand {
         String damageValue = String.valueOf(player.getCompetitive().getDamage().getSkillRating());
         String damageSR = !damageValue.equals("null") ? damageValue : "**N/A**";
 
-        return new EmbedBuilder()
-                .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
+        return getBaseEmbed(player, ctx)
                 .setThumbnail(player.getCompetitive().getDamage().getRank())
                 .setTitle("Damage Information")
                 .addField("Damage SR", damageSR, true)
                 .setColor(Color.ORANGE)
-                .setTimestamp(new Date().toInstant())
-                .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
                 .build();
     }
 
@@ -77,14 +75,11 @@ public class CompInfo implements ICommand {
         String supportValue = String.valueOf(player.getCompetitive().getSupport().getSkillRating());
         String supportSR = !supportValue.equals("null") ? supportValue : "**N/A**";
 
-        return new EmbedBuilder()
-                .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
+        return getBaseEmbed(player, ctx)
                 .setThumbnail(player.getCompetitive().getSupport().getRank())
                 .setTitle("Support Information")
                 .addField("Support SR", supportSR, true)
-                .setColor(Color.ORANGE)
-                .setTimestamp(new Date().toInstant())
-                .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
+                .setColor(Color.CYAN)
                 .build();
     }
 
