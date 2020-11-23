@@ -1,6 +1,6 @@
 # Winston | Personal Project for HTLANL
 
-![version-shield](https://img.shields.io/badge/version-v0.1--alpha-informational)
+![version-shield](https://img.shields.io/badge/version-v0.1.0-informational)
 ![project-type-shield](https://img.shields.io/badge/project%20type-personal-blueviolet)
 ![last-commit-shield](https://img.shields.io/github/last-commit/sgoudham-university/Winston-Bot)
 ![issues-shield](https://img.shields.io/github/issues/sgoudham-university/Winston-Bot?label=issues)
@@ -52,6 +52,7 @@ Listed below are the tasks that I will set out to complete:
 
 - [x] Host bot on Virtual Private Server (Running Ubuntu 20.04) for 24/7 uptime
 - [ ] Integrate Kotlin with Java
+- [ ] Make new Custom Error Class to handle Exceptions
 - [x] Configuration file to store Environment variables
 - [ ] Include Asynchronous Programming Methods for API retrieval
 
