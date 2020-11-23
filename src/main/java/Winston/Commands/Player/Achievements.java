@@ -10,7 +10,6 @@ import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
 import com.github.ygimenez.type.PageType;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,17 +28,15 @@ public class Achievements implements ICommand {
     @Override
     public void handle(CommandContext ctx) throws Exception {
 
-        JDA bot = ctx.getJDA();
         List<String> args = ctx.getArgs();
         ArrayList<Page> pages = new ArrayList<>();
-        Pages.activate(bot);
 
         List<String> playerArgs = args.subList(1, args.size());
         Player player = new Overwatch().getPlayerStats(playerArgs);
 
         buildAchievementEmbeds(player, pages, ctx, args.get(0));
-
         ctx.getEvent().getChannel().sendMessage((MessageEmbed) pages.get(0).getContent()).queue(success -> Pages.paginate(success, pages, 60, TimeUnit.SECONDS, 1));
+
         LOGGER.info("Player Achievements Sent For {}!", args);
 
     }
@@ -48,84 +45,90 @@ public class Achievements implements ICommand {
 
         switch (typeOfAchievement.toLowerCase()) {
             case "general":
-                for (General general : player.getAchievements().getGeneral())
-                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, general, ctx)));
+                List<General> generalAchievements = player.getAchievements().getGeneral();
+                for (int i = 0; i < generalAchievements.size(); i++)
+                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, generalAchievements.get(i), ctx, i)));
                 break;
             case "damage":
-                for (Damage damage : player.getAchievements().getDamage())
-                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, damage, ctx)));
+                List<Damage> damageAchievements = player.getAchievements().getDamage();
+                for (int i = 0; i < damageAchievements.size(); i++)
+                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, damageAchievements.get(i), ctx, i)));
                 break;
             case "map":
-                for (Map map : player.getAchievements().getMaps())
-                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, map, ctx)));
+                List<Map> mapAchievements = player.getAchievements().getMaps();
+                for (int i = 0; i < mapAchievements.size(); i++)
+                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, mapAchievements.get(i), ctx, i)));
                 break;
             case "special":
-                for (Special special : player.getAchievements().getSpecial())
-                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, special, ctx)));
+                List<Special> specialAchievements = player.getAchievements().getSpecial();
+                for (int i = 0; i < specialAchievements.size(); i++)
+                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, specialAchievements.get(i), ctx, i)));
                 break;
             case "support":
-                for (Support support : player.getAchievements().getSupport())
-                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, support, ctx)));
+                List<Support> supportAchievements = player.getAchievements().getSupport();
+                for (int i = 0; i < supportAchievements.size(); i++)
+                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, supportAchievements.get(i), ctx, i)));
                 break;
             case "tank":
-                for (Tank tank : player.getAchievements().getTank())
-                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, tank, ctx)));
+                List<Tank> tankAchievements = player.getAchievements().getTank();
+                for (int i = 0; i < tankAchievements.size(); i++)
+                    pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, tankAchievements.get(i), ctx, i)));
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + typeOfAchievement.toLowerCase());
+                throw new IllegalStateException("Unexpected Achievement: " + typeOfAchievement.toLowerCase());
         }
     }
 
-    private EmbedBuilder getBaseEmbed(Player player, CommandContext ctx) {
+    private EmbedBuilder getBaseEmbed(Player player, CommandContext ctx, int pageNum) {
         return new EmbedBuilder()
-                .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
+                .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue() + " | Page: " + (pageNum + 1))
                 .setColor(Color.YELLOW)
                 .setTimestamp(new Date().toInstant())
                 .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl());
     }
 
-    private MessageEmbed getAchievementEmbed(Player player, General general, CommandContext ctx) {
-        return getBaseEmbed(player, ctx)
+    private MessageEmbed getAchievementEmbed(Player player, General general, CommandContext ctx, int pageNum) {
+        return getBaseEmbed(player, ctx, pageNum)
                 .setTitle("General Achievements")
                 .setThumbnail(general.getImage())
                 .addField(general.getTitle(), general.getDescription(), true)
                 .build();
     }
 
-    private MessageEmbed getAchievementEmbed(Player player, Damage damage, CommandContext ctx) {
-        return getBaseEmbed(player, ctx)
+    private MessageEmbed getAchievementEmbed(Player player, Damage damage, CommandContext ctx, int pageNum) {
+        return getBaseEmbed(player, ctx, pageNum)
                 .setTitle("Damage Achievements")
                 .setThumbnail(damage.getImage())
                 .addField(damage.getTitle(), damage.getDescription(), true)
                 .build();
     }
 
-    private MessageEmbed getAchievementEmbed(Player player, Map map, CommandContext ctx) {
-        return getBaseEmbed(player, ctx)
+    private MessageEmbed getAchievementEmbed(Player player, Map map, CommandContext ctx, int pageNum) {
+        return getBaseEmbed(player, ctx, pageNum)
                 .setTitle("Map Achievements")
                 .setThumbnail(map.getImage())
                 .addField(map.getTitle(), map.getDescription(), true)
                 .build();
     }
 
-    private MessageEmbed getAchievementEmbed(Player player, Special special, CommandContext ctx) {
-        return getBaseEmbed(player, ctx)
+    private MessageEmbed getAchievementEmbed(Player player, Special special, CommandContext ctx, int pageNum) {
+        return getBaseEmbed(player, ctx, pageNum)
                 .setTitle("Special Achievements")
                 .setThumbnail(special.getImage())
                 .addField(special.getTitle(), special.getDescription(), true)
                 .build();
     }
 
-    private MessageEmbed getAchievementEmbed(Player player, Support support, CommandContext ctx) {
-        return getBaseEmbed(player, ctx)
+    private MessageEmbed getAchievementEmbed(Player player, Support support, CommandContext ctx, int pageNum) {
+        return getBaseEmbed(player, ctx, pageNum)
                 .setTitle("Support Achievements")
                 .setThumbnail(support.getImage())
                 .addField(support.getTitle(), support.getDescription(), true)
                 .build();
     }
 
-    private MessageEmbed getAchievementEmbed(Player player, Tank tank, CommandContext ctx) {
-        return getBaseEmbed(player, ctx)
+    private MessageEmbed getAchievementEmbed(Player player, Tank tank, CommandContext ctx, int pageNum) {
+        return getBaseEmbed(player, ctx, pageNum)
                 .setTitle("Tank Achievements")
                 .setThumbnail(tank.getImage())
                 .addField(tank.getTitle(), tank.getDescription(), true)
