@@ -1,5 +1,6 @@
 package Winston.Bot;
 
+import Exceptions.PlayerNotFoundException;
 import Models.Hero.Ability;
 import Models.Hero.Hero;
 import Models.Player.Achievement.Achievements;
@@ -46,7 +47,8 @@ public class Overwatch {
 
     }
 
-    private Player getPlayerInformation(String[] requestUrlInfo) throws IOException {
+    private Player getPlayerInformation(String[] requestUrlInfo) throws IOException, PlayerNotFoundException {
+        Player player;
 
         HttpGet request = new HttpGet(requestUrlInfo[0]);
         request.addHeader("Content-Type", "application/json");
@@ -55,8 +57,12 @@ public class Overwatch {
         HttpEntity entity = response.getEntity();
         String result = EntityUtils.toString(entity);
 
-        Player player = objectMapper.readValue(result, Player.class);
-        player.setOverbuffLink(requestUrlInfo[1]);
+        if (response.getStatusLine().getStatusCode() == 200) {
+            player = objectMapper.readValue(result, Player.class);
+            player.setOverbuffLink(requestUrlInfo[1]);
+        } else {
+            throw new PlayerNotFoundException("Player Not Found");
+        }
 
         return player;
     }
@@ -103,11 +109,12 @@ public class Overwatch {
                 + hero.getName().toLowerCase().replace(" ", "-")
                 + "/hero-select-portrait.png");
 
-        for (Ability ability : hero.getAbilities())
+        for (Ability ability : hero.getAbilities()) {
             ability.setIcon("https://d1u1mce87gyfbn.cloudfront.net/hero/"
                     + hero.getName().toLowerCase().replace(" ", "-") + "/ability-"
                     + ability.getName().toLowerCase().replace(" ", "-")
                     + "/icon-ability.png");
+        }
 
         return hero;
     }
