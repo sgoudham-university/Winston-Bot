@@ -9,7 +9,6 @@ import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
 import com.github.ygimenez.type.PageType;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +26,6 @@ public class PlayerInfo implements ICommand {
     @Override
     public void handle(CommandContext ctx) throws Exception {
 
-        JDA bot = ctx.getJDA();
-        Pages.activate(bot);
         List<String> args = ctx.getArgs();
 
         Player player = new Overwatch().getPlayerStats(args);
@@ -43,18 +40,22 @@ public class PlayerInfo implements ICommand {
         LOGGER.info("Player Statistics Sent For {}!", args);
     }
 
-    private static MessageEmbed buildMenuEmbed(Player player, CommandContext ctx) {
-
+    private static EmbedBuilder getBaseEmbed(Player player, CommandContext ctx) {
         return new EmbedBuilder()
                 .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
-                .setTitle("Overbuff Information", player.getOverbuffLink())
                 .setThumbnail(player.getAvatar())
+                .setColor(Color.BLUE)
+                .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
+                .setTimestamp(new Date().toInstant());
+    }
+
+    private static MessageEmbed buildMenuEmbed(Player player, CommandContext ctx) {
+
+        return getBaseEmbed(player, ctx)
+                .setTitle("Overbuff Information", player.getOverbuffLink())
                 .addField(":one:", "**Endorsements**", false)
                 .addField(":two:", "**Competitive**", false)
                 .addField(":three:", "**Basic Information**", false)
-                .setColor(Color.BLUE)
-                .setTimestamp(new Date().toInstant())
-                .setFooter("Powered by Swagger", ctx.getSelfUser().getAvatarUrl())
                 .build();
     }
 
@@ -68,16 +69,11 @@ public class PlayerInfo implements ICommand {
         String damageSR = !damageValue.equals("null") ? damageValue : "**N/A**";
         String supportSR = !supportValue.equals("null") ? supportValue : "**N/A**";
 
-        return new EmbedBuilder()
-                .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
+        return getBaseEmbed(player, ctx)
                 .setTitle("Competitive Information")
-                .setThumbnail(player.getAvatar())
-                .setTimestamp(new Date().toInstant())
                 .addField("Tank SR", tankSR, true)
                 .addField("Damage SR", damageSR, true)
                 .addField("Support SR", supportSR, true)
-                .setColor(Color.PINK)
-                .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
                 .build();
     }
 
@@ -87,16 +83,11 @@ public class PlayerInfo implements ICommand {
         String shotcaller = String.valueOf((int) (player.getEndorsement().getDistribution().getShotcaller() * 100));
         String teammate = String.valueOf((int) (player.getEndorsement().getDistribution().getTeammate() * 100));
 
-        return new EmbedBuilder()
-                .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
+        return getBaseEmbed(player, ctx)
                 .setTitle("Endorsement Information |  Level: " + player.getEndorsement().getLevel())
-                .setThumbnail(player.getAvatar())
-                .setTimestamp(new Date().toInstant())
                 .addField("Sportsmanship", sportsmanship, true)
                 .addField("Shotcaller", shotcaller, true)
                 .addField("Good Teammate", teammate, true)
-                .setColor(Color.RED)
-                .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
                 .build();
     }
 
