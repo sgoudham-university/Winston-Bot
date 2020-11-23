@@ -40,7 +40,7 @@ public class PlayerInfo implements ICommand {
         LOGGER.info("Player Statistics Sent For {}!", args);
     }
 
-    private static EmbedBuilder getBaseEmbed(Player player, CommandContext ctx) {
+    private EmbedBuilder getBaseEmbed(Player player, CommandContext ctx) {
         return new EmbedBuilder()
                 .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
                 .setThumbnail(player.getAvatar())
@@ -49,7 +49,7 @@ public class PlayerInfo implements ICommand {
                 .setTimestamp(new Date().toInstant());
     }
 
-    private static MessageEmbed buildMenuEmbed(Player player, CommandContext ctx) {
+    private MessageEmbed buildMenuEmbed(Player player, CommandContext ctx) {
 
         return getBaseEmbed(player, ctx)
                 .setTitle("Overbuff Information", player.getOverbuffLink())
@@ -59,7 +59,7 @@ public class PlayerInfo implements ICommand {
                 .build();
     }
 
-    private static MessageEmbed buildCompetitiveEmbed(Player player, CommandContext ctx) {
+    private MessageEmbed buildCompetitiveEmbed(Player player, CommandContext ctx) {
 
         String tankValue = String.valueOf(player.getCompetitive().getTank().getSkillRating());
         String damageValue = String.valueOf(player.getCompetitive().getDamage().getSkillRating());
@@ -77,7 +77,7 @@ public class PlayerInfo implements ICommand {
                 .build();
     }
 
-    private static MessageEmbed buildEndorsementEmbed(Player player, CommandContext ctx) {
+    private MessageEmbed buildEndorsementEmbed(Player player, CommandContext ctx) {
 
         String sportsmanship = String.valueOf((int) (player.getEndorsement().getDistribution().getSportsmanship() * 100));
         String shotcaller = String.valueOf((int) (player.getEndorsement().getDistribution().getShotcaller() * 100));
