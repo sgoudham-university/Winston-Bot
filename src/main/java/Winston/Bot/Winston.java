@@ -28,15 +28,14 @@ public class Winston {
     }
 
     public void start(String token) throws LoginException {
-        Pages.activate(
-                JDABuilder.createDefault(token)
-                        .setActivity(Activity.playing("Overwatch"))
-                        .addEventListeners(new Listener(),
-                                new ReadyEvent(),
-                                new GuildMessageReceivedEvent(),
-                                new MessageReceivedEvent())
-                        .enableIntents(Arrays.asList(gatewayIntents))
-                        .build()
+        Pages.activate(JDABuilder.createDefault(token)
+                .setActivity(Activity.playing("Overwatch"))
+                .addEventListeners(new Listener(),
+                        new ReadyEvent(),
+                        new GuildMessageReceivedEvent(),
+                        new MessageReceivedEvent())
+                .enableIntents(Arrays.asList(gatewayIntents))
+                .build()
         );
     }
 
