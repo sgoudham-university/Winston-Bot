@@ -48,39 +48,34 @@ public class CompInfo implements ICommand {
     }
 
     private MessageEmbed buildTankEmbed(Player player, CommandContext ctx) {
-        String tankValue = String.valueOf(player.getCompetitive().getTank().getSkillRating());
-        String tankSR = !tankValue.equals("null") ? tankValue : "**N/A**";
-
         return getBaseEmbed(player, ctx)
                 .setThumbnail(player.getCompetitive().getTank().getRank())
                 .setTitle("Tank Information")
-                .addField("Tank SR", tankSR, true)
+                .addField("Tank SR", getRankValue(String.valueOf(player.getCompetitive().getTank().getSkillRating())), true)
                 .setColor(Color.MAGENTA)
                 .build();
     }
 
     private MessageEmbed buildDamageEmbed(Player player, CommandContext ctx) {
-        String damageValue = String.valueOf(player.getCompetitive().getDamage().getSkillRating());
-        String damageSR = !damageValue.equals("null") ? damageValue : "**N/A**";
-
         return getBaseEmbed(player, ctx)
                 .setThumbnail(player.getCompetitive().getDamage().getRank())
                 .setTitle("Damage Information")
-                .addField("Damage SR", damageSR, true)
+                .addField("Damage SR", getRankValue(String.valueOf(player.getCompetitive().getDamage().getSkillRating())), true)
                 .setColor(Color.ORANGE)
                 .build();
     }
 
     private MessageEmbed buildSupportEmbed(Player player, CommandContext ctx) {
-        String supportValue = String.valueOf(player.getCompetitive().getSupport().getSkillRating());
-        String supportSR = !supportValue.equals("null") ? supportValue : "**N/A**";
-
         return getBaseEmbed(player, ctx)
                 .setThumbnail(player.getCompetitive().getSupport().getRank())
                 .setTitle("Support Information")
-                .addField("Support SR", supportSR, true)
+                .addField("Support SR", getRankValue(String.valueOf(player.getCompetitive().getSupport().getSkillRating())), true)
                 .setColor(Color.CYAN)
                 .build();
+    }
+
+    private String getRankValue(String skillRating) {
+        return !skillRating.equals("null") ? skillRating : "**N/A**";
     }
 
     @Override
