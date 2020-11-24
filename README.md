@@ -32,14 +32,14 @@ Listed below are the tasks that I will set out to complete:
 #### Commands
 
 - [x] Set bot activity to "Playing Overwatch"
-- [x] Display nicely formatted embeds that include Player Information
+- [x] Display nicely formatted embeds that include Player Information (Includes Competitive and Achievements)
 - [ ] Display nicely formatted embeds for Overwatch Hero Information
 - [ ] Implement a help command that lists all the commands
 
 #### Testing
 
 - [x] Use JUnit to successfully test
-- [x] Use Mockito to successfully Mock and test
+- [x] Use Mockito to successfully Mock Resources and test
 
 #### Frameworks / Libraries
 
@@ -52,7 +52,7 @@ Listed below are the tasks that I will set out to complete:
 
 - [x] Host bot on Virtual Private Server (Running Ubuntu 20.04) for 24/7 uptime
 - [ ] Integrate Kotlin with Java
-- [ ] Make new Custom Error Class to handle Exceptions
+- [x] Make new CustomException Classes to handle Exceptions
 - [x] Configuration file to store Environment variables
 - [ ] Include Asynchronous Programming Methods for API retrieval
 
