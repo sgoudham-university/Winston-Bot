@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "skillRating",
@@ -36,4 +38,29 @@ public class Damage {
         this.rank = rank;
     }
 
+    @Override
+    public String toString() {
+        return "Damage{" +
+                "skillRating=" + skillRating +
+                ", rank='" + rank + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Damage damage = (Damage) o;
+        return Objects.equals(skillRating, damage.skillRating) &&
+                Objects.equals(rank, damage.rank);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(skillRating, rank);
+    }
 }

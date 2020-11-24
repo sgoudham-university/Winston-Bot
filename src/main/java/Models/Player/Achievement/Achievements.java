@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.List;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -93,4 +94,37 @@ public class Achievements {
         this.special = special;
     }
 
+    @Override
+    public String toString() {
+        return "Achievements{" +
+                "general=" + general +
+                ", damage=" + damage +
+                ", tank=" + tank +
+                ", support=" + support +
+                ", maps=" + maps +
+                ", special=" + special +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Achievements that = (Achievements) o;
+        return Objects.equals(general, that.general) &&
+                Objects.equals(damage, that.damage) &&
+                Objects.equals(tank, that.tank) &&
+                Objects.equals(support, that.support) &&
+                Objects.equals(maps, that.maps) &&
+                Objects.equals(special, that.special);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(general, damage, tank, support, maps, special);
+    }
 }

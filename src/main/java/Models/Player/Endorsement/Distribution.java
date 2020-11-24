@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "shotcaller",
@@ -49,4 +51,31 @@ public class Distribution {
         this.sportsmanship = sportsmanship;
     }
 
+    @Override
+    public String toString() {
+        return "Distribution{" +
+                "shotcaller=" + shotcaller +
+                ", teammate=" + teammate +
+                ", sportsmanship=" + sportsmanship +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Distribution that = (Distribution) o;
+        return Objects.equals(shotcaller, that.shotcaller) &&
+                Objects.equals(teammate, that.teammate) &&
+                Objects.equals(sportsmanship, that.sportsmanship);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shotcaller, teammate, sportsmanship);
+    }
 }

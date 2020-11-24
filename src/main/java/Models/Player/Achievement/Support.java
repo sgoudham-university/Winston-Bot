@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "title",
@@ -50,4 +52,31 @@ public class Support {
         this.image = image;
     }
 
+    @Override
+    public String toString() {
+        return "Support{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Support support = (Support) o;
+        return Objects.equals(title, support.title) &&
+                Objects.equals(description, support.description) &&
+                Objects.equals(image, support.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description, image);
+    }
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "level",
@@ -49,4 +51,31 @@ public class Endorsements {
         this.distribution = distribution;
     }
 
+    @Override
+    public String toString() {
+        return "Endorsements{" +
+                "level=" + level +
+                ", frame='" + frame + '\'' +
+                ", distribution=" + distribution +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Endorsements that = (Endorsements) o;
+        return Objects.equals(level, that.level) &&
+                Objects.equals(frame, that.frame) &&
+                Objects.equals(distribution, that.distribution);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(level, frame, distribution);
+    }
 }

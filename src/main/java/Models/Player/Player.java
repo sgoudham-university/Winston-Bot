@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "username",
@@ -113,4 +115,41 @@ public class Player {
         this.privacy = privacy;
     }
 
+    @Override
+    public String toString() {
+        return "Player{" +
+                "username='" + username + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", level=" + level +
+                ", competitive=" + competitive +
+                ", endorsements=" + endorsements +
+                ", privacy='" + privacy + '\'' +
+                ", overbuffLink='" + overbuffLink + '\'' +
+                ", achievements=" + achievements +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Player player = (Player) o;
+        return Objects.equals(username, player.username) &&
+                Objects.equals(avatar, player.avatar) &&
+                Objects.equals(level, player.level) &&
+                Objects.equals(competitive, player.competitive) &&
+                Objects.equals(endorsements, player.endorsements) &&
+                Objects.equals(privacy, player.privacy) &&
+                Objects.equals(overbuffLink, player.overbuffLink) &&
+                Objects.equals(achievements, player.achievements);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, avatar, level, competitive, endorsements, privacy, overbuffLink, achievements);
+    }
 }
