@@ -6,7 +6,7 @@
 
     <groupId>org.winston</groupId>
     <artifactId>Winston-Bot</artifactId>
-    <version>v0.1.0</version>
+    <version>v0.1.1</version>
 
     <build>
         <plugins>
@@ -142,16 +142,9 @@
             <version>${kotlin.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.jagrosh</groupId>
-            <artifactId>jda-utilities-commons</artifactId>
-            <version>3.0.5</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.jagrosh</groupId>
-            <artifactId>jda-utilities-menu</artifactId>
-            <version>3.0.5</version>
-            <scope>compile</scope>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.9</version>
         </dependency>
     </dependencies>
 
