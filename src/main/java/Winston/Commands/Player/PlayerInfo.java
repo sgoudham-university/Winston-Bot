@@ -10,6 +10,7 @@ import com.github.ygimenez.model.Page;
 import com.github.ygimenez.type.PageType;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import org.apache.commons.text.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +43,7 @@ public class PlayerInfo implements ICommand {
 
     private EmbedBuilder getBaseEmbed(Player player, CommandContext ctx) {
         return new EmbedBuilder()
-                .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue())
+                .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue() + " | Profile: " + WordUtils.capitalize(player.getPrivacy()))
                 .setThumbnail(player.getAvatar())
                 .setColor(Color.BLUE)
                 .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
