@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "realName",
@@ -76,4 +78,35 @@ public class Biography {
         this.affiliation = affiliation;
     }
 
+    @Override
+    public String toString() {
+        return "Biography{" +
+                "realName='" + realName + '\'' +
+                ", age='" + age + '\'' +
+                ", occupation='" + occupation + '\'' +
+                ", baseOfOperations='" + baseOfOperations + '\'' +
+                ", affiliation='" + affiliation + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Biography biography = (Biography) o;
+        return Objects.equals(realName, biography.realName) &&
+                Objects.equals(age, biography.age) &&
+                Objects.equals(occupation, biography.occupation) &&
+                Objects.equals(baseOfOperations, biography.baseOfOperations) &&
+                Objects.equals(affiliation, biography.affiliation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(realName, age, occupation, baseOfOperations, affiliation);
+    }
 }

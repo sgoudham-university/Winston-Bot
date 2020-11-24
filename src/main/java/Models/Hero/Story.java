@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "biography",
@@ -50,4 +52,31 @@ public class Story {
         this.backStory = backStory;
     }
 
+    @Override
+    public String toString() {
+        return "Story{" +
+                "biography=" + biography +
+                ", catchPhrase='" + catchPhrase + '\'' +
+                ", backStory='" + backStory + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Story story = (Story) o;
+        return Objects.equals(biography, story.biography) &&
+                Objects.equals(catchPhrase, story.catchPhrase) &&
+                Objects.equals(backStory, story.backStory);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(biography, catchPhrase, backStory);
+    }
 }

@@ -53,9 +53,22 @@ public class Ability {
     }
 
     @Override
+    public String toString() {
+        return "Ability{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", icon='" + icon + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Ability ability = (Ability) o;
         return Objects.equals(name, ability.name) &&
                 Objects.equals(description, ability.description) &&
@@ -66,4 +79,6 @@ public class Ability {
     public int hashCode() {
         return Objects.hash(name, description, icon);
     }
+
+
 }

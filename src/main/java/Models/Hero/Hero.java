@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.util.List;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -102,4 +103,39 @@ public class Hero {
         this.story = story;
     }
 
+    @Override
+    public String toString() {
+        return "Hero{" +
+                "name='" + name + '\'' +
+                ", role='" + role + '\'' +
+                ", difficulty=" + difficulty +
+                ", description='" + description + '\'' +
+                ", abilities=" + abilities +
+                ", story=" + story +
+                ", portraitUrl='" + portraitUrl + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Hero hero = (Hero) o;
+        return Objects.equals(name, hero.name) &&
+                Objects.equals(role, hero.role) &&
+                Objects.equals(difficulty, hero.difficulty) &&
+                Objects.equals(description, hero.description) &&
+                Objects.equals(abilities, hero.abilities) &&
+                Objects.equals(story, hero.story) &&
+                Objects.equals(portraitUrl, hero.portraitUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, role, difficulty, description, abilities, story, portraitUrl);
+    }
 }
