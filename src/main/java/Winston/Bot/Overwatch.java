@@ -67,29 +67,34 @@ public class Overwatch {
         return player;
     }
 
-    private static String[] determinePlatform(List<String> args, String requestType) {
+    private static String[] determinePlatform(List<String> args, String requestType) throws PlayerNotFoundException {
         String url;
         String link;
 
-        String platform = args.get(0);
-        if (platform.equalsIgnoreCase("pc")) {
-            String[] battlenet = args.get(2).split("#");
-            url = "https://overwatch-api.tekrop.fr/player/"
-                    + battlenet[0] + "-" + battlenet[1]
-                    + requestType
-                    + "platform=" + platform
-                    + "&region=" + args.get(1);
-            link = "https://www.overbuff.com/players/"
-                    + platform + "/"
-                    + battlenet[0] + "-" + battlenet[1];
-        } else {
-            String user = args.get(1);
-            url = "https://overwatch-api.tekrop.fr/player/"
-                    + user
-                    + requestType
-                    + "platform=" + platform;
-            link = "https://www.overbuff.com/players/" + platform + "/" + user;
+        try {
+            String platform = args.get(0);
+            if (platform.equalsIgnoreCase("pc")) {
+                String[] battlenet = args.get(2).split("#");
+                url = "https://overwatch-api.tekrop.fr/player/"
+                        + battlenet[0] + "-" + battlenet[1]
+                        + requestType
+                        + "platform=" + platform
+                        + "&region=" + args.get(1);
+                link = "https://www.overbuff.com/players/"
+                        + platform + "/"
+                        + battlenet[0] + "-" + battlenet[1];
+            } else {
+                String user = args.get(1);
+                url = "https://overwatch-api.tekrop.fr/player/"
+                        + user
+                        + requestType
+                        + "platform=" + platform;
+                link = "https://www.overbuff.com/players/" + platform + "/" + user;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            throw new PlayerNotFoundException("Arguments are Invalid / Wrong Order!");
         }
+
 
         return new String[]{url, link};
     }
