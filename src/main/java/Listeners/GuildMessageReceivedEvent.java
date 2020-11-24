@@ -16,6 +16,7 @@ public class GuildMessageReceivedEvent extends ListenerAdapter {
             return;
         }
 
+
         if (event.getMessage().getContentRaw().startsWith(Config.get("PREFIX"))) {
             try {
                 commandManager.handle(event);
