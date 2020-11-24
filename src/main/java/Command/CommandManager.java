@@ -1,8 +1,9 @@
 package Command;
 
 import Winston.Bot.Config;
+import Winston.Commands.Hero.HeroInfo;
 import Winston.Commands.Ping;
-import Winston.Commands.Player.Achievements;
+import Winston.Commands.Player.AchievementsInfo;
 import Winston.Commands.Player.CompInfo;
 import Winston.Commands.Player.PlayerInfo;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -17,14 +18,16 @@ public class CommandManager {
     private final List<ICommand> allCommands = new ArrayList<>();
 
     public CommandManager() {
-        addCommand(new Ping(), new PlayerInfo(), new CompInfo(), new Achievements());
+        addCommand(new Ping(), new PlayerInfo(), new CompInfo(), new AchievementsInfo(), new HeroInfo());
     }
 
     private void addCommand(ICommand... commands) {
 
         for (ICommand cmd : commands) {
             boolean nameFound = allCommands.stream().anyMatch(it -> it.getName().equalsIgnoreCase(cmd.getName()));
-            if (nameFound) throw new IllegalArgumentException("Command Already Exists!");
+            if (nameFound) {
+                throw new IllegalArgumentException("Command Already Exists!");
+            }
             allCommands.add(cmd);
         }
 
@@ -35,8 +38,11 @@ public class CommandManager {
     private ICommand getCommand(String search) {
         String lowerSearch = search.toLowerCase();
 
-        for (ICommand command : allCommands)
-            if (command.getName().equals(lowerSearch) || command.getAliases().contains(lowerSearch)) return command;
+        for (ICommand command : allCommands) {
+            if (command.getName().equals(lowerSearch) || command.getAliases().contains(lowerSearch)) {
+                return command;
+            }
+        }
         return null;
     }
 

@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class Achievements implements ICommand {
+public class AchievementsInfo implements ICommand {
 
     private final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
 
@@ -46,33 +46,39 @@ public class Achievements implements ICommand {
         switch (typeOfAchievement.toLowerCase()) {
             case "general":
                 List<General> generalAchievements = player.getAchievements().getGeneral();
-                for (int i = 0; i < generalAchievements.size(); i++)
+                for (int i = 0; i < generalAchievements.size(); i++) {
                     pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, generalAchievements.get(i), ctx, i, generalAchievements.size())));
+                }
                 break;
             case "damage":
                 List<Damage> damageAchievements = player.getAchievements().getDamage();
-                for (int i = 0; i < damageAchievements.size(); i++)
+                for (int i = 0; i < damageAchievements.size(); i++) {
                     pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, damageAchievements.get(i), ctx, i, damageAchievements.size())));
+                }
                 break;
             case "map":
                 List<Map> mapAchievements = player.getAchievements().getMaps();
-                for (int i = 0; i < mapAchievements.size(); i++)
+                for (int i = 0; i < mapAchievements.size(); i++) {
                     pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, mapAchievements.get(i), ctx, i, mapAchievements.size())));
+                }
                 break;
             case "special":
                 List<Special> specialAchievements = player.getAchievements().getSpecial();
-                for (int i = 0; i < specialAchievements.size(); i++)
+                for (int i = 0; i < specialAchievements.size(); i++) {
                     pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, specialAchievements.get(i), ctx, i, specialAchievements.size())));
+                }
                 break;
             case "support":
                 List<Support> supportAchievements = player.getAchievements().getSupport();
-                for (int i = 0; i < supportAchievements.size(); i++)
+                for (int i = 0; i < supportAchievements.size(); i++) {
                     pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, supportAchievements.get(i), ctx, i, supportAchievements.size())));
+                }
                 break;
             case "tank":
                 List<Tank> tankAchievements = player.getAchievements().getTank();
-                for (int i = 0; i < tankAchievements.size(); i++)
+                for (int i = 0; i < tankAchievements.size(); i++) {
                     pages.add(new Page(PageType.EMBED, getAchievementEmbed(player, tankAchievements.get(i), ctx, i, tankAchievements.size())));
+                }
                 break;
             default:
                 throw new IllegalStateException("Unexpected Achievement: " + typeOfAchievement.toLowerCase());
