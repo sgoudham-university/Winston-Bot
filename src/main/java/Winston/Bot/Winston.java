@@ -11,11 +11,13 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Winston {
     private JDA jda;
     private GatewayIntent[] gatewayIntents;
+    private final Overwatch overwatch = new Overwatch();
 
     public Winston() {
         gatewayIntents = new GatewayIntent[]{
@@ -25,6 +27,10 @@ public class Winston {
                 GatewayIntent.GUILD_VOICE_STATES,
                 GatewayIntent.GUILD_EMOJIS,
                 GatewayIntent.GUILD_MESSAGE_REACTIONS};
+    }
+
+    public void startupCache() throws IOException {
+        overwatch.startup();
     }
 
     public void start(String token) throws LoginException {
