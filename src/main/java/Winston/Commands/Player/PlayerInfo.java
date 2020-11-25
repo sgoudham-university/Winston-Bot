@@ -45,7 +45,6 @@ public class PlayerInfo implements ICommand {
         return new EmbedBuilder()
                 .setAuthor(player.getUsername() + " | Level: " + player.getLevel().getValue() + " | Profile: " + WordUtils.capitalize(player.getPrivacy()))
                 .setThumbnail(player.getAvatar())
-                .setColor(Color.BLUE)
                 .setFooter("Powered By Swagger", ctx.getSelfUser().getAvatarUrl())
                 .setTimestamp(new Date().toInstant());
     }
@@ -57,6 +56,7 @@ public class PlayerInfo implements ICommand {
                 .addField(":one:", "**Endorsements**", false)
                 .addField(":two:", "**Competitive**", false)
                 .addField(":three:", "**Basic Information**", false)
+                .setColor(Color.BLUE)
                 .build();
     }
 
@@ -75,6 +75,7 @@ public class PlayerInfo implements ICommand {
                 .addField("Tank SR", tankSR, true)
                 .addField("Damage SR", damageSR, true)
                 .addField("Support SR", supportSR, true)
+                .setColor(Color.GREEN)
                 .build();
     }
 
@@ -89,6 +90,7 @@ public class PlayerInfo implements ICommand {
                 .addField("Sportsmanship", sportsmanship, true)
                 .addField("Shotcaller", shotcaller, true)
                 .addField("Good Teammate", teammate, true)
+                .setColor(Color.PINK)
                 .build();
     }
 
