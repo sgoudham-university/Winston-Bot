@@ -263,32 +263,32 @@
       {
         "name": "Tri-Shot",
         "description": "Echo fires 3 shots at once, in a triangle pattern.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/echo/ability-tri-shot/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/8fc9f68f9cdcd7c90ce902d1882bca2e783609f7f0e62c8ee00996eec4026063.png"
       },
       {
         "name": "Sticky Bombs",
         "description": "Echo fires a volley of sticky bombs that detonates after a delay.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/echo/ability-sticky-bombs/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/dcaa626e367b80b5bcd2425e26e0075b5343990785bc96e1705325904f73fe96.png"
       },
       {
         "name": "Flight",
         "description": "Echo surges forward quickly, then can fly freely.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/echo/ability-flight/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/711f211c988ff1fafe99276bddefa3a861789e4b27859260e8ad87df5b879337.png"
       },
       {
         "name": "Focusing Beam",
         "description": "Echo channels a beam for a few seconds, dealing very high damage to targets with less than half health.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/echo/ability-focusing-beam/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/6552feeb85a32ae7131df50f61a9c0fa24bf347bf007e208a356a940561129ae.png"
       },
       {
         "name": "Glide",
         "description": "Echo can glide while falling.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/echo/ability-glide/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/e90772df1f7e55d4ea6e639ce909773ae2e28172d06afd8afa00e85bbef0a20d.png"
       },
       {
         "name": "Duplicate",
         "description": "Echo duplicates a targeted enemy hero and gains use of their abilities.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/echo/ability-duplicate/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/457d6ebcb2b92d1e7f7a7174b426903879e131422196825589adbc5e5d9f7efb.png"
       }
     ],
     "story": {
