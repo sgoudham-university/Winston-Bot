@@ -18,8 +18,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,8 +106,9 @@ public class Overwatch {
 
     void startup() throws IOException {
         String sep = File.separator;
-        Path path1 = Paths.get(sep + "src" + sep + "main" + sep + "resources" + sep + "allHeroes.json");
-        allHeroes = objectMapper.readValue(new File(String.valueOf(path1)), new TypeReference<>() {
+
+        //  Path path1 = Paths.get(sep + "src" + sep + "main" + sep + "resources" + sep + "allHeroes.json");
+        allHeroes = objectMapper.readValue(new File(String.valueOf(getClass().getClassLoader().getResource("allHeroes.json"))), new TypeReference<>() {
         });
         LOGGER.info("All Heroes Read Into Cache");
 
