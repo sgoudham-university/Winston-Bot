@@ -108,7 +108,7 @@ public class Overwatch {
         String sep = File.separator;
 
         //  Path path1 = Paths.get(sep + "src" + sep + "main" + sep + "resources" + sep + "allHeroes.json");
-        allHeroes = objectMapper.readValue(new File(String.valueOf(getClass().getClassLoader().getResource("allHeroes.json"))), new TypeReference<>() {
+        allHeroes = objectMapper.readValue(getClass().getClassLoader().getResource("allHeroes.json"), new TypeReference<>() {
         });
         LOGGER.info("All Heroes Read Into Cache");
 
