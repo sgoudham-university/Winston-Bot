@@ -33,7 +33,7 @@ Listed below are the tasks that I will set out to complete:
 
 - [x] Set bot activity to "Playing Overwatch"
 - [x] Display nicely formatted embeds that include Player Information (Includes Competitive and Achievements)
-- [ ] Display nicely formatted embeds for Overwatch Hero Information
+- [x] Display nicely formatted embeds for Overwatch Hero Information
 - [ ] Implement a help command that lists all the commands
 
 #### Testing
