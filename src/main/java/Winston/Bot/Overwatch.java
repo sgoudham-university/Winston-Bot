@@ -16,7 +16,6 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -105,9 +104,7 @@ public class Overwatch {
     }
 
     void startup() throws IOException {
-        String sep = File.separator;
 
-        //  Path path1 = Paths.get(sep + "src" + sep + "main" + sep + "resources" + sep + "allHeroes.json");
         allHeroes = objectMapper.readValue(getClass().getClassLoader().getResource("allHeroes.json"), new TypeReference<>() {
         });
         LOGGER.info("All Heroes Read Into Cache");
