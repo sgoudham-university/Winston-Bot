@@ -6,7 +6,7 @@
 
     <groupId>org.winston</groupId>
     <artifactId>Winston-Bot</artifactId>
-    <version>v0.1.1</version>
+    <version>v0.2.0</version>
 
     <build>
         <plugins>
