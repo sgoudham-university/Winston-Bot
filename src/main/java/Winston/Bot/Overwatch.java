@@ -105,7 +105,7 @@ public class Overwatch {
     }
 
     void startup() throws IOException {
-        allHeroes = objectMapper.readValue(new File("C:\\Users\\sgoud\\University Work\\Winston-Bot\\src\\main\\resources\\allHeroes.json"), new TypeReference<>() {
+        allHeroes = objectMapper.readValue(new File("src\\main\\resources\\allHeroes.json"), new TypeReference<>() {
         });
         LOGGER.info("All Heroes Read Into Cache");
 
@@ -114,5 +114,5 @@ public class Overwatch {
     public static Map<String, Hero> getAllHeroes() {
         return allHeroes;
     }
-    
+
 }
