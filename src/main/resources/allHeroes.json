@@ -438,37 +438,37 @@
       {
         "name": "Fusion Cannons",
         "description": "D.Va's mech is equipped with twin short-range rotating cannons. They lay down continuous, high-damage fire without needing to reload, but slow D.Va’s movement while they’re active.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/d.va/ability-fusion-cannons/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/dva/ability-fusion-cannons/icon-ability.png"
       },
       {
         "name": "Light Gun",
         "description": "While outside of her mech, D.Va can continue the fight with a mid-range automatic blaster.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/d.va/ability-light-gun/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/dva/ability-light-gun/icon-ability.png"
       },
       {
         "name": "Boosters",
         "description": "D.Va’s mech launches into the air, her momentum carrying her forward. She can turn and change directions or barrel through her enemies, knocking them back.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/d.va/ability-boosters/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/dva/ability-boosters/icon-ability.png"
       },
       {
         "name": "Defense Matrix",
         "description": "D.Va can maintain this forward-facing targeting array for a short period of time; while active, it'll stop incoming projectiles.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/d.va/ability-defense-matrix/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/dva/ability-defense-matrix/icon-ability.png"
       },
       {
         "name": "Micro Missiles",
         "description": "D.Va launches a volley of explosive rockets. ",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/d.va/ability-micro-missiles/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/dva/ability-micro-missiles/icon-ability.png"
       },
       {
         "name": "Self-Destruct",
         "description": "D.Va ejects from her mech and sets its reactor to explode, dealing massive damage to nearby opponents.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/d.va/ability-self-destruct/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/dva/ability-self-destruct/icon-ability.png"
       },
       {
         "name": "Call Mech",
         "description": "If her armored battle suit is destroyed, D.Va can call down a fresh mech and return to the fray.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/d.va/ability-call-mech/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/dva/ability-call-mech/icon-ability.png"
       }
     ],
     "story": {
@@ -482,7 +482,7 @@
       "catchPhrase": "I play to win.",
       "backStory": "D.Va is a former professional gamer who now uses her skills to pilot a state-of-the-art mech in defense of her homeland. Twenty years ago, South Korea was attacked by a colossal omnic monstrosity that rose from the depths of the East China Sea. The massive, lumbering construct caused catastrophic damage to coastal cities before it was driven back beneath the waves. In response, the South Korean government developed a mechanized armored drone unit, called MEKA, to protect urban environments in future engagements with the omnic threat. The government's fears proved to be well founded, as a disturbing pattern of attacks emerged. Every few years, the monstrosity would rise from the sea to assault South Korea and its neighbors. The omnic learned from these encounters, often reconfiguring itself in a different form and appearing with new weapons and capabilities. Each incident ended in a stalemate, with the monstrosity defeated but not destroyed. As the omnic continued to adapt, it eventually disrupted MEKA's drone-control networks, forcing the military to place pilots in the mechs. Scrambling to find suitable candidates, the government turned to the country's professional gamers, who possessed the necessary reflexes and instincts to operate the mechs' advanced weapons systems. Top stars were drafted, including reigning world champion Hana Song, also known as \"D.Va.\" Famous for her elite skills, D.Va was a fierce competitor who played to win at all costs, and she had a well-earned reputation for showing no mercy to her opponents. Seeing her new mission as a game, D.Va fearlessly charges into battle alongside the rest of her MEKA unit, ready to spring to her nation's defense at a moment's notice. Recently, she has begun to stream combat operations to her adoring fans, and her growing following has turned her into a global icon."
     },
-    "portraitUrl": "https://d1u1mce87gyfbn.cloudfront.net/hero/d.va/hero-select-portrait.png"
+    "portraitUrl": "https://d1u1mce87gyfbn.cloudfront.net/hero/dva/hero-select-portrait.png"
   },
   "mei": {
     "name": "Mei",
