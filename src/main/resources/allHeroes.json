@@ -88,27 +88,27 @@
       {
         "name": "Heavy Pulse Rifle",
         "description": "Soldier: 76’s rifle remains particularly steady while unloading fully-automatic pulse fire.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier:-76/ability-heavy-pulse-rifle/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier-76/ability-heavy-pulse-rifle/icon-ability.png"
       },
       {
         "name": "Helix Rockets",
         "description": "Tiny rockets spiral out of Soldier: 76’s Pulse Rifle in a single burst. The rockets’ explosion damages enemies in a small radius.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier:-76/ability-helix-rockets/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier-76/ability-helix-rockets/icon-ability.png"
       },
       {
         "name": "Sprint",
         "description": "Whether he needs to evade a firefight or get back into one, Soldier: 76 can rush ahead in a burst of speed. His sprint ends if he takes an action other than charging forward.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier:-76/ability-sprint/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier-76/ability-sprint/icon-ability.png"
       },
       {
         "name": "Biotic Field",
         "description": "Soldier: 76 plants a biotic emitter on the ground. Its energy projection restores health to 76 and any of his squadmates within the field.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier:-76/ability-biotic-field/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier-76/ability-biotic-field/icon-ability.png"
       },
       {
         "name": "Tactical Visor",
         "description": "Soldier: 76’s pinpoint targeting visor “locks” his aim on the threat closest to his crosshairs. If an enemy leaves his line of sight, Soldier: 76 can quickly switch to another target.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier:-76/ability-tactical-visor/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier-76/ability-tactical-visor/icon-ability.png"
       }
     ],
     "story": {
@@ -122,7 +122,7 @@
       "catchPhrase": "We're all soldiers now.",
       "backStory": "Currently the target of an international manhunt, the vigilante known as Soldier: 76 wages a personal war to expose the truth behind Overwatch's collapse. Soldier: 76 revealed himself in a string of attacks that crisscrossed the globe, targeting financial institutions, shadowy corporations, and secure Overwatch facilities. Though to the outside world his motives are inscrutable, there are those who claim that he is a former Overwatch agent, determined to shed light on the conspiracy that brought down the organization. While his true identity remains a mystery, he is believed to have been trained as a member of the American \"soldier enhancement program.\" He possesses physical capabilities exceeding those of a conventional soldier's, as well as other augmentations that make him a peerless combatant. In addition, he utilizes a cutting-edge arsenal, much of it stolen in raids on Overwatch installations. Unrelenting in his search to find those responsible for Overwatch's fall, Soldier: 76 will stop at nothing to bring them to justice."
     },
-    "portraitUrl": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier:-76/hero-select-portrait.png"
+    "portraitUrl": "https://d1u1mce87gyfbn.cloudfront.net/hero/soldier-76/hero-select-portrait.png"
   },
   "mccree": {
     "name": "McCree",
@@ -778,12 +778,12 @@
       {
         "name": "Configuration: Recon",
         "description": "In Recon mode, Bastion is fully mobile, outfitted with a submachine gun that fires steady bursts of bullets at medium range.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/bastion/ability-configuration:-recon/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/bastion/ability-configuration-recon/icon-ability.png"
       },
       {
         "name": "Configuration: Sentry",
         "description": "In Sentry mode, Bastion is a stationary powerhouse equipped with a gatling gun capable of unleashing a hail of bullets. The gun's aim can be \"walked\" across multiple targets, dealing devastating damage at short to medium range.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/bastion/ability-configuration:-sentry/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/bastion/ability-configuration-sentry/icon-ability.png"
       },
       {
         "name": "Reconfigure",
@@ -798,7 +798,7 @@
       {
         "name": "Configuration: Tank",
         "description": "In Tank mode, Bastion extends wheeled treads and a powerful long-range cannon. The cannon’s explosive shells demolish targets in a wide blast radius, but Bastion can only remain in this mode for a limited time.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/bastion/ability-configuration:-tank/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/bastion/ability-configuration-tank/icon-ability.png"
       }
     ],
     "story": {
