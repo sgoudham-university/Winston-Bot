@@ -23,7 +23,7 @@
       {
         "name": "B.O.B.",
         "description": "Ashe summons her trusted omnic sidekick, Bob, who charges forward and knocks enemies into the air, then lays down suppressing fire with his arm cannons.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/ashe/ability-b.o.b./icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/ashe/ability-bob/icon-ability.png"
       }
     ],
     "story": {
@@ -173,22 +173,22 @@
       {
         "name": "Sonic Amplifier",
         "description": "Lúcio can hit his enemies with sonic projectiles or knock them back with a blast of sound.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/lúcio/ability-sonic-amplifier/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/lucio/ability-sonic-amplifier/icon-ability.png"
       },
       {
         "name": "Crossfade",
         "description": "Lúcio continuously energizes himself—and nearby teammates—with music. He can switch between two songs: one amplifies movement speed, while the other regenerates health.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/lúcio/ability-crossfade/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/lucio/ability-crossfade/icon-ability.png"
       },
       {
         "name": "Amp It Up",
         "description": "Lúcio increases the volume on his speakers, boosting the effects of his songs.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/lúcio/ability-amp-it-up/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/lucio/ability-amp-it-up/icon-ability.png"
       },
       {
         "name": "Sound Barrier",
         "description": "Protective  waves radiate  out from Lúcio’s Sonic Amplifier, briefly providing him and nearby allies with personal shields.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/lúcio/ability-sound-barrier/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/lucio/ability-sound-barrier/icon-ability.png"
       }
     ],
     "story": {
@@ -202,7 +202,7 @@
       "catchPhrase": "Come on, let’s bring it together!",
       "backStory": "Lúcio is an international celebrity who inspires social change through his music and actions. Lúcio Correia dos Santos grew up in Rio de Janeiro, in a poor and crowded favela that was hit hard by the financial upheaval following the Omnic Crisis. As Brazil began the long process of recovery, he wanted to find a way to lift the spirits of those around him. He found his answer in music and its power to bring people together and even help them forget their troubles, if only for a short time. He performed on street corners, in block parties, and as he got older, at a string of legendary underground shows. But Lúcio's close-knit community was thrown into chaos when the multinational Vishkar Corporation secured a contract to redevelop large tracts of the city. Lúcio and his neighbors had been told that the development would improve their lives. However, that promise never became a reality. Vishkar imposed controls on the residents in the name of building a more orderly society: enforcing curfews, cracking down on what the company perceived as lawless behavior, and exploiting the populace as a cheap labor force. Lúcio wouldn't stand for it. He stole Vishkar sonic technology that had been used to suppress the people, and he converted it into a tool to rally them to action. In a popular uprising, they drove Vishkar out of their neighborhoods. Lúcio's leadership made him a star overnight and a symbol for positive social change. His music skyrocketed in popularity. Whereas he had once performed locally, he was now filling arenas across the world. With his newfound fame, Lúcio realizes that he has an opportunity to make a difference and change the world for the better."
     },
-    "portraitUrl": "https://d1u1mce87gyfbn.cloudfront.net/hero/lúcio/hero-select-portrait.png"
+    "portraitUrl": "https://d1u1mce87gyfbn.cloudfront.net/hero/lucio/hero-select-portrait.png"
   },
   "brigitte": {
     "name": "Brigitte",
@@ -733,27 +733,27 @@
       {
         "name": "Rivet Gun",
         "description": "Torbjörn fires rivets at long range or ejects molten metal from his gun in a short, close-range burst.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjörn/ability-rivet-gun/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjorn/ability-rivet-gun/icon-ability.png"
       },
       {
         "name": "Forge Hammer",
         "description": "This multipurpose hammer repairs turrets and, in a pinch, can also be used as a weapon.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjörn/ability-forge-hammer/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjorn/ability-forge-hammer/icon-ability.png"
       },
       {
         "name": "Deploy Turret",
         "description": "Torbjörn deploys a self-building turret which automatically tracks and attacks enemies.  ",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjörn/ability-deploy-turret/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjorn/ability-deploy-turret/icon-ability.png"
       },
       {
         "name": "Overload",
         "description": "Torbjörn gains additional armor as well as improved attack, movement, and reload speed for a brief period.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjörn/ability-overload/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjorn/ability-overload/icon-ability.png"
       },
       {
         "name": "Molten Core",
         "description": "Torbjörn creates pools of molten slag that deal massive, sustained damage (plus bonus damage to armor), and can prevent enemies from moving through key locations.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjörn/ability-molten-core/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjorn/ability-molten-core/icon-ability.png"
       }
     ],
     "story": {
@@ -767,7 +767,7 @@
       "catchPhrase": "Build ‘em up, break ‘em down.",
       "backStory": "At its height, Overwatch possessed one of the most advanced armaments on the planet, which could be traced to the workshop of an ingenious engineer named Torbjörn Lindholm. Before the Omnic Crisis, Torbjörn had gained notoriety for designing weapons systems used by countries around the world. However, his belief that technology must serve a better vision for humanity put him at odds with his employers, who desired to control his weapons using networked computer intelligence. Torbjörn had a deep mistrust of sentient robotic intelligence, and while many of his peers wrote this off as paranoia, his worst fears were realized when the robot populations of the world turned against their human creators during the Omnic Crisis. Because of his engineering genius, he was recruited to join the original Overwatch strike team, and his many inventions proved integral to ending the crisis. In the years that followed, Overwatch became an international peacekeeping force, and Torbjörn remained a critical resource for all of its technological needs and signature weapons systems. But in the aftermath of Overwatch's fall, many of Torbjörn's weapons were stolen or stashed away around the world. Feeling responsible for his creations, Torbjörn is determined to stop them from falling into the wrong hands and wreaking havoc on the innocent."
     },
-    "portraitUrl": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjörn/hero-select-portrait.png"
+    "portraitUrl": "https://d1u1mce87gyfbn.cloudfront.net/hero/torbjorn/hero-select-portrait.png"
   },
   "bastion": {
     "name": "Bastion",
@@ -868,7 +868,7 @@
       {
         "name": "Fusion Driver ",
         "description": "Orisa’s automatic projectile cannon delivers sustained damage, but slows her movement while she fires it. ",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/orisa/ability-fusion-driver-/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/orisa/ability-fusion-driver/icon-ability.png"
       },
       {
         "name": "Fortify",
@@ -878,17 +878,17 @@
       {
         "name": "Halt! ",
         "description": "Orisa launches a graviton charge which she can detonate, slowing nearby enemies and pulling them towards the explosion.  ",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/orisa/ability-halt!-/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/orisa/ability-halt/icon-ability.png"
       },
       {
         "name": "Protective Barrier ",
         "description": "Orisa throws out a stationary barrier that can protect her and her allies from enemy fire. ",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/orisa/ability-protective-barrier-/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/orisa/ability-protective-barrier/icon-ability.png"
       },
       {
         "name": "Supercharger ",
         "description": "Orisa deploys a device to increase damage inflicted by allies within her line of sight. ",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/orisa/ability-supercharger-/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/orisa/ability-supercharger/icon-ability.png"
       }
     ],
     "story": {
@@ -1263,7 +1263,7 @@
       {
         "name": "Widow’s Kiss",
         "description": "Widowmaker’s versatile sniper rifle is ideal for scope-aimed shots at distant targets. Should targets close to medium range, the rifle can also be fired in fully-automatic mode.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/widowmaker/ability-widow’s-kiss/icon-ability.png"
+        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/widowmaker/ability-widows-kiss/icon-ability.png"
       },
       {
         "name": "Grappling Hook",
@@ -1303,27 +1303,27 @@
       {
         "name": "Biotic Launcher",
         "description": "Baptiste’s three-round-burst Biotic Launcher rewards accuracy and recoil control with significant damage output. It also doubles as a healing device, lobbing projectiles that heal allies near the point of impact.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/baptiste/ability-biotic-launcher/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/af62dfb3476b6389472188ce9e6e0e296928a5cb3ae87a4ed5133c8330e46f0d.png"
       },
       {
         "name": "Regenerative Burst",
         "description": "Baptiste activates an intense regenerative burst that heals himself and nearby allies over time.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/baptiste/ability-regenerative-burst/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/af62dfb3476b6389472188ce9e6e0e296928a5cb3ae87a4ed5133c8330e46f0d.png"
       },
       {
         "name": "Immortality Field",
         "description": "Baptiste uses a device to create a field that prevents allies from dying. The generator can be destroyed.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/baptiste/ability-immortality-field/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/d66d82bab88fc813080dd15e31629cc3aa7c8b41cfb41d5b962b628dd345e433.png"
       },
       {
         "name": "Amplification Matrix",
         "description": "Baptiste creates a matrix that doubles the damage and healing effects of friendly projectiles that pass through it.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/baptiste/ability-amplification-matrix/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/0a31371b55e4007e67a86f8495949970d20f64b2f0166e78d3fd16217e090a83.png"
       },
       {
         "name": "Exo Boots",
         "description": "By first crouching, Baptiste can jump higher.",
-        "icon": "https://d1u1mce87gyfbn.cloudfront.net/hero/baptiste/ability-exo-boots/icon-ability.png"
+        "icon": "https://d15f34w2p8l1cc.cloudfront.net/overwatch/0d598afba5a03761d617d735d5435323c56108655b5017ddf8c36c4af36b9b73.png"
       }
     ],
     "story": {
