@@ -63,12 +63,23 @@ You can deploy an instance of Winston on your own server with the steps below!
 ```
 git clone https://github.com/sgoudham-university/Winston-Bot.git
 ```
+
+### Method 1
+
 2. **After successfully cloning the repo, run** 
 ```
 mvn package
 ```
 **This will read the `pom.xml` file and build all the dependencies that the bot will need to run on your local machine. 
 This is assuming that you have [maven](https://maven.apache.org/) installed and ready to go on your computer, if not, you can grab it [here](https://maven.apache.org/download.cgi)**
+
+### Method 2
+
+If you have [Intellij]() installed, you can directly read in the `pom.xml` file, and it can resolve all your dependencies for you. 
+2. **After successfully cloning the repo, start-up Intellij and then select the `pom.sml` and then `Import as Project`**
+
+![](https://imgur.com/a/cx0BUsa)
+![](https://imgur.com/EedEKss)
 
 ## Configuration
 
