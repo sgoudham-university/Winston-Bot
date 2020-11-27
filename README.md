@@ -76,10 +76,11 @@ This is assuming that you have [maven](https://maven.apache.org/) installed and 
 ### Method 2
 
 If you have [Intellij]() installed, you can directly read in the `pom.xml` file, and it can resolve all your dependencies for you. 
-2. **After successfully cloning the repo, start-up Intellij and then select the `pom.sml` and then `Import as Project`**
+2. **After successfully cloning the repo, start-up Intellij and then select the `pom.xml` and then `Open as Project`**
 
-![](https://imgur.com/a/cx0BUsa)
-![](https://imgur.com/EedEKss)
+    ![](https://i.imgur.com/ypW6awm.png)
+    
+    ![](https://imgur.com/EedEKss.png)
 
 ## Configuration
 
