@@ -1,4 +1,4 @@
-package Models.Player.Endorsement;
+package models.Player.Endorsement;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

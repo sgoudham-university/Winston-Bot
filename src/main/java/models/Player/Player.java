@@ -1,12 +1,12 @@
-package Models.Player;
+package models.Player;
 
-import Models.Player.Achievement.Achievements;
-import Models.Player.Competitive.Competitive;
-import Models.Player.Endorsement.Endorsements;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import models.Player.Achievement.Achievements;
+import models.Player.Competitive.Competitive;
+import models.Player.Endorsement.Endorsements;
 
 import java.util.Objects;
 

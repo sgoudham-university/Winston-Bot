@@ -1,4 +1,4 @@
-package Models.Player;
+package models.Player;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
