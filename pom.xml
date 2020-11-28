@@ -22,7 +22,7 @@
                         <configuration>
                             <archive>
                                 <manifest>
-                                    <mainClass>Winston.Main</mainClass>
+                                    <mainClass>winston.Main</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
