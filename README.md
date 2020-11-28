@@ -16,6 +16,8 @@ Creating a Discord Bot within [Discord JDA](https://github.com/DV8FromTheWorld/J
     - [Frameworks / Libraries](#Frameworks-/-Libraries)
     - [Misc](#Misc)
 - [Installation](#Installation)
+    - [Method 1](#Method-1)
+    - [Method 2](#Method-2)
 - [Configuration](#Configuration)
 - [API Issues](#API-Issues)
 - [Services / Libraries Used](#services--libraries-used)
@@ -52,16 +54,16 @@ Listed below are the tasks that I will set out to complete:
 
 - [x] Host bot on Virtual Private Server (Running Ubuntu 20.04) for 24/7 uptime
 - [ ] Integrate Kotlin with Java
-- [x] Make new CustomException Classes to handle Exceptions
+- [x] Make new CustomException Classes to handle exceptions
 - [x] Configuration file to store Environment variables
 - [ ] Include Asynchronous Programming Methods for API retrieval
 
 ## Installation
 
-You can deploy an instance of Winston on your own server with the steps below! 
+You can deploy an instance of winston on your own server with the steps below! 
 1. **First of all, you're going to want to `git clone` the repo as shown below**
 ```
-git clone https://github.com/sgoudham-university/Winston-Bot.git
+git clone https://github.com/sgoudham-university/winston-Bot.git
 ```
 
 ### Method 1
