@@ -1,4 +1,4 @@
-package Models.Player.Achievement;
+package models.Player.Achievement;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,7 +13,7 @@ import java.util.Objects;
         "image"
 })
 
-public class Support {
+public class Map {
 
     @JsonProperty("title")
     private String title;
@@ -54,7 +54,7 @@ public class Support {
 
     @Override
     public String toString() {
-        return "Support{" +
+        return "Map{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
@@ -69,10 +69,10 @@ public class Support {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Support support = (Support) o;
-        return Objects.equals(title, support.title) &&
-                Objects.equals(description, support.description) &&
-                Objects.equals(image, support.image);
+        Map map = (Map) o;
+        return Objects.equals(title, map.title) &&
+                Objects.equals(description, map.description) &&
+                Objects.equals(image, map.image);
     }
 
     @Override

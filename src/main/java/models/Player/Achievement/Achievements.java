@@ -1,4 +1,4 @@
-package Models.Player.Achievement;
+package models.Player.Achievement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

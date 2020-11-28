@@ -1,4 +1,4 @@
-package Models.Player.Achievement;
+package models.Player.Achievement;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,8 +12,7 @@ import java.util.Objects;
         "description",
         "image"
 })
-
-public class Tank {
+public class General {
 
     @JsonProperty("title")
     private String title;
@@ -54,7 +53,7 @@ public class Tank {
 
     @Override
     public String toString() {
-        return "Tank{" +
+        return "General{" +
                 "title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
@@ -69,10 +68,10 @@ public class Tank {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Tank tank = (Tank) o;
-        return Objects.equals(title, tank.title) &&
-                Objects.equals(description, tank.description) &&
-                Objects.equals(image, tank.image);
+        General general = (General) o;
+        return Objects.equals(title, general.title) &&
+                Objects.equals(description, general.description) &&
+                Objects.equals(image, general.image);
     }
 
     @Override
