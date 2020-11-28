@@ -1,12 +1,12 @@
-package Winston.Bot;
+package winston.bot;
 
-import Exceptions.PlayerNotFoundException;
-import Listeners.Listener;
-import Models.Hero.Hero;
-import Models.Player.Achievement.Achievements;
-import Models.Player.Player;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import exceptions.PlayerNotFoundException;
+import listeners.Listener;
+import models.Hero.Hero;
+import models.Player.Achievement.Achievements;
+import models.Player.Player;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
