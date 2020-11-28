@@ -1,4 +1,4 @@
-package Models.Player.Competitive;
+package models.Player.Competitive;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

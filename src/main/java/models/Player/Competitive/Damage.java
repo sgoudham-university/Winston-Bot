@@ -1,4 +1,4 @@
-package Models.Player.Competitive;
+package models.Player.Competitive;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,8 +11,7 @@ import java.util.Objects;
         "skillRating",
         "rank"
 })
-
-public class Support {
+public class Damage {
 
     @JsonProperty("skillRating")
     private Integer skillRating;
@@ -41,7 +40,7 @@ public class Support {
 
     @Override
     public String toString() {
-        return "Support{" +
+        return "Damage{" +
                 "skillRating=" + skillRating +
                 ", rank='" + rank + '\'' +
                 '}';
@@ -55,9 +54,9 @@ public class Support {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Support support = (Support) o;
-        return Objects.equals(skillRating, support.skillRating) &&
-                Objects.equals(rank, support.rank);
+        Damage damage = (Damage) o;
+        return Objects.equals(skillRating, damage.skillRating) &&
+                Objects.equals(rank, damage.rank);
     }
 
     @Override

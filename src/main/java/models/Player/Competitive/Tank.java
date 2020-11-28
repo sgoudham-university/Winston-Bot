@@ -1,4 +1,4 @@
-package Models.Player.Competitive;
+package models.Player.Competitive;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -50,8 +50,12 @@ public class Tank {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Tank tank = (Tank) o;
         return Objects.equals(skillRating, tank.skillRating) &&
                 Objects.equals(rank, tank.rank);
