@@ -1,10 +1,10 @@
-package Listeners;
+package listeners;
 
-import Command.CommandManager;
-import Exceptions.HeroNotFoundException;
-import Exceptions.PlayerNotFoundException;
-import Winston.Bot.Config;
+import command.CommandManager;
+import exceptions.HeroNotFoundException;
+import exceptions.PlayerNotFoundException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import winston.bot.Config;
 
 public class GuildMessageReceivedEvent extends ListenerAdapter {
 

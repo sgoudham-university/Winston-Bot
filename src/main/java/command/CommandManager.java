@@ -1,12 +1,12 @@
-package Command;
+package command;
 
-import Winston.Bot.Config;
-import Winston.Commands.Hero.HeroInfo;
-import Winston.Commands.Ping;
-import Winston.Commands.Player.AchievementsInfo;
-import Winston.Commands.Player.CompInfo;
-import Winston.Commands.Player.PlayerInfo;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import winston.bot.Config;
+import winston.commands.Ping;
+import winston.commands.hero.HeroInfo;
+import winston.commands.player.AchievementsInfo;
+import winston.commands.player.CompInfo;
+import winston.commands.player.PlayerInfo;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

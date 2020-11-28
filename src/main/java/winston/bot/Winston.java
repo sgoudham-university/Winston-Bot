@@ -1,10 +1,10 @@
-package Winston.Bot;
+package winston.bot;
 
-import Listeners.GuildMessageReceivedEvent;
-import Listeners.Listener;
-import Listeners.MessageReceivedEvent;
-import Listeners.ReadyEvent;
 import com.github.ygimenez.method.Pages;
+import listeners.GuildMessageReceivedEvent;
+import listeners.Listener;
+import listeners.MessageReceivedEvent;
+import listeners.ReadyEvent;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;

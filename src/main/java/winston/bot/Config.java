@@ -1,4 +1,4 @@
-package Winston.Bot;
+package winston.bot;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
