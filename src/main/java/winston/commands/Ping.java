@@ -1,8 +1,8 @@
-package Winston.Commands;
+package winston.commands;
 
-import Command.CommandContext;
-import Command.ICommand;
-import Listeners.Listener;
+import command.CommandContext;
+import command.ICommand;
+import listeners.Listener;
 import net.dv8tion.jda.api.JDA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,18 +1,18 @@
-package Winston.Commands.Player;
+package winston.commands.player;
 
-import Command.CommandContext;
-import Command.ICommand;
-import Listeners.Listener;
-import Models.Player.Player;
-import Winston.Bot.Overwatch;
 import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
 import com.github.ygimenez.type.PageType;
+import command.CommandContext;
+import command.ICommand;
+import listeners.Listener;
+import models.Player.Player;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.apache.commons.text.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import winston.bot.Overwatch;
 
 import java.awt.*;
 import java.util.ArrayList;

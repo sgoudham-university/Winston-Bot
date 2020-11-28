@@ -1,19 +1,19 @@
-package Winston.Commands.Hero;
+package winston.commands.hero;
 
-import Command.CommandContext;
-import Command.ICommand;
-import Exceptions.HeroNotFoundException;
-import Listeners.Listener;
-import Models.Hero.Ability;
-import Models.Hero.Hero;
-import Winston.Bot.Overwatch;
 import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
 import com.github.ygimenez.type.PageType;
+import command.CommandContext;
+import command.ICommand;
+import exceptions.HeroNotFoundException;
+import listeners.Listener;
+import models.Hero.Ability;
+import models.Hero.Hero;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import winston.bot.Overwatch;
 
 import java.awt.*;
 import java.util.List;
