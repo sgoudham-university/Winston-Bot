@@ -1,10 +1,13 @@
+package winston.bot;
+
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDA;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import winston.bot.Winston;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class WinstonTest {
     private final JDA jda = Mockito.mock(JDA.class);
@@ -19,12 +22,12 @@ public class WinstonTest {
     @Test
     public void botTokenShouldBeValid() {
         Mockito.when(jda.getToken()).thenReturn(dotenv.get("TOKEN"));
-        Assertions.assertEquals(dotenv.get("TOKEN"), winston.getJDA().getToken());
+        assertEquals(dotenv.get("TOKEN"), winston.getJDA().getToken());
     }
 
     @Test
     public void botTokenShouldNotBeValid() {
         Mockito.when(jda.getToken()).thenReturn("KJSDJF;LK29384KLSDFNlksjfl928034urlknsdf");
-        Assertions.assertFalse(Boolean.parseBoolean(dotenv.get("TOKEN")), winston.getJDA().getToken());
+        assertFalse(Boolean.parseBoolean(dotenv.get("TOKEN")), winston.getJDA().getToken());
     }
 }
