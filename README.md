@@ -1,6 +1,6 @@
 # Winston | Personal Project for HTLANL
 
-![version-shield](https://img.shields.io/badge/version-v0.2.0-informational)
+![version-shield](https://img.shields.io/badge/version-v1.0.0-informational)
 ![project-type-shield](https://img.shields.io/badge/project%20type-personal-blueviolet)
 ![last-commit-shield](https://img.shields.io/github/last-commit/sgoudham-university/Winston-Bot)
 ![issues-shield](https://img.shields.io/github/issues/sgoudham-university/Winston-Bot?label=issues)
@@ -36,7 +36,7 @@ Listed below are the tasks that I will set out to complete:
 - [x] Set bot activity to "Playing Overwatch"
 - [x] Display nicely formatted embeds that include Player Information (Includes Competitive and Achievements)
 - [x] Display nicely formatted embeds for Overwatch Hero Information
-- [ ] Implement a help command that lists all the commands
+- [x] Implement a help command that lists all the commands
 
 #### Testing
 
@@ -53,7 +53,7 @@ Listed below are the tasks that I will set out to complete:
 #### Misc
 
 - [x] Host bot on Virtual Private Server (Running Ubuntu 20.04) for 24/7 uptime
-- [ ] Integrate Kotlin with Java
+- [x] Integrate Kotlin with Java
 - [x] Make new CustomException Classes to handle exceptions
 - [x] Configuration file to store Environment variables
 - [ ] Include Asynchronous Programming Methods for API retrieval
