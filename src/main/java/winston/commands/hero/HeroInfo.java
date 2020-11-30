@@ -91,7 +91,12 @@ public class HeroInfo implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Returns a Specified Overwatch Hero | Usage: `!hero <name>`";
+        return "Returns a Specified Overwatch Hero";
+    }
+
+    @Override
+    public String getUsage() {
+        return "`!hero <name>`";
     }
 
     @Override

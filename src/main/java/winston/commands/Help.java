@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import winston.bot.Config;
 
+import java.awt.*;
 import java.util.List;
 
 public class Help implements ICommand {
@@ -40,7 +41,7 @@ public class Help implements ICommand {
 
     private void addFields(List<ICommand> allCommands, EmbedBuilder helpEmbed) {
         allCommands.forEach(command -> {
-            helpEmbed.addField(Config.get("PREFIX") + command.getName(), command.getHelp(), false);
+            helpEmbed.addField(Config.get("PREFIX") + command.getName() + " | " + command.getUsage(), command.getHelp(), false);
         });
     }
 
@@ -48,6 +49,8 @@ public class Help implements ICommand {
         EmbedBuilder helpEmbed = new EmbedBuilder();
         helpEmbed.setAuthor(ctx.getSelfMember().getEffectiveName(), ctx.getSelfMember().getUser().getAvatarUrl(), ctx.getSelfMember().getUser().getAvatarUrl());
         helpEmbed.setTitle("Winston Commands");
+        helpEmbed.setDescription("`<argument>` This means the argument is **required**\n`[argument]` This means the argument is **optional**");
+        helpEmbed.setColor(Color.MAGENTA);
         addFields(allCommands, helpEmbed);
         return helpEmbed.build();
     }
@@ -55,6 +58,11 @@ public class Help implements ICommand {
     @Override
     public String getName() {
         return "help";
+    }
+
+    @Override
+    public String getUsage() {
+        return "`!help [command]`";
     }
 
     @Override

@@ -28,6 +28,11 @@ public class Ping implements ICommand {
     }
 
     @Override
+    public String getUsage() {
+        return "`!ping`";
+    }
+
+    @Override
     public String getName() {
         return "ping";
     }

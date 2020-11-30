@@ -10,6 +10,8 @@ public interface ICommand {
 
     String getHelp();
 
+    String getUsage();
+
     default List<String> getAliases() {
         return Collections.emptyList();
     }

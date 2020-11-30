@@ -100,6 +100,11 @@ public class PlayerInfo implements ICommand {
     }
 
     @Override
+    public String getUsage() {
+        return "`!info <platform> <region> <playerName>`";
+    }
+
+    @Override
     public String getHelp() {
         return "Returns General Information about the Player requested";
     }

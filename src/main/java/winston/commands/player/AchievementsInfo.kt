@@ -146,6 +146,10 @@ class AchievementsInfo : ICommand {
         return "Returns a list of achievements that the player has"
     }
 
+    override fun getUsage(): String {
+        return "`!achievement <type> <platform> <region> <playerName>`"
+    }
+
     override fun getAliases(): List<String> {
         return listOf("achievements", "achieve")
     }

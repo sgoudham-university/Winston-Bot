@@ -90,6 +90,11 @@ public class CompInfo implements ICommand {
     }
 
     @Override
+    public String getUsage() {
+        return "`!comp <platform> <region> <playerName>`";
+    }
+
+    @Override
     public List<String> getAliases() {
         return Arrays.asList("competitive", "ranked");
     }
