@@ -2,6 +2,7 @@ package command;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import winston.bot.Config;
+import winston.commands.Help;
 import winston.commands.Ping;
 import winston.commands.hero.HeroInfo;
 import winston.commands.player.AchievementsInfo;
@@ -18,7 +19,7 @@ public class CommandManager {
     private final List<ICommand> allCommands = new ArrayList<>();
 
     public CommandManager() {
-        addCommand(new Ping(), new PlayerInfo(), new CompInfo(), new AchievementsInfo(), new HeroInfo());
+        addCommand(new Ping(), new PlayerInfo(), new CompInfo(), new AchievementsInfo(), new HeroInfo(), new Help(this));
     }
 
     private void addCommand(ICommand... commands) {
@@ -30,12 +31,15 @@ public class CommandManager {
             }
             allCommands.add(cmd);
         }
-
-
     }
 
+    public List<ICommand> getAllCommands() {
+        return allCommands;
+    }
+
+
     @Nullable
-    private ICommand getCommand(String search) {
+    public ICommand getCommand(String search) {
         String lowerSearch = search.toLowerCase();
 
         for (ICommand command : allCommands) {

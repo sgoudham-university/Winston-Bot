@@ -85,6 +85,11 @@ public class CompInfo implements ICommand {
     }
 
     @Override
+    public String getHelp() {
+        return "Returns the Skill Rating of the Player requested";
+    }
+
+    @Override
     public List<String> getAliases() {
         return Arrays.asList("competitive", "ranked");
     }

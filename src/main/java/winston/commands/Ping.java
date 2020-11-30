@@ -23,6 +23,11 @@ public class Ping implements ICommand {
     }
 
     @Override
+    public String getHelp() {
+        return "Shows the ping of bot to the discord servers";
+    }
+
+    @Override
     public String getName() {
         return "ping";
     }

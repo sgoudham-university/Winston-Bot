@@ -98,4 +98,9 @@ public class PlayerInfo implements ICommand {
     public String getName() {
         return "info";
     }
+
+    @Override
+    public String getHelp() {
+        return "Returns General Information about the Player requested";
+    }
 }

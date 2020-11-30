@@ -8,6 +8,8 @@ public interface ICommand {
 
     String getName();
 
+    String getHelp();
+
     default List<String> getAliases() {
         return Collections.emptyList();
     }

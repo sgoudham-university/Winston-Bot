@@ -142,6 +142,10 @@ class AchievementsInfo : ICommand {
         return "achievement"
     }
 
+    override fun getHelp(): String {
+        return "Returns a list of achievements that the player has"
+    }
+
     override fun getAliases(): List<String> {
         return listOf("achievements", "achieve")
     }
