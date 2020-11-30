@@ -88,7 +88,14 @@ If you have [Intellij]() installed, you can directly read in the `pom.xml` file,
 
 Create an `.env` file in your root directory and fill in the fields with your respective values
 
-**NOT FINISHED YET**
+```.env
+TOKEN=<Your_Bot_Token_Here>
+OWNER_ID=<Your_Owner_ID_Here>
+PREFIX=<Bot_Prefix_here>
+```
+
+This will allow the bot to boot up successfully, at the moment, changeable prefixes are not a feature in the bot itself but 
+may be at a later time. The only way to change the prefix is through hosting the bot locally yourself and changing it as shown above.
 
 ## API Issues
 
