@@ -56,7 +56,7 @@ Listed below are the tasks that I will set out to complete:
 - [x] Integrate Kotlin with Java
 - [x] Make new CustomException Classes to handle exceptions
 - [x] Configuration file to store Environment variables
-- [ ] Include Asynchronous Programming Methods for API retrieval
+- [ ] ~~Include Asynchronous Programming Methods for API retrieval~~
 
 ## Installation
 
@@ -74,6 +74,11 @@ mvn package
 ```
 **This will read the `pom.xml` file and build all the dependencies that the bot will need to run on your local machine. 
 This is assuming that you have [maven](https://maven.apache.org/) installed and ready to go on your computer, if not, you can grab it [here](https://maven.apache.org/download.cgi)**
+
+3. **Now you can run the bot through the terminal by using the command shown below. However, you will have to replace the VERSION with the version number that you chose to download**
+```
+java -jar target/Winston-Bot-VERSION-jar-with-dependencies.jar
+```
 
 ### Method 2
 
