@@ -100,8 +100,12 @@ OWNER_ID=<Your_Owner_ID_Here>
 PREFIX=<Bot_Prefix_here>
 ```
 
-This will allow the bot to boot up successfully, at the moment, changeable prefixes are not a feature in the bot itself but 
-may be at a later time. The only way to change the prefix is through hosting the bot locally yourself and changing it as shown above.
+In order to get your bot token above, you will need to head over to the [Discord Developers](https://discord.com/developers/applications) website and register a bot application.
+There are many other tutorials out there that cover this, personally, I recommend reading [this](https://discordpy.readthedocs.io/en/latest/discord.html) to get your bot setup.
+Furthermore, Please visit this [discord support article](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) for help in obtaining your Owner ID.
+
+At the moment, changeable prefixes are not a feature in the bot itself but may be at a later time. 
+The only way to change the prefix is through hosting the bot locally yourself and changing it as shown above.
 
 ## API Issues
 
