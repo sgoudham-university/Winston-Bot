@@ -66,6 +66,9 @@ You can deploy an instance of winston on your own server with the steps below!
 git clone https://github.com/sgoudham-university/winston-Bot.git
 ```
 
+I've laid out 2 methods below for further installation, it's up to you which one you choose. 
+I'd recommend method 1 for more experienced users in the terminal and method 2 for beginner users.
+
 ### Method 1
 
 2. **After successfully cloning the repo, run** 
@@ -97,12 +100,12 @@ Create an `.env` file in your root directory and fill in the fields with your re
 ```.env
 TOKEN=<Your_Bot_Token_Here>
 OWNER_ID=<Your_Owner_ID_Here>
-PREFIX=<Bot_Prefix_here>
+PREFIX=<Bot_Prefix_Here>
 ```
 
 In order to get your bot token above, you will need to head over to the [Discord Developers](https://discord.com/developers/applications) website and register a bot application.
 There are many other tutorials out there that cover this, personally, I recommend reading [this](https://discordpy.readthedocs.io/en/latest/discord.html) to get your bot setup.
-Furthermore, Please visit this [discord support article](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) for help in obtaining your Owner ID.
+Furthermore, please visit this [discord support article](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) for help in obtaining your Owner ID.
 
 At the moment, changeable prefixes are not a feature in the bot itself but may be at a later time. 
 The only way to change the prefix is through hosting the bot locally yourself and changing it as shown above.
