@@ -72,18 +72,18 @@ public class Overwatch {
                 link = "https://www.overbuff.com/players/"
                         + platform + "/"
                         + battlenet[0] + "-" + battlenet[1];
-            } else {
+            } else if (platform.equalsIgnoreCase("xbl") || platform.equalsIgnoreCase("psn")) {
                 String user = args.get(1);
                 url = "https://overwatch-api.tekrop.fr/player/"
                         + user
                         + requestType
                         + "platform=" + platform;
                 link = "https://www.overbuff.com/players/" + platform + "/" + user;
+            } else {
+                throw new PlayerNotFoundException("Arguments are Invalid / Wrong Order!");
             }
         } catch (IndexOutOfBoundsException e) {
-            throw new PlayerNotFoundException("Arguments are Invalid / Wrong Order!");
-        } catch (Exception e) {
-            throw new Exception("Unknown Exception Occurred" + e);
+            throw new PlayerNotFoundException("Player Not Found!");
         }
 
         return new String[]{url, link};
