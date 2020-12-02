@@ -1,13 +1,14 @@
 package winston.bot;
 
+import exceptions.PlayerNotFoundException;
 import models.Player.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class OverwatchTest {
     private static Player pcPlayer;
@@ -41,6 +42,41 @@ class OverwatchTest {
     }
 
     @Test
-    void getAllHeroes() {
+    void getAllHeroesIsNotEmpty() throws IOException {
+        overwatch.startup();
+        assertFalse(Overwatch.getAllHeroes().isEmpty());
+    }
+
+    @Test
+    void exceptionThrownWhenArgumentsAreWrongOrder() {
+        PlayerNotFoundException thrown = assertThrows(
+                PlayerNotFoundException.class,
+                () -> overwatch.getPlayerStats(List.of("eu", "pc", "Hammy#21436")),
+                "Oh no, the assertion failed! *gasp*"
+        );
+
+        assertTrue(thrown.getMessage().contains("Arguments are Invalid / Wrong Order!"));
+    }
+
+    @Test
+    void exceptionThrownWhenPlayerNameDoesNotHaveHashSymbol() {
+        PlayerNotFoundException thrown = assertThrows(
+                PlayerNotFoundException.class,
+                () -> overwatch.getPlayerStats(List.of("pc", "eu", "Hamm-436")),
+                "Oh no, the assertion failed! *gasp*"
+        );
+
+        assertTrue(thrown.getMessage().contains("Player Not Found!"));
+    }
+
+    @Test
+    void exceptionThrownWhenPlayerNameHasHashSymbolButStillWrong() {
+        PlayerNotFoundException thrown = assertThrows(
+                PlayerNotFoundException.class,
+                () -> overwatch.getPlayerStats(List.of("pc", "eu", "Hammy#436122")),
+                "Oh no, the assertion failed! *gasp*"
+        );
+
+        assertTrue(thrown.getMessage().contains("Player Not Found!"));
     }
 }
