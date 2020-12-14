@@ -6,7 +6,3 @@ script: mvn package
 
 git:
   depth: 1
-
-cache:
-  directories:
-    - $HOME
