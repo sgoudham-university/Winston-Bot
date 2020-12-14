@@ -4,6 +4,9 @@ jdk: openjdk11
 
 script: mvn clean install
 
+git:
+  depth: 1
+
 cache:
   directories:
     - $HOME
