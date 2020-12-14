@@ -5,6 +5,9 @@ jdk: openjdk11
 install: true
 script: mvn clean install
 
+env:
+  - TOKEN = $TOKEN
+
 cache:
   directories:
     - $HOME/.m2
