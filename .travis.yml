@@ -2,7 +2,9 @@ language: java
 
 jdk: openjdk11
 
-script: mvn package
+script:
+  - mvn clean install
+  - mvn package
 
 git:
   depth: 1
