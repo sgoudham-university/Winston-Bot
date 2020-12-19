@@ -4,7 +4,7 @@ import command.CommandManager;
 import exceptions.HeroNotFoundException;
 import exceptions.PlayerNotFoundException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import winston.bot.Config;
+import winston.bot.config.Config;
 
 public class GuildMessageReceivedEvent extends ListenerAdapter {
 

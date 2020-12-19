@@ -6,14 +6,12 @@ import com.github.ygimenez.type.PageType;
 import command.CommandContext;
 import command.ICommand;
 import exceptions.HeroNotFoundException;
-import listeners.Listener;
 import models.Hero.Ability;
 import models.Hero.Hero;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import winston.bot.Overwatch;
+import winston.bot.config.Logger;
 
 import java.awt.*;
 import java.util.List;
@@ -21,8 +19,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class HeroInfo implements ICommand {
-
-    private final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
 
     @Override
     public void handle(CommandContext ctx) throws Exception {
@@ -41,7 +37,7 @@ public class HeroInfo implements ICommand {
             }
 
             ctx.getEvent().getChannel().sendMessage((MessageEmbed) pages.get(0).getContent()).queue(success -> Pages.paginate(success, pages, 60, TimeUnit.SECONDS, 2));
-            LOGGER.info("Overwatch Hero: " + hero.getName() + " Information Sent!");
+            Logger.LOGGER.info("Overwatch Hero: " + hero.getName() + " Information Sent!");
 
         } catch (NullPointerException e) {
             throw new HeroNotFoundException("Hero Not Found!");

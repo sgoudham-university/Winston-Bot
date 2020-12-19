@@ -1,7 +1,7 @@
 package winston;
 
-import winston.bot.Config;
 import winston.bot.Winston;
+import winston.bot.config.Config;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;

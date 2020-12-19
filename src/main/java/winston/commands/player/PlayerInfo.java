@@ -5,14 +5,12 @@ import com.github.ygimenez.model.Page;
 import com.github.ygimenez.type.PageType;
 import command.CommandContext;
 import command.ICommand;
-import listeners.Listener;
 import models.Player.Player;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.apache.commons.text.WordUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import winston.bot.Overwatch;
+import winston.bot.config.Logger;
 
 import java.awt.*;
 import java.util.Date;
@@ -21,8 +19,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerInfo implements ICommand {
-
-    private final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
 
     @Override
     public void handle(CommandContext ctx) throws Exception {
@@ -38,7 +34,7 @@ public class PlayerInfo implements ICommand {
         pages.put("3️⃣", new Page(PageType.EMBED, playerInfoMenu));
 
         ctx.getEvent().getChannel().sendMessage(playerInfoMenu).queue(success -> Pages.categorize(success, pages, 120, TimeUnit.SECONDS));
-        LOGGER.info("Player Statistics Sent For {}!", args);
+        Logger.LOGGER.info("Player Statistics Sent For {}!", args);
     }
 
     private EmbedBuilder getBaseEmbed(Player player, CommandContext ctx) {

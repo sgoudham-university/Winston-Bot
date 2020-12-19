@@ -1,7 +1,7 @@
 package command;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import winston.bot.Config;
+import winston.bot.config.Config;
 import winston.commands.Help;
 import winston.commands.Ping;
 import winston.commands.hero.HeroInfo;

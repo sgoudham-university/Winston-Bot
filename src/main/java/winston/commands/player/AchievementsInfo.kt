@@ -5,21 +5,19 @@ import com.github.ygimenez.model.Page
 import com.github.ygimenez.type.PageType
 import command.CommandContext
 import command.ICommand
-import listeners.Listener
 import models.Player.Achievement.*
 import models.Player.Achievement.Map
 import models.Player.Player
 import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.MessageEmbed
-import org.slf4j.LoggerFactory
 import winston.bot.Overwatch
+import winston.bot.config.Logger
 import java.awt.Color
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class AchievementsInfo : ICommand {
-    private val LOGGER = LoggerFactory.getLogger(Listener::class.java)
 
     @Throws(Exception::class)
     override fun handle(ctx: CommandContext) {
@@ -32,7 +30,7 @@ class AchievementsInfo : ICommand {
 
         ctx.event.channel.sendMessage((pages[0].content as MessageEmbed))
             .queue { success: Message? -> Pages.paginate(success, pages, 60, TimeUnit.SECONDS, 2) }
-        LOGGER.info("Player Achievements Sent For {}!", args)
+        Logger.LOGGER.info("Player Achievements Sent For {}!", args)
     }
 
     private fun buildAchievementEmbeds(

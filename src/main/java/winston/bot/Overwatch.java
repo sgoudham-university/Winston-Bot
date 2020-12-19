@@ -3,9 +3,7 @@ package winston.bot;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exceptions.PlayerNotFoundException;
-import listeners.Listener;
 import models.Hero.Hero;
-import models.Player.Achievement.Achievements;
 import models.Player.Player;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -13,8 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import winston.bot.config.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,26 +21,27 @@ import java.util.Map;
 public class Overwatch {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
-    private final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private static Map<String, Hero> allHeroes = new HashMap<>();
 
     public Player getPlayerStats(List<String> args) throws Exception {
 
         String[] requestUrlInfo = determinePlatform(args, "/info?");
-        String[] requestUrlAchievements = determinePlatform(args, "/achievements?");
 
-        Player player = getPlayerInformation(requestUrlInfo);
-        getPlayerAchievements(requestUrlAchievements, player);
+        // Note: API returning errors with this so not including it anymore
+        // String[] requestUrlAchievements = determinePlatform(args, "/achievements?");
+        // getPlayerAchievements(requestUrlAchievements, player);
 
-        return player;
+        return getPlayerInformation(requestUrlInfo);
     }
 
+/*
     private void getPlayerAchievements(String[] requestUrlAchievements, Player player) throws IOException, PlayerNotFoundException {
 
         String playerAchievementsData = getDataFromAPI(requestUrlAchievements[0]);
         player.setAchievements(objectMapper.readValue(playerAchievementsData, Achievements.class));
 
     }
+*/
 
     private Player getPlayerInformation(String[] requestUrlInfo) throws IOException, PlayerNotFoundException {
 
@@ -107,7 +105,7 @@ public class Overwatch {
 
         allHeroes = objectMapper.readValue(getClass().getClassLoader().getResource("allHeroes.json"), new TypeReference<>() {
         });
-        LOGGER.info("All Heroes Read Into Cache");
+        Logger.LOGGER.info("All Heroes Read Into Cache");
 
     }
 
