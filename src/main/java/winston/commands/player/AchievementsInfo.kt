@@ -215,7 +215,7 @@ class AchievementsInfo : ICommand {
     }
 
     override fun getHelp(): String {
-        return "*[DEPRECATED]* Returns a list of achievements that the player has"
+        return "Returns a list of achievements that the player has"
     }
 
     override fun getUsage(): String {
