@@ -5,6 +5,7 @@ import winston.bot.config.Config;
 import winston.commands.Help;
 import winston.commands.Ping;
 import winston.commands.hero.HeroInfo;
+import winston.commands.misc.BullyNuggs;
 import winston.commands.player.AchievementsInfo;
 import winston.commands.player.CompInfo;
 import winston.commands.player.PlayerInfo;
@@ -19,7 +20,9 @@ public class CommandManager {
     private final List<ICommand> allCommands = new ArrayList<>();
 
     public CommandManager() {
-        addCommand(new Ping(), new PlayerInfo(), new CompInfo(), new AchievementsInfo(), new HeroInfo(), new Help(this));
+        addCommand(new Ping(), new PlayerInfo(), new CompInfo(),
+                new AchievementsInfo(), new HeroInfo(),
+                new Help(this), new BullyNuggs());
     }
 
     private void addCommand(ICommand... commands) {

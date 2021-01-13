@@ -11,6 +11,7 @@ import java.util.Random;
 public class MessageReceivedEvent extends ListenerAdapter {
 
     private final List<String> voiceLines = new ArrayList<>();
+    public static boolean bullyNuggs = false;
 
     public MessageReceivedEvent() {
         Collections.addAll(
@@ -31,6 +32,15 @@ public class MessageReceivedEvent extends ListenerAdapter {
         if (message.toLowerCase().contains("winston")) {
             event.getChannel().sendMessage(event.getAuthor().getAsMention() + " " + randomVoiceLine).queue();
             Logger.LOGGER.info("Voice Line Sent! | Voice Line That Was Chosen: '{}'", randomVoiceLine);
+        }
+
+        if (event.getAuthor().getIdLong() == 337175192751308801L) {
+            if (bullyNuggs) {
+                event.getMessage().delete().queue();
+                event.getChannel().sendMessage("Stupid " + event.getAuthor().getAsMention() + " Tried To Type In Chat! Ha ha!").queue();
+            } else {
+                event.getChannel().sendMessage("Ha Ha! " + event.getAuthor().getAsMention() + " Typed Cringe!!").queue();
+            }
         }
     }
 }
