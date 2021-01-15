@@ -16,10 +16,17 @@ public class BullyNuggs implements ICommand {
         List<String> args = ctx.getArgs();
 
         if (Objects.requireNonNull(ctx.getEvent().getMessage().getMember()).getIdLong() == Long.parseLong(Config.get("OWNER_ID"))) {
-            if (args.get(0).equalsIgnoreCase("on")) {
-                MessageReceivedEvent.bullyNuggs = true;
-            } else if (args.get(0).equalsIgnoreCase("off")) {
-                MessageReceivedEvent.bullyNuggs = false;
+            if (args.get(0).equalsIgnoreCase(BullyNuggsStates.ON.toString())) {
+                MessageReceivedEvent.bullyNuggs = BullyNuggsStates.ON;
+                ctx.getEvent().getChannel().sendMessage("Mode Changed To: " + MessageReceivedEvent.bullyNuggs.toString()).queue();
+            } else if (args.get(0).equalsIgnoreCase(BullyNuggsStates.OFF.toString())) {
+                MessageReceivedEvent.bullyNuggs = BullyNuggsStates.OFF;
+                ctx.getEvent().getChannel().sendMessage("Mode Changed To: " + MessageReceivedEvent.bullyNuggs.toString()).queue();
+            } else if (args.get(0).equalsIgnoreCase(BullyNuggsStates.STOP.toString())) {
+                MessageReceivedEvent.bullyNuggs = BullyNuggsStates.STOP;
+                ctx.getEvent().getChannel().sendMessage("Mode Changed To: " + MessageReceivedEvent.bullyNuggs.toString()).queue();
+            } else if (args.get(0).equalsIgnoreCase("mode")) {
+                ctx.getEvent().getChannel().sendMessage("Current Mode: " + MessageReceivedEvent.bullyNuggs.toString()).queue();
             }
         }
     }
@@ -36,7 +43,7 @@ public class BullyNuggs implements ICommand {
 
     @Override
     public String getUsage() {
-        return "`!bullynuggs <on> | <off>`";
+        return "`!bullynuggs <on> | <off> | <stop> | <mode>`";
     }
 
     @Override

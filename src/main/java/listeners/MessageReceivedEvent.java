@@ -2,6 +2,7 @@ package listeners;
 
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import winston.bot.config.Logger;
+import winston.commands.misc.BullyNuggsStates;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +12,7 @@ import java.util.Random;
 public class MessageReceivedEvent extends ListenerAdapter {
 
     private final List<String> voiceLines = new ArrayList<>();
-    public static boolean bullyNuggs = false;
+    public static BullyNuggsStates bullyNuggs = BullyNuggsStates.STOP;
 
     public MessageReceivedEvent() {
         Collections.addAll(
@@ -34,12 +35,14 @@ public class MessageReceivedEvent extends ListenerAdapter {
             Logger.LOGGER.info("Voice Line Sent! | Voice Line That Was Chosen: '{}'", randomVoiceLine);
         }
 
-        if (event.getAuthor().getIdLong() == 337175192751308801L) {
-            if (bullyNuggs) {
+        if (event.getAuthor().getIdLong() == 154840866496839680L) {
+            if (bullyNuggs == BullyNuggsStates.ON) {
                 event.getMessage().delete().queue();
                 event.getChannel().sendMessage("Stupid " + event.getAuthor().getAsMention() + " Tried To Type In Chat! Ha ha!").queue();
-            } else {
+                Logger.LOGGER.info("Nuggs Bullied Successfully!");
+            } else if (bullyNuggs == BullyNuggsStates.OFF) {
                 event.getChannel().sendMessage("Ha Ha! " + event.getAuthor().getAsMention() + " Typed Cringe!!").queue();
+                Logger.LOGGER.info("Nuggs Bullied Successfully! (Cringe Mode)");
             }
         }
     }
