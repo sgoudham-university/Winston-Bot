@@ -35,7 +35,7 @@ public class MessageReceivedEvent extends ListenerAdapter {
             Logger.LOGGER.info("Voice Line Sent! | Voice Line That Was Chosen: '{}'", randomVoiceLine);
         }
 
-        if (event.getAuthor().getIdLong() == 154840866496839680L) {
+        if (event.getAuthor().getIdLong() == 337175192751308801L) {
             if (bullyNuggs == BullyNuggsStates.ON) {
                 event.getMessage().delete().queue();
                 event.getChannel().sendMessage("Stupid " + event.getAuthor().getAsMention() + " Tried To Type In Chat! Ha ha!").queue();
