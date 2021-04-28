@@ -14,7 +14,7 @@ env:
 
 script:
   - ls -la
-  - screen -r winston
+  - pwd
   - git pull
   - mvn package
   - java -jar target/Winston-Bot-$VERSION-jar-with-dependencies.jar
