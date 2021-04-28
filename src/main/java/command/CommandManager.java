@@ -20,9 +20,13 @@ public class CommandManager {
     private final List<ICommand> allCommands = new ArrayList<>();
 
     public CommandManager() {
-        addCommand(new Ping(), new PlayerInfo(), new CompInfo(),
+        ICommand[] allCommands = new ICommand[]{
+                new Ping(), new PlayerInfo(), new CompInfo(),
                 new AchievementsInfo(), new HeroInfo(),
-                new Help(this), new BullyNuggs());
+                new Help(this), new BullyNuggs(),
+        };
+
+        addCommand(allCommands);
     }
 
     private void addCommand(ICommand... commands) {
@@ -64,9 +68,7 @@ public class CommandManager {
         if (cmd != null) {
             event.getChannel().sendTyping().queue();
             List<String> args = Arrays.asList(split).subList(1, split.length);
-
             CommandContext ctx = new CommandContext(event, args);
-
             cmd.handle(ctx);
         }
     }
