@@ -1,6 +1,6 @@
 package winston.bot;
 
-import exceptions.PlayerNotFoundException;
+import exception.PlayerNotFoundException;
 import models.Player.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

@@ -5,7 +5,7 @@ import com.github.ygimenez.model.Page;
 import com.github.ygimenez.type.PageType;
 import command.CommandContext;
 import command.ICommand;
-import exceptions.HeroNotFoundException;
+import exception.HeroNotFoundException;
 import models.Hero.Ability;
 import models.Hero.Hero;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -28,7 +28,6 @@ public class HeroInfo implements ICommand {
         ArrayList<Page> pages = new ArrayList<>();
 
         try {
-
             Hero hero = allHeroes.get(args.get(0).toLowerCase());
 
             pages.add(new Page(PageType.EMBED, buildHeroInfoEmbed(hero, ctx, hero.getAbilities().size() + 1)));
@@ -46,8 +45,6 @@ public class HeroInfo implements ICommand {
         } catch (Exception e) {
             throw new Exception("Unknown Exception Occurred" + e);
         }
-
-
     }
 
     private EmbedBuilder getBaseInfoEmbed(Hero hero, CommandContext ctx, int index, int totalPages) {
