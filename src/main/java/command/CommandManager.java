@@ -6,6 +6,7 @@ import winston.commands.Help;
 import winston.commands.Ping;
 import winston.commands.hero.HeroInfo;
 import winston.commands.misc.BullyNuggs;
+import winston.commands.misc.Wednesday;
 import winston.commands.player.AchievementsInfo;
 import winston.commands.player.CompInfo;
 import winston.commands.player.PlayerInfo;
@@ -24,6 +25,7 @@ public class CommandManager {
                 new Ping(), new PlayerInfo(), new CompInfo(),
                 new AchievementsInfo(), new HeroInfo(),
                 new Help(this), new BullyNuggs(),
+                new Wednesday()
         };
 
         addCommand(allCommands);
