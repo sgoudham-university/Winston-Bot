@@ -5,12 +5,19 @@ before_install:
   - openssl aes-256-cbc -K $encrypted_0984cd22fdc0_key -iv $encrypted_0984cd22fdc0_iv
     -in .travis_deploy_key.enc -out .travis_deploy_key -d
 
-script:
-  - ls -la
-
-git:
-  depth: 1
-
 branches:
   only:
     - main
+
+env:
+  - VERSION="v1.1.2"
+
+script:
+  - ls -la
+  - screen -r winston
+  - git pull
+  - mvn package
+  - java -jar target/Winston-Bot-$VERSION-jar-with-dependencies.jar
+
+git:
+  depth: 1
