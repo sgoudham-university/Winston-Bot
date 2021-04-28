@@ -6,8 +6,11 @@ before_install:
     -in .travis_deploy_key.enc -out .travis_deploy_key -d
 
 script:
-  - ls -a
-  - git status
+  - ls -la
 
 git:
   depth: 1
+
+branches:
+  only:
+    - main
