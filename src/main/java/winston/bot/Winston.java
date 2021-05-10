@@ -1,6 +1,7 @@
 package winston.bot;
 
 import com.github.ygimenez.method.Pages;
+import exception.FileReaderException;
 import listener.Listener;
 import listener.MyGuildMessageReceivedEvent;
 import listener.MyMessageReceivedEvent;
@@ -34,7 +35,7 @@ public class Winston {
         overwatch.startup();
     }
 
-    public void start(String token) throws LoginException {
+    public void start(String token) throws LoginException, FileReaderException {
         Pages.activate(JDABuilder.createDefault(token)
                 .setActivity(Activity.playing("Overwatch"))
                 .addEventListeners(new Listener(),
