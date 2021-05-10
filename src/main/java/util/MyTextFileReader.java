@@ -9,8 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static util.Constants.RESOURCES_PATH;
-import static util.Constants.WINSTON_WEDNESDAY;
+import static util.Constants.WINSTON_VOICE_LINES;
 
 /**
  * MyTextFileReader reads from a given file
@@ -18,21 +17,14 @@ import static util.Constants.WINSTON_WEDNESDAY;
 public class MyTextFileReader implements MyFileReader {
 
     private String filePath;
-    private String fileName;
 
-    private MyTextFileReader() {
-        filePath = RESOURCES_PATH.toString();
-        fileName = WINSTON_WEDNESDAY.toString();
-    }
-
-    public MyTextFileReader(String fileName) {
-        this();
-        this.fileName = fileName;
+    public MyTextFileReader() {
+        filePath = WINSTON_VOICE_LINES.toString();
     }
 
     @Override
     public List<String> read() throws FileReaderException {
-        return readFromFile(new File(filePath + fileName));
+        return readFromFile(new File(filePath));
     }
 
     @Override
@@ -42,7 +34,7 @@ public class MyTextFileReader implements MyFileReader {
 
     @Override
     public List<String> readFile(String fileToRead) throws FileReaderException {
-        return readFromFile(new File(filePath + fileToRead));
+        return readFromFile(new File(fileToRead));
     }
 
     private List<String> readFromFile(File fileToRead) throws FileReaderException {
@@ -57,10 +49,6 @@ public class MyTextFileReader implements MyFileReader {
         }
 
         return fileLines;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
     }
 
     public void setFilePath(String filePath) {
