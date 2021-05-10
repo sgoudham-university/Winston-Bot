@@ -1,6 +1,6 @@
 package winston.bot.config;
 
-import listeners.Listener;
+import listener.Listener;
 import org.slf4j.LoggerFactory;
 
 public class Logger {

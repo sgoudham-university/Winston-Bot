@@ -1,31 +1,35 @@
-package listeners;
+package listener;
 
+import exception.FileReaderException;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import util.MyFileReader;
+import util.MyTextFileReader;
 import winston.bot.config.Logger;
 import winston.commands.misc.BullyNuggsStates;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class MessageReceivedEvent extends ListenerAdapter {
+public class MyMessageReceivedEvent extends ListenerAdapter {
 
-    private final List<String> voiceLines = new ArrayList<>();
+    private final MyFileReader myTextFileReader = new MyTextFileReader();
+    private final List<String> voiceLines;
     public static BullyNuggsStates bullyNuggs = BullyNuggsStates.STOP;
 
-    public MessageReceivedEvent() {
-        Collections.addAll(
-                voiceLines,
-                "Are you with me?",
-                "Is this on?",
-                "How Embarrassing!",
-                "Oh Yeah!"
-        );
+    public MyMessageReceivedEvent() throws FileReaderException {
+        voiceLines = myTextFileReader.read();
     }
 
     @Override
-    public void onMessageReceived(net.dv8tion.jda.api.events.message.MessageReceivedEvent event) {
+    public void onMessageReceived(MessageReceivedEvent event) {
+        User author = event.getAuthor();
+
+        if (author.isBot() || event.isWebhookMessage()) {
+            return;
+        }
+
         int random = new Random().nextInt(voiceLines.size());
         String message = event.getMessage().getContentRaw();
         String randomVoiceLine = voiceLines.get(random);

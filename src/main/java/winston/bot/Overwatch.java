@@ -2,7 +2,7 @@ package winston.bot;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import exceptions.PlayerNotFoundException;
+import exception.PlayerNotFoundException;
 import models.Hero.Hero;
 import models.Player.Player;
 import org.apache.http.HttpEntity;

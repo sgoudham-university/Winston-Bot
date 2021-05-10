@@ -1,10 +1,11 @@
 package winston.bot;
 
 import com.github.ygimenez.method.Pages;
-import listeners.GuildMessageReceivedEvent;
-import listeners.Listener;
-import listeners.MessageReceivedEvent;
-import listeners.ReadyEvent;
+import exception.FileReaderException;
+import listener.Listener;
+import listener.MyGuildMessageReceivedEvent;
+import listener.MyMessageReceivedEvent;
+import listener.MyReadyEvent;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -26,20 +27,21 @@ public class Winston {
                 GatewayIntent.GUILD_MESSAGES,
                 GatewayIntent.GUILD_VOICE_STATES,
                 GatewayIntent.GUILD_EMOJIS,
-                GatewayIntent.GUILD_MESSAGE_REACTIONS};
+                GatewayIntent.GUILD_MESSAGE_REACTIONS
+        };
     }
 
     public void startupCache() throws IOException {
         overwatch.startup();
     }
 
-    public void start(String token) throws LoginException {
+    public void start(String token) throws LoginException, FileReaderException {
         Pages.activate(JDABuilder.createDefault(token)
                 .setActivity(Activity.playing("Overwatch"))
                 .addEventListeners(new Listener(),
-                        new ReadyEvent(),
-                        new GuildMessageReceivedEvent(),
-                        new MessageReceivedEvent())
+                        new MyReadyEvent(),
+                        new MyGuildMessageReceivedEvent(),
+                        new MyMessageReceivedEvent())
                 .enableIntents(Arrays.asList(gatewayIntents))
                 .build()
         );
@@ -49,7 +51,7 @@ public class Winston {
         this.jda = jda;
     }
 
-    public JDA getJDA() {
+    JDA getJDA() {
         return jda;
     }
 }
