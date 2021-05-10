@@ -13,11 +13,7 @@ env:
   - VERSION="v1.1.2"
 
 script:
-  - ls -la
-  - pwd
-  - git pull
   - mvn package
-  - java -jar target/Winston-Bot-$VERSION-jar-with-dependencies.jar
 
 git:
   depth: 1
