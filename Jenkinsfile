@@ -14,7 +14,7 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building..."
-                sh "ls -la"
+                sh "pwd && ls -la"
                 sh "mvn -version"
                 sh "mvn clean install"
             }
