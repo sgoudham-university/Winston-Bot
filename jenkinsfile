@@ -3,12 +3,14 @@ pipeline {
         docker {
             image "maven:3.6.0-jdk-13"
             label "docker"
+            args "-u root"
         }
     }
 
     stages {
         stage("Build") {
             steps {
+                echo "Building..."
                 sh "mvn -version"
                 sh "mvn clean install"
             }
