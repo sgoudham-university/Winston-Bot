@@ -4,7 +4,7 @@
 ![project-type-shield](https://img.shields.io/badge/project%20type-personal-blueviolet)
 ![last-commit-shield](https://img.shields.io/github/last-commit/sgoudham-university/Winston-Bot)
 ![issues-shield](https://img.shields.io/github/issues/sgoudham-university/Winston-Bot?label=issues)
-[![Build Status](https://travis-ci.com/sgoudham-university/Winston-Bot.svg?branch=main)](https://travis-ci.com/sgoudham-university/Winston-Bot)
+![Build Status](https://goudham.me/job/Winston/job/main/badge/icon)
 
 Creating a Discord Bot within [Discord JDA](https://github.com/DV8FromTheWorld/JDA) For Real-Time Player Statistics in
 Overwatch.
