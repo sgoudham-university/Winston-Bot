@@ -7,17 +7,26 @@ pipeline {
     }
 
     stages {
-        stage("Build") {
+        stage("Building") {
             steps {
-                echo "Building..."
-                sh "mvn -version"
-                sh "mvn clean install"
+                sh "mvn -B -DskipTests clean package"
+            }
+        }
+        stage("Testing") {
+            steps {
+                sh "mvn test"
+            }
+        }
+        stage("Deploying") {
+            steps {
+                echo "Deploying Winston Bot..."
             }
         }
     }
 
     post {
         always {
+            junit 'target/surefire-reports/*.xml'
             cleanWs()
         }
     }
