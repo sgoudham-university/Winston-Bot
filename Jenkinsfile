@@ -7,14 +7,19 @@ pipeline {
     }
 
     stages {
-        stage("Building Winston-Bot...") {
+        stage("Building") {
             steps {
                 sh "mvn -B -DskipTests clean package"
             }
         }
-        stage("Testing Winston-Bot...") {
+        stage("Testing") {
             steps {
                 sh "mvn test"
+            }
+        }
+        stage("Deploying") {
+            steps {
+                echo "Deploying Winston Bot..."
             }
         }
     }
