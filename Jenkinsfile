@@ -14,7 +14,10 @@ pipeline {
         }
         stage("Testing") {
             steps {
+                echo "Testing Code..."
                 sh "mvn test"
+                echo "Generating Test Report..."
+                jacoco(execPattern: 'target/*.exec', classPattern: 'target/classes', sourcePattern: 'src/main/java', exclusionPattern: 'src/test*')
             }
         }
         stage("Deploying") {
@@ -26,8 +29,6 @@ pipeline {
 
     post {
         always {
-            jacoco(execPattern: 'target/jacoco.exec')
-            junit 'target/surefire-reports/*.xml'
             cleanWs()
         }
     }
