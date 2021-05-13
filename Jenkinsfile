@@ -15,7 +15,7 @@ pipeline {
         stage("Testing") {
             steps {
                 sh "mvn test"
-                jacoco(execPattern: '**/build/jacoco/**.exec', classPattern: '**/classes/*/main')
+                jacoco(execPattern: 'target/jacoco.exec')
             }
         }
         stage("Deploying") {
