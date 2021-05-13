@@ -5,6 +5,7 @@
 ![last-commit-shield](https://img.shields.io/github/last-commit/sgoudham-university/Winston-Bot)
 ![issues-shield](https://img.shields.io/github/issues/sgoudham-university/Winston-Bot?label=issues)
 ![Build Status](https://goudham.me/job/Winston/job/main/badge/icon)
+![coverage](https://img.shields.io/jenkins/coverage/jacoco?jobUrl=https%3A%2F%2Fgoudham.me%2Fjob%2FWinston%2Fjob%2Fmain%2F)
 
 Creating a Discord Bot within [Discord JDA](https://github.com/DV8FromTheWorld/JDA) For Real-Time Player Statistics in
 Overwatch.

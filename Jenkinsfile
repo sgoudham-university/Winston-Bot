@@ -26,6 +26,7 @@ pipeline {
 
     post {
         always {
+            jacoco(execPattern: 'target/jacoco.exec')
             junit 'target/surefire-reports/*.xml'
             cleanWs()
         }
