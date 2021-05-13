@@ -21,6 +21,9 @@ pipeline {
             }
         }
         stage("Deploying") {
+            when {
+                branch 'release'
+            }
             steps {
                 echo "Deploying Winston Bot..."
             }
