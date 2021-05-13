@@ -15,6 +15,7 @@ pipeline {
         stage("Testing") {
             steps {
                 sh "mvn test"
+                sh "mvn jacoco:report"
             }
         }
         stage("Deploying") {
