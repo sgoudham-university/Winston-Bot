@@ -1,3 +1,6 @@
+def remote = [:]
+remote.allowAnyHosts = true
+
 pipeline {
     agent {
         docker {
@@ -8,10 +11,8 @@ pipeline {
 
     environment {
         VERSION = readMavenPom().getVersion()
-        def REMOTE = [:]
         NAME = "jenkins"
         HOST = "51.159.152.230"
-        REMOTE.allowAnyHosts = true
     }
 
     stages {
@@ -32,13 +33,13 @@ pipeline {
             steps {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: 'e48b15ad-0f5e-4f07-8706-635c5250fa29', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'jenkins')]) {
-                      REMOTE.user = jenkins
-                      REMOTE.identityFile = identity
+                      remote.user = jenkins
+                      remote.identityFile = identity
 
-                      sshCommand remote: REMOTE, command: 'cd /home/jenkins/Winston-Bot; ./kill_winston.sh'
-                      sshCommand remote: REMOTE, command: 'rm /home/jenkins/Winston-Bot/*.jar', failOnError:'false'
-                      sshPut remote: REMOTE, from: "target/Winston-Bot-${VERSION}-jar-with-dependencies.jar", into: '/home/jenkins/Winston-Bot/'
-                      sshCommand remote: REMOTE, command: 'cd /home/jenkins/Winston-Bot; ./deploy.sh'
+                      sshCommand remote: remote, command: 'cd /home/jenkins/Winston-Bot; ./kill_winston.sh'
+                      sshCommand remote: remote, command: 'rm /home/jenkins/Winston-Bot/*.jar', failOnError:'false'
+                      sshPut remote: remote, from: "target/Winston-Bot-${VERSION}-jar-with-dependencies.jar", into: '/home/jenkins/Winston-Bot/'
+                      sshCommand remote: remote, command: 'cd /home/jenkins/Winston-Bot; ./deploy.sh'
                     }
                 }
             }
