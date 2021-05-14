@@ -1,8 +1,3 @@
-def remote = [:]
-remote.name = "jenkins"
-remote.host = "51.159.152.230"
-remote.allowAnyHosts = true
-
 pipeline {
     agent {
         docker {
@@ -32,6 +27,7 @@ pipeline {
         stage("Deploying") {
             steps {
                 script {
+                    def remote = [name: 'jenkins', host: '51.159.152.230', allowAnyHosts: true]
                     withCredentials([sshUserPrivateKey(credentialsId: 'e48b15ad-0f5e-4f07-8706-635c5250fa29', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'jenkins')]) {
                       remote.user = jenkins
                       remote.identityFile = identity
