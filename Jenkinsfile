@@ -1,4 +1,7 @@
-def remote = [name: 'jenkins', host: '51.159.152.230', allowAnyHosts: true]
+def remote = [:]
+remote.name = "jenkins"
+remote.host = "51.159.152.230"
+remote.allowAnyHosts = true
 
 pipeline {
     agent {
