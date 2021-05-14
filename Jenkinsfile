@@ -43,6 +43,7 @@ pipeline {
                       sshPut remote: remote, from: "target/Winston-Bot-${VERSION}-jar-with-dependencies.jar", into: 'Winston-Bot/'
                       sshPut remote: remote, from: "src", into: 'Winston-Bot/'
                       sshCommand remote: remote, command: 'cd Winston-Bot/; ./deploy_winston.sh'
+                      sshRemove remote: remote, path: '/Winston-Bot/deploy_winston.sh'
                     }
                 }
             }
