@@ -39,7 +39,9 @@ pipeline {
 
                       sshCommand remote: remote, command: 'cd Winston-Bot/; ./kill_winston.sh'
                       sshCommand remote: remote, command: 'rm Winston-Bot/*.jar', failOnError:'false'
+                      sshCommand remote: remote, command: 'rm -rf Winston-Bot/src', failOnError:'false'
                       sshPut remote: remote, from: "target/Winston-Bot-${VERSION}-jar-with-dependencies.jar", into: 'Winston-Bot/'
+                      sshPut remote: remote, from: "src", into: 'Winston-Bot/'
                       sshCommand remote: remote, command: 'cd Winston-Bot/; ./deploy_winston.sh'
                     }
                 }
