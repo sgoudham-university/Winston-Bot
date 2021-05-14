@@ -1,4 +1,6 @@
 def remote = [:]
+remote.name = "jenkins"
+remote.host = "51.159.152.230"
 remote.allowAnyHosts = true
 
 pipeline {
@@ -11,8 +13,6 @@ pipeline {
 
     environment {
         VERSION = readMavenPom().getVersion()
-        NAME = "jenkins"
-        HOST = "51.159.152.230"
     }
 
     stages {
