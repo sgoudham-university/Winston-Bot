@@ -36,6 +36,8 @@ pipeline {
                       remote.user = jenkins
                       remote.identityFile = identity
 
+                      sshCommand remote: remote, command: 'whoami'
+                      sshCommand remote: remote, command: 'sudo whoami'
                       sshCommand remote: remote, command: 'cd Winston-Bot/; sudo ./kill_winston.sh'
                       sshCommand remote: remote, command: 'rm Winston-Bot/*.jar', failOnError:'false'
                       sshCommand remote: remote, command: 'rm -rf Winston-Bot/src', failOnError:'false'
