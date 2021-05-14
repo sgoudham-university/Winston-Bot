@@ -1,6 +1,7 @@
 def remote = [:]
 remote.name = "jenkins"
 remote.host = "51.159.152.230"
+remote.password = "jenkins"
 remote.allowAnyHosts = true
 remote.pty = true
 
