@@ -32,12 +32,12 @@ pipeline {
         stage("Deploying") {
             steps {
                 echo "${VERSION}"
-                sh "pwd"
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: 'e48b15ad-0f5e-4f07-8706-635c5250fa29', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'jenkins')]) {
                       remote.user = jenkins
                       remote.identityFile = identity
 
+                      sshCommand remote: remote, command: 'pwd'
                       sshCommand remote: remote, command: 'cd /home/jenkins/Winston-Bot; ./kill_winston.sh'
                       sshCommand remote: remote, command: 'rm /home/jenkins/Winston-Bot/*.jar', failOnError:'false'
                       sshPut remote: remote, from: "target/Winston-Bot-${VERSION}-jar-with-dependencies.jar", into: '/home/jenkins/Winston-Bot/'
