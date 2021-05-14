@@ -2,6 +2,7 @@ def remote = [:]
 remote.name = "jenkins"
 remote.host = "51.159.152.230"
 remote.allowAnyHosts = true
+remote.pty = true
 
 pipeline {
     agent {
@@ -36,7 +37,7 @@ pipeline {
                       remote.user = jenkins
                       remote.identityFile = identity
 
-                      sshCommand remote: remote, command: 'cd Winston-Bot/; ./kill_winston.sh', sudo: true, pty: true
+                      sshCommand remote: remote, command: 'cd Winston-Bot/; ./kill_winston.sh', sudo: true,
                       sshCommand remote: remote, command: 'rm Winston-Bot/*.jar', failOnError:'false'
                       sshCommand remote: remote, command: 'rm -rf Winston-Bot/src', failOnError:'false'
                       sshPut remote: remote, from: "target/Winston-Bot-${VERSION}-jar-with-dependencies.jar", into: 'Winston-Bot/'
