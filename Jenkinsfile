@@ -51,10 +51,10 @@ pipeline {
     post {
         always {
             echo "Generating JaCoCo Test Report..."
-            jacoco(execPattern: 'target/*.xml', classPattern: 'target/classes', sourcePattern: 'src/main/java', exclusionPattern: 'src/test*')
+            jacoco(execPattern: 'target/*.exec', classPattern: 'target/classes', sourcePattern: 'src/main/java', exclusionPattern: 'src/test*')
 
             echo "Sending Report to CodeCov..."
-            sh "bash <(curl -s https://codecov.io/bash)"
+            sh 'bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN'
 
             cleanWs()
         }
