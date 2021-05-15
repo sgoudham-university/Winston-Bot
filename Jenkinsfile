@@ -24,7 +24,6 @@ pipeline {
         }
         stage("Testing") {
             steps {
-                echo "Testing Code..."
                 sh "mvn test"
             }
         }
@@ -35,13 +34,12 @@ pipeline {
                       remote.user = jenkins
                       remote.identityFile = identity
 
-                      sshCommand remote: remote, command: "cd Winston-Bot/; mkdir ${BUILD_NUMBER}"
+                      sshCommand remote: remote, command: "cd Winston-Bot/; ./kill_winston.sh"
                       sshCommand remote: remote, command: 'rm Winston-Bot/*.jar', failOnError:'false'
                       sshCommand remote: remote, command: 'rm -rf Winston-Bot/src', failOnError:'false'
                       sshPut remote: remote, from: "target/Winston-Bot-${VERSION}-jar-with-dependencies.jar", into: "Winston-Bot/${BUILD_NUMBER}/"
                       sshPut remote: remote, from: "src", into: "Winston-Bot/${BUILD_NUMBER}"
                       sshCommand remote: remote, command: "echo ${VERSION} > Winston-Bot/version.txt"
-                      sshCommand remote: remote, command: "echo ${BUILD_NUMBER} > Winston-Bot/build.txt"
                     }
                 }
             }
@@ -50,8 +48,7 @@ pipeline {
 
     post {
         always {
-            echo "Generating JaCoCo Test Report..."
-            jacoco(execPattern: 'target/*.exec', classPattern: 'target/classes', sourcePattern: 'src/main/java', exclusionPattern: 'src/test*')
+            echo "Generating Test Report..."
             publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
 
             echo "Sending Report to CodeCov..."

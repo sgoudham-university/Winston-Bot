@@ -1,11 +1,17 @@
-# Winston | Personal Project for HTLANL
-
-![version-shield](https://img.shields.io/badge/version-v1.2.0-informational)
-![project-type-shield](https://img.shields.io/badge/project%20type-personal-blueviolet)
-![last-commit-shield](https://img.shields.io/github/last-commit/sgoudham-university/Winston-Bot)
-![issues-shield](https://img.shields.io/github/issues/sgoudham-university/Winston-Bot?label=issues)
-![Build Status](https://goudham.me/job/Winston/job/main/badge/icon)
-![coverage](https://img.shields.io/jenkins/coverage/jacoco?jobUrl=https%3A%2F%2Fgoudham.me%2Fjob%2FWinston%2Fjob%2Fmain%2F)
+<h1 align="center">Winston | Personal Project for HTLANL</h1>
+<hr>
+<p align="center">
+    <img src="https://goudham.me/job/Winston/job/main/badge/icon"/>
+    <a href="https://codecov.io/gh/sgoudham-university/Winston-Bot">
+    <img src="https://codecov.io/gh/sgoudham-university/Winston-Bot/branch/main/graph/badge.svg?token=Q40v3fyItO"/>
+    </a>
+</p>
+<p align="center">
+    <img src="https://img.shields.io/badge/version-v1.2.0-informational"/>
+    <img src="https://img.shields.io/badge/project%20type-personal-blueviolet"/>
+    <img src="https://img.shields.io/github/last-commit/sgoudham-university/Winston-Bot"/>
+    <img src="https://img.shields.io/github/issues/sgoudham-university/Winston-Bot?label=issues"/>
+</p>
 
 Creating a Discord Bot within [Discord JDA](https://github.com/DV8FromTheWorld/JDA) For Real-Time Player Statistics in
 Overwatch.
