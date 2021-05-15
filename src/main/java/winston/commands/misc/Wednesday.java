@@ -15,7 +15,7 @@ public class Wednesday implements ICommand {
     @Override
     public void handle(CommandContext ctx) throws Exception {
         TextChannel textChannel = ctx.getChannel();
-        String messageBody = "**It's ~~White Girl~~ Winston Wednesday!**";
+        String messageBody = "**It's ~~White Girl~~ Winston Wednesday! (Test for CI/CD)**";
         String winstonWednesdayPath = WINSTON_WEDNESDAY.toString();
 
         textChannel.sendMessage(messageBody).addFile(new File(winstonWednesdayPath)).queue();
