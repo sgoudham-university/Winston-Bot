@@ -13,6 +13,7 @@ pipeline {
 
     environment {
         VERSION = readMavenPom().getVersion()
+        CODECOV_TOKEN = credentials("codecov-token")
     }
 
     stages {
@@ -52,8 +53,10 @@ pipeline {
             echo "Generating JaCoCo Test Report..."
             jacoco(execPattern: 'target/*.exec', classPattern: 'target/classes', sourcePattern: 'src/main/java', exclusionPattern: 'src/test*')
             jacoco(execPattern: 'target/*.xml', classPattern: 'target/classes', sourcePattern: 'src/main/java', exclusionPattern: 'src/test*')
+
             echo "Sending Report To CodeCov..."
-            sh "curl -s https://codecov.io/bash | bash"
+            sh "bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}"
+
             cleanWs()
         }
     }
