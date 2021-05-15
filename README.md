@@ -1,5 +1,5 @@
 <h1 align="center">Winston | Personal Project for HTLANL</h1>
-<hr>
+
 <p align="center">
     <img src="https://goudham.me/job/Winston/job/main/badge/icon"/>
     <a href="https://codecov.io/gh/sgoudham-university/Winston-Bot">
