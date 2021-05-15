@@ -13,7 +13,7 @@ pipeline {
 
     environment {
         VERSION = readMavenPom().getVersion()
-        CODECOV_TOKEN = credentials('codecov-token')
+        CODECOV_TOKEN = credentials('6cbb6aea-0634-4082-b547-6d6a8802cf8c')
     }
 
     stages {
