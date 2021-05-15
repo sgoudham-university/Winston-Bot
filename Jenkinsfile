@@ -52,6 +52,7 @@ pipeline {
         always {
             echo "Generating JaCoCo Test Report..."
             jacoco(execPattern: 'target/*.exec', classPattern: 'target/classes', sourcePattern: 'src/main/java', exclusionPattern: 'src/test*')
+            publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
 
             echo "Sending Report to CodeCov..."
             sh 'curl -s https://codecov.io/bash -t $CODECOV_TOKEN'
