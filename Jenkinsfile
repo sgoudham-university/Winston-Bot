@@ -55,7 +55,9 @@ pipeline {
             publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
 
             echo "Sending Report to CodeCov..."
-            sh 'curl -s https://codecov.io/bash -t $CODECOV_TOKEN'
+            sh '''#!/bin/bash
+                  curl -s https://codecov.io/bash -t $CODECOV_TOKEN
+               '''
 
             cleanWs()
         }
