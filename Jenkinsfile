@@ -56,7 +56,7 @@ pipeline {
 
             echo "Sending Report to CodeCov..."
             sh '''#!/bin/bash
-                  curl -s https://codecov.io/bash -t $CODECOV_TOKEN
+                  bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN || echo "Codecov did not collect coverage reports"
                '''
 
             cleanWs()
