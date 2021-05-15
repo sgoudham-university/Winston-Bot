@@ -55,7 +55,7 @@ pipeline {
             jacoco(execPattern: 'target/*.xml', classPattern: 'target/classes', sourcePattern: 'src/main/java', exclusionPattern: 'src/test*')
 
             echo "Sending Report To CodeCov..."
-            sh "bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}"
+            sh "curl -s https://codecov.io/bash | bash"
 
             cleanWs()
         }
