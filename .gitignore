@@ -2,4 +2,3 @@
 /target/
 /Winston.iml
 /.env
-.travis_deploy_key
