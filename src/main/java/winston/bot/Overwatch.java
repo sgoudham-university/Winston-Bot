@@ -25,23 +25,9 @@ public class Overwatch {
 
     public Player getPlayerStats(List<String> args) throws Exception {
 
-        String[] requestUrlInfo = determinePlatform(args, "/info?");
-
-        // Note: API returning errors with this so not including it anymore
-        // String[] requestUrlAchievements = determinePlatform(args, "/achievements?");
-        // getPlayerAchievements(requestUrlAchievements, player);
-
+        String[] requestUrlInfo = determinePlatform(args);
         return getPlayerInformation(requestUrlInfo);
     }
-
-/*
-    private void getPlayerAchievements(String[] requestUrlAchievements, Player player) throws IOException, PlayerNotFoundException {
-
-        String playerAchievementsData = getDataFromAPI(requestUrlAchievements[0]);
-        player.setAchievements(objectMapper.readValue(playerAchievementsData, Achievements.class));
-
-    }
-*/
 
     private Player getPlayerInformation(String[] requestUrlInfo) throws IOException, PlayerNotFoundException {
 
@@ -54,7 +40,7 @@ public class Overwatch {
         return player;
     }
 
-    private String[] determinePlatform(List<String> args, String requestType) throws Exception {
+    private String[] determinePlatform(List<String> args) throws Exception {
         String url;
         String link;
 
@@ -64,7 +50,7 @@ public class Overwatch {
                 String[] battlenet = args.get(2).split("#");
                 url = "https://overwatch-api.tekrop.fr/player/"
                         + battlenet[0] + "-" + battlenet[1]
-                        + requestType
+                        + "/info?"
                         + "platform=" + platform
                         + "&region=" + args.get(1);
                 link = "https://www.overbuff.com/players/"
@@ -74,7 +60,7 @@ public class Overwatch {
                 String user = args.get(1);
                 url = "https://overwatch-api.tekrop.fr/player/"
                         + user
-                        + requestType
+                        + "/info?"
                         + "platform=" + platform;
                 link = "https://www.overbuff.com/players/" + platform + "/" + user;
             } else {
