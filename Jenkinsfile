@@ -25,6 +25,9 @@ pipeline {
             }
         }
         stage("Deploying") {
+            when {
+                branch 'main'
+            }
             steps {
                 script {
                     def remote = [name: "${NAME}", host: "${HOST}", allowAnyHosts: true]
