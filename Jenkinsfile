@@ -48,11 +48,7 @@ pipeline {
     post {
         success {
             echo "I'm Feeling Powerful!"
-        }
-        failure {
-            echo 'How Embarrassing!'
-        }
-        always {
+
             echo "Generating Test Report..."
             publishCoverage adapters: [jacocoAdapter('target/site/jacoco/jacoco.xml')]
 
@@ -60,6 +56,11 @@ pipeline {
             sh '''#!/bin/bash
                   bash <(curl -s https://codecov.io/bash) -t $CODECOV_TOKEN || echo "Codecov did not collect coverage reports"
                '''
+        }
+        failure {
+            echo 'How Embarrassing!'
+        }
+        cleanup {
             cleanWs()
         }
     }
