@@ -27,18 +27,18 @@ pipeline {
         stage("Deploying") {
             steps {
                 script {
-                    def remote = [name: "S{NAME}", host: "${HOST}", allowAnyHosts: true]
+                    def remote = [name: '${NAME}', host: '${HOST}', allowAnyHosts: true]
                     withCredentials([sshUserPrivateKey(credentialsId: 'e48b15ad-0f5e-4f07-8706-635c5250fa29', keyFileVariable: 'identity', passphraseVariable: '', usernameVariable: 'jenkins')]) {
                       remote.user = jenkins
                       remote.identityFile = identity
 
-                      sshCommand remote: remote, command: "sudo systemctl stop winston.service"
+                      sshCommand remote: remote, command: 'sudo systemctl stop winston.service'
                       sshCommand remote: remote, command: 'rm Winston-Bot/*.jar', failOnError:'false'
                       sshCommand remote: remote, command: 'rm -rf Winston-Bot/src', failOnError:'false'
-                      sshPut remote: remote, from: "target/Winston-Bot-jar-with-dependencies.jar", into: "Winston-Bot/"
-                      sshPut remote: remote, from: "src", into: "Winston-Bot/"
-                      sshCommand remote: remote, command: "echo VERSION=${VERSION} > Winston-Bot/version.txt"
-                      sshCommand remote: remote, command: "sudo systemctl start winston.service"
+                      sshPut remote: remote, from: 'target/Winston-Bot-jar-with-dependencies.jar', into: 'Winston-Bot/'
+                      sshPut remote: remote, from: 'src', into: 'Winston-Bot/'
+                      sshCommand remote: remote, command: 'echo VERSION=${VERSION} > Winston-Bot/version.txt'
+                      sshCommand remote: remote, command: 'sudo systemctl start winston.service'
                     }
                 }
             }
