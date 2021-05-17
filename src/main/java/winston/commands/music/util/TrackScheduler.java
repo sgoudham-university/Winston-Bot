@@ -12,7 +12,7 @@ public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     private final BlockingQueue<AudioTrack> queue;
 
-    public TrackScheduler(AudioPlayer player) {
+    TrackScheduler(AudioPlayer player) {
         this.player = player;
         this.queue = new LinkedBlockingQueue<>();
     }
@@ -22,7 +22,6 @@ public class TrackScheduler extends AudioEventAdapter {
             this.queue.offer(track);
         }
     }
-
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
