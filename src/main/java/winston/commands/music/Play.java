@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.PlayerManager;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
@@ -17,6 +19,10 @@ public class Play implements ICommand {
         TextChannel textChannel = ctx.getChannel();
         Member bot = ctx.getSelfMember();
         GuildVoiceState botVoiceState = bot.getVoiceState();
+
+        if (ctx.getArgs().isEmpty()) {
+            textChannel.sendMessage("Usage Is: " + getUsage()).queue();
+        }
 
         if (!botVoiceState.inVoiceChannel()) {
             textChannel.sendMessage("I need to be in a voice channel to use this command!").queue();
@@ -35,7 +41,21 @@ public class Play implements ICommand {
             return;
         }
 
-        PlayerManager.getInstance().loadAndPlay(textChannel, "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        String link = String.join(" ", ctx.getArgs());
+        if (!isUrl(link)) {
+            link = "ytsearch:" + link;
+        }
+
+        PlayerManager.getInstance().loadAndPlay(textChannel, link);
+    }
+
+    private boolean isUrl(String link) {
+        try {
+            new URI(link);
+        } catch (URISyntaxException use) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -50,7 +70,7 @@ public class Play implements ICommand {
 
     @Override
     public String getUsage() {
-        return "`!play <link>`";
+        return "`!play <link | text>`";
     }
 
     @Override
