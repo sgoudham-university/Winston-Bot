@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PlayerManager {
@@ -35,6 +36,10 @@ public class PlayerManager {
         });
     }
 
+    public static PlayerManager getInstance() {
+        return instance == null ? instance = new PlayerManager() : instance;
+    }
+
     public void loadAndPlay(TextChannel textChannel, String trackUrl) {
         GuildMusicManager musicManager = this.getMusicManager(textChannel.getGuild());
         this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
@@ -42,17 +47,30 @@ public class PlayerManager {
             public void trackLoaded(AudioTrack audioTrack) {
                 musicManager.scheduler.queue(audioTrack);
 
-                textChannel.sendMessage("Added **")
+                textChannel.sendMessage("Added `")
                         .append(audioTrack.getInfo().title)
-                        .append("** by **")
+                        .append("` by `")
                         .append(audioTrack.getInfo().author)
-                        .append("**")
+                        .append("`")
                         .queue();
             }
 
             @Override
             public void playlistLoaded(AudioPlaylist audioPlaylist) {
+                if (audioPlaylist.isSearchResult()) {
+                    trackLoaded(audioPlaylist.getTracks().get(0));
+                } else {
+                    List<AudioTrack> allTracks = audioPlaylist.getTracks();
 
+                    textChannel.sendMessage("Added `")
+                            .append(String.valueOf(allTracks.size()))
+                            .append("` Tracks From Playlist `")
+                            .append(audioPlaylist.getName())
+                            .append("`")
+                            .queue();
+
+                    allTracks.forEach(musicManager.scheduler::queue);
+                }
             }
 
             @Override
@@ -61,14 +79,9 @@ public class PlayerManager {
             }
 
             @Override
-            public void loadFailed(FriendlyException e) {
+            public void loadFailed(FriendlyException fde) {
 
             }
         });
     }
-
-    public static PlayerManager getInstance() {
-        return instance == null ? instance = new PlayerManager() : instance;
-    }
-
 }
