@@ -8,6 +8,7 @@ import winston.commands.hero.HeroInfo;
 import winston.commands.misc.BullyNuggs;
 import winston.commands.misc.Wednesday;
 import winston.commands.music.Join;
+import winston.commands.music.Play;
 import winston.commands.player.CompInfo;
 import winston.commands.player.PlayerInfo;
 
@@ -24,7 +25,7 @@ public class CommandManager {
         ICommand[] allCommands = new ICommand[]{
                 new Ping(), new PlayerInfo(), new CompInfo(),
                 new HeroInfo(), new Help(this), new BullyNuggs(),
-                new Wednesday(), new Join()
+                new Wednesday(), new Join(), new Play()
         };
 
         addCommand(allCommands);
