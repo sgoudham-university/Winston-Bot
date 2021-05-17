@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class Winston {
                         new MyGuildMessageReceivedEvent(),
                         new MyMessageReceivedEvent())
                 .enableIntents(Arrays.asList(gatewayIntents))
+                .enableCache(CacheFlag.VOICE_STATE)
                 .build()
         );
     }

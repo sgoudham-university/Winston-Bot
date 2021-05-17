@@ -43,7 +43,10 @@ public class Help implements ICommand {
     }
 
     private void addFields(List<ICommand> allCommands, EmbedBuilder helpEmbed) {
-        allCommands.forEach(command -> helpEmbed.addField(Config.get("PREFIX") + command.getName() + " | " + command.getUsage(), command.getHelp(), false));
+        for (ICommand command : allCommands) {
+            String message = command.getUsage() != null ? command.getName() + " | " + command.getUsage() : command.getName();
+            helpEmbed.addField(Config.get("PREFIX") + message, command.getHelp(), false);
+        }
     }
 
     private MessageEmbed buildHelpEmbed(List<ICommand> allCommands, CommandContext ctx) {
