@@ -7,6 +7,7 @@ import winston.commands.Ping;
 import winston.commands.hero.HeroInfo;
 import winston.commands.misc.BullyNuggs;
 import winston.commands.misc.Wednesday;
+import winston.commands.music.Join;
 import winston.commands.player.CompInfo;
 import winston.commands.player.PlayerInfo;
 
@@ -23,14 +24,13 @@ public class CommandManager {
         ICommand[] allCommands = new ICommand[]{
                 new Ping(), new PlayerInfo(), new CompInfo(),
                 new HeroInfo(), new Help(this), new BullyNuggs(),
-                new Wednesday()
+                new Wednesday(), new Join()
         };
 
         addCommand(allCommands);
     }
 
     private void addCommand(ICommand... commands) {
-
         for (ICommand cmd : commands) {
             boolean nameFound = allCommands.stream().anyMatch(it -> it.getName().equalsIgnoreCase(cmd.getName()));
             if (nameFound) {
@@ -54,6 +54,7 @@ public class CommandManager {
                 return command;
             }
         }
+
         return null;
     }
 
@@ -63,13 +64,13 @@ public class CommandManager {
                 .split("\\s+");
 
         String invoke = split[0].toLowerCase();
-        ICommand cmd = getCommand(invoke);
+        ICommand command = getCommand(invoke);
 
-        if (cmd != null) {
+        if (command != null) {
             event.getChannel().sendTyping().queue();
             List<String> args = Arrays.asList(split).subList(1, split.length);
             CommandContext ctx = new CommandContext(event, args);
-            cmd.handle(ctx);
+            command.handle(ctx);
         }
     }
 }
