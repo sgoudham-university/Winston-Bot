@@ -22,12 +22,17 @@ public class Common {
         Member bot = ctx.getSelfMember();
         TextChannel textChannel = ctx.getChannel();
 
+        String message;
+        Color colour;
         if (bot.hasPermission(Permission.VOICE_CONNECT)) {
             audioManager.openAudioConnection(authorVoiceChannel);
-            textChannel.sendMessage("Connected to `\uD83D\uDD0A` **#" + authorVoiceChannel.getName() + "** `\uD83D\uDD0A`").queue();
+            message = "\uD83D\uDD0A Connected to #" + authorVoiceChannel.getName() + " \uD83D\uDD0A";
+            colour = Color.GREEN;
         } else {
-            textChannel.sendMessage("I need Voice Permissions To Join '" + authorVoiceChannel.getName() + "'").queue();
+            message = "I need Voice Permissions To Join '" + authorVoiceChannel.getName() + "'";
+            colour = Color.RED;
         }
+        textChannel.sendMessage(buildSimpleInfo(message, colour)).queue();
     }
 
     static void displayAddedToQueue(CommandContext ctx, AudioTrack track) {
@@ -69,6 +74,13 @@ public class Common {
         final long seconds = timeInMillis % TimeUnit.MINUTES.toMillis(1) / TimeUnit.SECONDS.toMillis(1);
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    public static MessageEmbed buildSimpleInfo(String message, Color colour) {
+        return new EmbedBuilder()
+                .setAuthor(message)
+                .setColor(colour)
+                .build();
     }
 
     private static EmbedBuilder getBaseEmbed(CommandContext ctx, String embedAuthor) {
