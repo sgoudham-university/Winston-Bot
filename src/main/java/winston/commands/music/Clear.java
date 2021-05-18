@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
+import winston.commands.music.util.TrackScheduler;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,14 +25,15 @@ public class Clear implements ICommand {
         GuildVoiceState authorVoiceState = author.getVoiceState();
         GuildVoiceState botVoiceState = bot.getVoiceState();
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
+        TrackScheduler scheduler = musicManager.getScheduler();
 
         if (botNotInVoiceChannel(botVoiceState, textChannel) || memberNotInVoiceChannel(authorVoiceState, textChannel)
                 || bothPartiesInDiffVoiceChannels(botVoiceState, authorVoiceState, textChannel)) {
             return;
         }
 
-        musicManager.scheduler.player.stopTrack();
-        musicManager.scheduler.queue.clear();
+        scheduler.getPlayer().stopTrack();
+        scheduler.getQueue().clear();
 
         textChannel.sendMessage("Queue Has Been Cleared & Stopped Current Song").queue();
 

@@ -32,7 +32,7 @@ public class Queue implements ICommand {
         TextChannel textChannel = ctx.getChannel();
         User author = ctx.getAuthor();
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
-        BlockingQueue<AudioTrack> queue = musicManager.scheduler.queue;
+        BlockingQueue<AudioTrack> queue = musicManager.getScheduler().getQueue();
 
         if (queueIsEmpty(queue, textChannel)) {
             return;
@@ -40,10 +40,10 @@ public class Queue implements ICommand {
 
         int songsRead = 0;
         int songsRemaining = 1;
-        int trackSize = Math.min(queue.size(), 10);
+        int trackSize = Math.min(queue.size(), 5);
         int currPage = 1;
         List<AudioTrack> trackList = new ArrayList<>(queue);
-        int totalPages = (int) Math.ceil((double) trackList.size() / 10);
+        int totalPages = (int) Math.ceil((double) trackList.size() / 5);
 
         QueueEmbedInfo embedInfo = new QueueEmbedInfo(songsRead, trackSize, currPage, totalPages);
 
@@ -52,10 +52,10 @@ public class Queue implements ICommand {
             pages.add(new Page(PageType.EMBED, queueEmbedInfo.getQueueMessageEmbed()));
             queueEmbedInfo.setCurrentPage(queueEmbedInfo.getCurrentPage() + 1);
             songsRemaining = trackList.size() - queueEmbedInfo.getTrackSize();
-            queueEmbedInfo.setTrackSize(queueEmbedInfo.getTrackSize() + Math.min(songsRemaining, 10));
+            queueEmbedInfo.setTrackSize(queueEmbedInfo.getTrackSize() + Math.min(songsRemaining, 5));
         }
 
-        textChannel.sendMessage((MessageEmbed) pages.get(0).getContent()).queue(success -> Pages.paginate(success, pages, 60, TimeUnit.SECONDS, 2));
+        textChannel.sendMessage((MessageEmbed) pages.get(0).getContent()).queue(success -> Pages.paginate(success, pages, 120, TimeUnit.SECONDS, 5));
     }
 
     private QueueEmbedInfo readSongs(List<AudioTrack> trackList, User author, CommandContext ctx, QueueEmbedInfo embedInfo) {
@@ -65,19 +65,20 @@ public class Queue implements ICommand {
         int totalPages = embedInfo.getTotalPages();
 
         EmbedBuilder queueEmbed = buildQueueEmbed(author, ctx, currPage, totalPages);
-
         for (int i = songsRead; i < trackSize; i++) {
             AudioTrack track = trackList.get(i);
             AudioTrackInfo trackInfo = track.getInfo();
-
             String title = trackInfo.title;
             String duration = formatTime(track.getDuration());
 
-            String description = "**" + (i + 1) + ")**  " + title + " | `[" + duration + "]`\n";
-            queueEmbed.appendDescription(description);
+            String name = "**" + (i + 1) + ")**  " + title;
+            String value = "`[" + duration + "]`";
+            queueEmbed.addField(name, value, false);
+
             embedInfo.setSongsRead(songsRead += 1);
         }
         embedInfo.setQueueMessageEmbed(queueEmbed.build());
+
         return embedInfo;
     }
 
@@ -91,6 +92,7 @@ public class Queue implements ICommand {
 
     private EmbedBuilder buildQueueEmbed(User author, CommandContext ctx, int currPage, int totalPages) {
         return getBaseEmbed(author, ctx, currPage, totalPages)
+                .setThumbnail(null)
                 .setTitle("Current Songs in Queue")
                 .setColor(Color.BLUE);
     }
