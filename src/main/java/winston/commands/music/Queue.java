@@ -24,7 +24,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import static winston.commands.music.util.Common.formatTime;
-import static winston.commands.music.util.Validation.queueIsEmpty;
 
 public class Queue implements ICommand {
     @Override
@@ -34,10 +33,6 @@ public class Queue implements ICommand {
         User author = ctx.getAuthor();
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         BlockingQueue<AudioTrack> queue = musicManager.getScheduler().getQueue();
-
-        if (queueIsEmpty(queue, textChannel)) {
-            return;
-        }
 
         List<AudioTrack> trackList = new ArrayList<>(queue);
         QueueEmbedInfo embedInfo = new QueueEmbedInfo(queue, trackList);
