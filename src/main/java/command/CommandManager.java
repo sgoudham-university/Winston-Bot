@@ -25,7 +25,8 @@ public class CommandManager {
                 new Ping(), new PlayerInfo(), new CompInfo(),
                 new HeroInfo(), new Help(this), new BullyNuggs(),
                 new Wednesday(), new Join(), new Play(), new Pause(),
-                new Clear(), new Skip(), new NowPlaying(), new Queue()
+                new Clear(), new Skip(), new NowPlaying(), new Queue(),
+                new Repeat(), new Leave()
         };
 
         addCommand(allCommands);
