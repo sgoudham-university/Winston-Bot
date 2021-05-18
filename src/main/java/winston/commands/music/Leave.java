@@ -10,9 +10,11 @@ import net.dv8tion.jda.api.managers.AudioManager;
 import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
+import static winston.commands.music.util.Common.buildSimpleInfo;
 import static winston.commands.music.util.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
@@ -40,7 +42,9 @@ public class Leave implements ICommand {
         VoiceChannel connectedChannel = audioManager.getConnectedChannel();
         audioManager.closeAudioConnection();
 
-        textChannel.sendMessage("Leaving `\uD83D\uDD0A` **#" + connectedChannel.getName() + "** `\uD83D\uDD0A`").queue();
+        String message = "\uD83D\uDD0A Leaving #" + connectedChannel.getName() + " \uD83D\uDD0A";
+        Color colour = Color.YELLOW;
+        textChannel.sendMessage(buildSimpleInfo(message, colour)).queue();
     }
 
     @Override
