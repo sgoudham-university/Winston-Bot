@@ -17,7 +17,7 @@ public class QueueEmbedInfo {
         this.songsRead = 0;
         this.trackSize = Math.min(queue.size(), 10);
         this.currentPage = 1;
-        this.totalPages = trackSize != 0 ? (int) Math.ceil((double) trackList.size() / 10) : 1;
+        this.totalPages = (int) Math.ceil((double) trackList.size() / 10);
     }
 
     public MessageEmbed getQueueMessageEmbed() {
