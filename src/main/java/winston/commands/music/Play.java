@@ -15,7 +15,8 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import static winston.commands.music.util.Validation.*;
+import static winston.commands.music.util.Common.joinVoiceChannel;
+import static winston.commands.music.util.Validation.memberNotInVoiceChannel;
 
 @SuppressWarnings("ConstantConditions")
 public class Play implements ICommand {
@@ -30,9 +31,12 @@ public class Play implements ICommand {
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
         AudioPlayer audioPlayer = musicManager.getAudioPlayer();
 
-        if (botNotInVoiceChannel(botVoiceState, textChannel) || memberNotInVoiceChannel(authorVoiceState, textChannel)
-                || bothPartiesInDiffVoiceChannels(botVoiceState, authorVoiceState, textChannel)) {
+        if (memberNotInVoiceChannel(authorVoiceState, textChannel)) {
             return;
+        }
+
+        if (!botVoiceState.inVoiceChannel()) {
+            joinVoiceChannel(ctx);
         }
 
         if (ctx.getArgs().isEmpty()) {
