@@ -37,7 +37,6 @@ public class Repeat implements ICommand {
         scheduler.setRepeating(!scheduler.isRepeating());
 
         textChannel.sendMessage(scheduler.isRepeating() ? "Looping Current Song!" : "Not Looping Current Song Anymore!").queue();
-
     }
 
     @Override

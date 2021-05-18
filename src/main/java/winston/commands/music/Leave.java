@@ -41,8 +41,6 @@ public class Leave implements ICommand {
         audioManager.closeAudioConnection();
 
         textChannel.sendMessage("Leaving `\uD83D\uDD0A` **#" + connectedChannel.getName() + "** `\uD83D\uDD0A`").queue();
-
-
     }
 
     @Override

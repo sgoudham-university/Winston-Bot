@@ -36,7 +36,6 @@ public class Clear implements ICommand {
         scheduler.getQueue().clear();
 
         textChannel.sendMessage("Queue Has Been Cleared & Stopped Current Song").queue();
-
     }
 
     @Override
