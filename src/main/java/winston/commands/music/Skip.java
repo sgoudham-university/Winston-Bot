@@ -13,7 +13,7 @@ import winston.commands.music.util.TrackScheduler;
 import java.util.Collections;
 import java.util.List;
 
-import static winston.commands.music.util.Common.displayNowPlayingSong;
+import static winston.commands.music.util.Common.displayNowPlaying;
 import static winston.commands.music.util.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
@@ -36,10 +36,8 @@ public class Skip implements ICommand {
         }
 
         scheduler.nextTrack();
-        textChannel.sendMessage("Skipped Current Track").queue();
-
-        if (!scheduler.getQueue().isEmpty()) {
-            displayNowPlayingSong(ctx, audioPlayer);
+        if (audioPlayer.getPlayingTrack() != null) {
+            displayNowPlaying(ctx, audioPlayer);
         }
     }
 

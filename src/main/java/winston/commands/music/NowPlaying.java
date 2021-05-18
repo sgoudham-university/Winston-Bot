@@ -12,7 +12,7 @@ import winston.commands.music.util.PlayerManager;
 import java.util.Collections;
 import java.util.List;
 
-import static winston.commands.music.util.Common.displayNowPlayingSong;
+import static winston.commands.music.util.Common.displayNowPlaying;
 import static winston.commands.music.util.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
@@ -33,7 +33,7 @@ public class NowPlaying implements ICommand {
             return;
         }
 
-        displayNowPlayingSong(ctx, audioPlayer);
+        displayNowPlaying(ctx, audioPlayer);
     }
 
     @Override

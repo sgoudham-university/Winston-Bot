@@ -30,18 +30,36 @@ public class Common {
         }
     }
 
-    public static void displayNowPlayingSong(CommandContext ctx, AudioPlayer audioPlayer) {
-        TextChannel textChannel = ctx.getChannel();
+    static void displayAddedToQueue(CommandContext ctx, AudioTrack track) {
+        String duration = formatTime(track.getDuration());
 
+        String embedTitle = "Added To Queue";
+        String embedDesc = "**[" + duration + "s]**";
+
+        displaySong(ctx, track, embedTitle, embedDesc);
+    }
+
+    public static void displayNowPlaying(CommandContext ctx, AudioPlayer audioPlayer) {
         AudioTrack track = audioPlayer.getPlayingTrack();
-        AudioTrackInfo trackInfo = track.getInfo();
-        String title = trackInfo.title;
-        String url = trackInfo.uri;
         String position = formatTime(track.getPosition());
         String duration = formatTime(track.getDuration());
-        String progress = "**[" + position + "s / " + duration + "s]**";
 
-        MessageEmbed nowPlayingEmbed = buildNowPlayingEmbed(ctx, title, url, progress);
+        String embedTitle = "Now Playing";
+        String embedDesc = "**[" + position + "s / " + duration + "s]**";
+
+        displaySong(ctx, track, embedTitle, embedDesc);
+    }
+
+    private static void displaySong(CommandContext ctx, AudioTrack track, String embedAuthor, String embedDesc) {
+        TextChannel textChannel = ctx.getChannel();
+        AudioTrackInfo trackInfo = track.getInfo();
+
+        String title = trackInfo.title;
+        String url = trackInfo.uri;
+        int titleSize = Math.min(title.length(), 70);
+        String suffix = titleSize < title.length() ? "..." : "";
+
+        MessageEmbed nowPlayingEmbed = buildNowPlayingEmbed(ctx, title + suffix, url, embedAuthor, embedDesc);
         textChannel.sendMessage(nowPlayingEmbed).queue();
     }
 
@@ -53,24 +71,24 @@ public class Common {
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
-    private static EmbedBuilder getBaseEmbed(CommandContext ctx) {
+    private static EmbedBuilder getBaseEmbed(CommandContext ctx, String embedAuthor) {
         User author = ctx.getAuthor();
 
         return new EmbedBuilder()
-                .setAuthor("Now Playing")
+                .setAuthor(embedAuthor)
                 .setThumbnail(author.getEffectiveAvatarUrl())
                 .setFooter("Requested By " + author.getName(), ctx.getSelfUser().getAvatarUrl())
                 .setTimestamp(new Date().toInstant());
     }
 
-    private static MessageEmbed buildNowPlayingEmbed(CommandContext ctx, String title, String url, String progress) {
+    private static MessageEmbed buildNowPlayingEmbed(CommandContext ctx, String title, String url, String embedAuthor, String embedDesc) {
         URI uri = URI.create(url);
         String videoID = uri.getQuery().split("v=")[1];
         String thumbnailUrl = "https://img.youtube.com/vi/" + videoID + "/0.jpg";
 
-        return getBaseEmbed(ctx)
+        return getBaseEmbed(ctx, embedAuthor)
                 .setTitle(title, url)
-                .setDescription(progress)
+                .setDescription(embedDesc)
                 .setThumbnail(thumbnailUrl)
                 .setColor(Color.RED)
                 .build();
