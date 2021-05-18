@@ -33,7 +33,7 @@ public class Wednesday implements ICommand {
 
     @Override
     public String getUsage() {
-        return "`!wednesday`";
+        return null;
     }
 
     @Override

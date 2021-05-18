@@ -1,4 +1,4 @@
-package winston.commands;
+package winston.commands.misc;
 
 import command.CommandContext;
 import command.CommandManager;

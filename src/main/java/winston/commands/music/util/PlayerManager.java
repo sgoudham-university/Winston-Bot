@@ -7,12 +7,15 @@ import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
+import command.CommandContext;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static winston.commands.music.util.Common.displayAddedToQueue;
 
 public class PlayerManager {
     private static PlayerManager instance;
@@ -27,7 +30,7 @@ public class PlayerManager {
         AudioSourceManagers.registerRemoteSources(this.audioPlayerManager);
     }
 
-    private GuildMusicManager getMusicManager(Guild guild) {
+    public GuildMusicManager getMusicManager(Guild guild) {
         return this.musicManagers.computeIfAbsent(guild.getIdLong(), (guildID) -> {
             GuildMusicManager guildMusicManager = new GuildMusicManager(this.audioPlayerManager);
             guild.getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
@@ -40,19 +43,15 @@ public class PlayerManager {
         return instance == null ? instance = new PlayerManager() : instance;
     }
 
-    public void loadAndPlay(TextChannel textChannel, String trackUrl) {
+    public void loadAndPlay(CommandContext ctx, String trackUrl) {
+        TextChannel textChannel = ctx.getChannel();
         GuildMusicManager musicManager = this.getMusicManager(textChannel.getGuild());
+
         this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
-                musicManager.scheduler.queue(audioTrack);
-
-                textChannel.sendMessage("Added `")
-                        .append(audioTrack.getInfo().title)
-                        .append("` by `")
-                        .append(audioTrack.getInfo().author)
-                        .append("`")
-                        .queue();
+                musicManager.getScheduler().queue(audioTrack);
+                displayAddedToQueue(ctx, audioTrack);
             }
 
             @Override
@@ -69,18 +68,18 @@ public class PlayerManager {
                             .append("`")
                             .queue();
 
-                    allTracks.forEach(musicManager.scheduler::queue);
+                    allTracks.forEach(musicManager.getScheduler()::queue);
                 }
             }
 
             @Override
             public void noMatches() {
-
+                textChannel.sendMessage("Nothing Found For: " + trackUrl).queue();
             }
 
             @Override
             public void loadFailed(FriendlyException fde) {
-
+                textChannel.sendMessage("Could Not Play: " + fde.getMessage()).queue();
             }
         });
     }

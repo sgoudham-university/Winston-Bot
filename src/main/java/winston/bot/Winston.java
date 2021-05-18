@@ -39,10 +39,7 @@ public class Winston {
     public void start(String token) throws LoginException, FileReaderException {
         Pages.activate(JDABuilder.createDefault(token)
                 .setActivity(Activity.playing("Overwatch"))
-                .addEventListeners(new Listener(),
-                        new MyReadyEvent(),
-                        new MyGuildMessageReceivedEvent(),
-                        new MyMessageReceivedEvent())
+                .addEventListeners(new Listener(), new MyReadyEvent(), new MyGuildMessageReceivedEvent(), new MyMessageReceivedEvent())
                 .enableIntents(Arrays.asList(gatewayIntents))
                 .enableCache(CacheFlag.VOICE_STATE)
                 .build()

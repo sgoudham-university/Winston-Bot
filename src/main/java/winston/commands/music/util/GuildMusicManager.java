@@ -3,9 +3,9 @@ package winston.commands.music.util;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 
-class GuildMusicManager {
+public class GuildMusicManager {
     private final AudioPlayer audioPlayer;
-    final TrackScheduler scheduler;
+    private final TrackScheduler scheduler;
     private final AudioPlayerSendHandler sendHandler;
 
     GuildMusicManager(AudioPlayerManager manager) {
@@ -17,5 +17,13 @@ class GuildMusicManager {
 
     AudioPlayerSendHandler getSendHandler() {
         return sendHandler;
+    }
+
+    public AudioPlayer getAudioPlayer() {
+        return audioPlayer;
+    }
+
+    public TrackScheduler getScheduler() {
+        return scheduler;
     }
 }

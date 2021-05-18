@@ -2,13 +2,12 @@ package command;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import winston.bot.config.Config;
-import winston.commands.Help;
-import winston.commands.Ping;
 import winston.commands.hero.HeroInfo;
 import winston.commands.misc.BullyNuggs;
+import winston.commands.misc.Help;
+import winston.commands.misc.Ping;
 import winston.commands.misc.Wednesday;
-import winston.commands.music.Join;
-import winston.commands.music.Play;
+import winston.commands.music.*;
 import winston.commands.player.CompInfo;
 import winston.commands.player.PlayerInfo;
 
@@ -25,7 +24,9 @@ public class CommandManager {
         ICommand[] allCommands = new ICommand[]{
                 new Ping(), new PlayerInfo(), new CompInfo(),
                 new HeroInfo(), new Help(this), new BullyNuggs(),
-                new Wednesday(), new Join(), new Play()
+                new Wednesday(), new Join(), new Play(), new Pause(),
+                new Clear(), new Skip(), new NowPlaying(), new Queue(),
+                new Repeat(), new Leave()
         };
 
         addCommand(allCommands);
