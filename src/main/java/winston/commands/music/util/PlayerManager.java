@@ -27,7 +27,7 @@ public class PlayerManager {
         AudioSourceManagers.registerRemoteSources(this.audioPlayerManager);
     }
 
-    private GuildMusicManager getMusicManager(Guild guild) {
+    public GuildMusicManager getMusicManager(Guild guild) {
         return this.musicManagers.computeIfAbsent(guild.getIdLong(), (guildID) -> {
             GuildMusicManager guildMusicManager = new GuildMusicManager(this.audioPlayerManager);
             guild.getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
@@ -75,12 +75,12 @@ public class PlayerManager {
 
             @Override
             public void noMatches() {
-
+                textChannel.sendMessage("Nothing Found For: " + trackUrl).queue();
             }
 
             @Override
             public void loadFailed(FriendlyException fde) {
-
+                textChannel.sendMessage("Could Not Play: " + fde.getMessage()).queue();
             }
         });
     }
