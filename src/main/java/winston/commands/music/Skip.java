@@ -1,8 +1,6 @@
 package winston.commands.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import command.CommandContext;
 import command.ICommand;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
@@ -15,6 +13,7 @@ import winston.commands.music.util.TrackScheduler;
 import java.util.Collections;
 import java.util.List;
 
+import static winston.commands.music.util.Common.displayNowPlayingSong;
 import static winston.commands.music.util.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
@@ -40,15 +39,8 @@ public class Skip implements ICommand {
         textChannel.sendMessage("Skipped Current Track").queue();
 
         if (!scheduler.getQueue().isEmpty()) {
-            AudioTrack track = audioPlayer.getPlayingTrack();
-            AudioTrackInfo trackInfo = track.getInfo();
-            String title = trackInfo.title;
-            String artist = trackInfo.author;
-            String url = trackInfo.uri;
-
-            textChannel.sendMessage("Now Playing `" + title + "` by `" + artist + "` \nLink: <" + url + ">").queue();
+            displayNowPlayingSong(ctx, audioPlayer);
         }
-
     }
 
     @Override

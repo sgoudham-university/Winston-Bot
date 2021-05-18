@@ -2,16 +2,14 @@ package winston.commands.music;
 
 import command.CommandContext;
 import command.ICommand;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
-import net.dv8tion.jda.api.managers.AudioManager;
 
 import java.util.Collections;
 import java.util.List;
 
+import static winston.commands.music.util.Common.joinVoiceChannel;
 import static winston.commands.music.util.Validation.botInVoiceChannel;
 import static winston.commands.music.util.Validation.memberNotInVoiceChannel;
 
@@ -30,14 +28,7 @@ public class Join implements ICommand {
             return;
         }
 
-        AudioManager audioManager = ctx.getGuild().getAudioManager();
-        VoiceChannel authorVoiceChannel = authorVoiceState.getChannel();
-        if (bot.hasPermission(Permission.VOICE_CONNECT)) {
-            audioManager.openAudioConnection(authorVoiceChannel);
-            textChannel.sendMessage("Connected to `\uD83D\uDD0A` **#" + authorVoiceChannel.getName() + "** `\uD83D\uDD0A`").queue();
-        } else {
-            textChannel.sendMessage("I need Voice Permissions To Join '" + authorVoiceChannel.getName() + "'").queue();
-        }
+        joinVoiceChannel(ctx);
     }
 
     @Override

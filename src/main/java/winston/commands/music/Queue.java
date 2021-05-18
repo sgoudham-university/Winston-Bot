@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import static winston.commands.music.util.Common.formatTime;
 import static winston.commands.music.util.Validation.queueIsEmpty;
 
 public class Queue implements ICommand {
@@ -38,21 +39,16 @@ public class Queue implements ICommand {
             return;
         }
 
-        int songsRead = 0;
-        int songsRemaining = 1;
-        int trackSize = Math.min(queue.size(), 5);
-        int currPage = 1;
         List<AudioTrack> trackList = new ArrayList<>(queue);
-        int totalPages = (int) Math.ceil((double) trackList.size() / 5);
+        QueueEmbedInfo embedInfo = new QueueEmbedInfo(queue, trackList);
 
-        QueueEmbedInfo embedInfo = new QueueEmbedInfo(songsRead, trackSize, currPage, totalPages);
-
+        int songsRemaining = 1;
         while (songsRemaining > 0) {
             QueueEmbedInfo queueEmbedInfo = readSongs(trackList, author, ctx, embedInfo);
             pages.add(new Page(PageType.EMBED, queueEmbedInfo.getQueueMessageEmbed()));
             queueEmbedInfo.setCurrentPage(queueEmbedInfo.getCurrentPage() + 1);
             songsRemaining = trackList.size() - queueEmbedInfo.getTrackSize();
-            queueEmbedInfo.setTrackSize(queueEmbedInfo.getTrackSize() + Math.min(songsRemaining, 5));
+            queueEmbedInfo.setTrackSize(queueEmbedInfo.getTrackSize() + Math.min(songsRemaining, 10));
         }
 
         textChannel.sendMessage((MessageEmbed) pages.get(0).getContent()).queue(success -> Pages.paginate(success, pages, 120, TimeUnit.SECONDS, 5));
@@ -63,17 +59,20 @@ public class Queue implements ICommand {
         int trackSize = embedInfo.getTrackSize();
         int currPage = embedInfo.getCurrentPage();
         int totalPages = embedInfo.getTotalPages();
-
         EmbedBuilder queueEmbed = buildQueueEmbed(author, ctx, currPage, totalPages);
+
         for (int i = songsRead; i < trackSize; i++) {
             AudioTrack track = trackList.get(i);
             AudioTrackInfo trackInfo = track.getInfo();
             String title = trackInfo.title;
             String duration = formatTime(track.getDuration());
+            int titleSize = Math.min(title.length(), 40);
+            String suffix = titleSize < title.length() ? "..." : "";
 
-            String name = "**" + (i + 1) + ")**  " + title;
-            String value = "`[" + duration + "]`";
-            queueEmbed.addField(name, value, false);
+            queueEmbed.appendDescription("**" + (i + 1) + ")**  ")
+                    .appendDescription("`[" + duration + "]`  ")
+                    .appendDescription(title.substring(0, titleSize) + suffix)
+                    .appendDescription("\n");
 
             embedInfo.setSongsRead(songsRead += 1);
         }
@@ -95,14 +94,6 @@ public class Queue implements ICommand {
                 .setThumbnail(null)
                 .setTitle("Current Songs in Queue")
                 .setColor(Color.BLUE);
-    }
-
-    private String formatTime(long timeInMillis) {
-        final long hours = timeInMillis / TimeUnit.HOURS.toMillis(1);
-        final long minutes = timeInMillis / TimeUnit.MINUTES.toMillis(1);
-        final long seconds = timeInMillis % TimeUnit.MINUTES.toMillis(1) / TimeUnit.SECONDS.toMillis(1);
-
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
     @Override

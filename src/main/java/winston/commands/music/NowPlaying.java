@@ -1,8 +1,6 @@
 package winston.commands.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import command.CommandContext;
 import command.ICommand;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
@@ -13,8 +11,8 @@ import winston.commands.music.util.PlayerManager;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import static winston.commands.music.util.Common.displayNowPlayingSong;
 import static winston.commands.music.util.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
@@ -35,25 +33,7 @@ public class NowPlaying implements ICommand {
             return;
         }
 
-        AudioTrack track = audioPlayer.getPlayingTrack();
-        AudioTrackInfo trackInfo = track.getInfo();
-        String title = trackInfo.title;
-        String artist = trackInfo.author;
-        String url = trackInfo.uri;
-        String position = formatTime(track.getPosition());
-        String duration = formatTime(track.getDuration());
-
-        textChannel.sendMessage("Now Playing `" + title + "` by `" + artist + "` " +
-                "\nLink: <" + url + ">" +
-                "\nTime: [" + position + "s / " + duration + "s]").queue();
-    }
-
-    private String formatTime(long timeInMillis) {
-        final long hours = timeInMillis / TimeUnit.HOURS.toMillis(1);
-        final long minutes = timeInMillis / TimeUnit.MINUTES.toMillis(1);
-        final long seconds = timeInMillis % TimeUnit.MINUTES.toMillis(1) / TimeUnit.SECONDS.toMillis(1);
-
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        displayNowPlayingSong(ctx, audioPlayer);
     }
 
     @Override

@@ -1,6 +1,10 @@
 package winston.commands.music.util;
 
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
 
 public class QueueEmbedInfo {
     private int songsRead;
@@ -9,11 +13,11 @@ public class QueueEmbedInfo {
     private int totalPages;
     private MessageEmbed queueMessageEmbed;
 
-    public QueueEmbedInfo(int songsRead, int trackSize, int currentPage, int totalPages) {
-        this.songsRead = songsRead;
-        this.trackSize = trackSize;
-        this.currentPage = currentPage;
-        this.totalPages = totalPages;
+    public QueueEmbedInfo(BlockingQueue<AudioTrack> queue, List<AudioTrack> trackList) {
+        this.songsRead = 0;
+        this.trackSize = Math.min(queue.size(), 10);
+        this.currentPage = 1;
+        this.totalPages = (int) Math.ceil((double) trackList.size() / 10);
     }
 
     public MessageEmbed getQueueMessageEmbed() {
