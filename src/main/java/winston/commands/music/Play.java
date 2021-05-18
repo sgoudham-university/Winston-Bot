@@ -1,15 +1,21 @@
 package winston.commands.music;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import command.CommandContext;
 import command.ICommand;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 
-import java.net.URI;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Collections;
 import java.util.List;
+
+import static winston.commands.music.util.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
 public class Play implements ICommand {
@@ -18,27 +24,29 @@ public class Play implements ICommand {
     public void handle(CommandContext ctx) throws Exception {
         TextChannel textChannel = ctx.getChannel();
         Member bot = ctx.getSelfMember();
-        GuildVoiceState botVoiceState = bot.getVoiceState();
-
-        if (ctx.getArgs().isEmpty()) {
-            textChannel.sendMessage("Usage Is: " + getUsage()).queue();
-        }
-
-        if (!botVoiceState.inVoiceChannel()) {
-            textChannel.sendMessage("I need to be in a voice channel to use this command!").queue();
-            return;
-        }
-
         Member author = ctx.getMember();
         GuildVoiceState authorVoiceState = author.getVoiceState();
-        if (!authorVoiceState.inVoiceChannel()) {
-            textChannel.sendMessage("You need to be in a voice channel to use this command!").queue();
+        GuildVoiceState botVoiceState = bot.getVoiceState();
+        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
+        AudioPlayer audioPlayer = musicManager.getAudioPlayer();
+
+        if (botNotInVoiceChannel(botVoiceState, textChannel) || memberNotInVoiceChannel(authorVoiceState, textChannel)
+                || bothPartiesInDiffVoiceChannels(botVoiceState, authorVoiceState, textChannel)) {
             return;
         }
 
-        if (!authorVoiceState.getChannel().equals(botVoiceState.getChannel())) {
-            textChannel.sendMessage("This command requires both parties to be in the same voice channel!").queue();
-            return;
+        if (ctx.getArgs().isEmpty()) {
+            if (audioPlayer.isPaused()) {
+                audioPlayer.setPaused(false);
+
+                String title = audioPlayer.getPlayingTrack().getInfo().title;
+                String artist = audioPlayer.getPlayingTrack().getInfo().author;
+                textChannel.sendMessage("Resuming `" + title + "` by `" + artist + "`").queue();
+
+                return;
+            } else {
+                textChannel.sendMessage("Usage Is: " + getUsage()).queue();
+            }
         }
 
         String link = String.join(" ", ctx.getArgs());
@@ -51,8 +59,8 @@ public class Play implements ICommand {
 
     private boolean isUrl(String link) {
         try {
-            new URI(link);
-        } catch (URISyntaxException use) {
+            new URL(link).toURI();
+        } catch (URISyntaxException | MalformedURLException exp) {
             return false;
         }
         return true;
@@ -75,6 +83,6 @@ public class Play implements ICommand {
 
     @Override
     public List<String> getAliases() {
-        return ICommand.super.getAliases();
+        return Collections.singletonList("p");
     }
 }
