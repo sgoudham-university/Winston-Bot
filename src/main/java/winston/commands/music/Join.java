@@ -9,7 +9,11 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 
+import java.util.Collections;
 import java.util.List;
+
+import static winston.commands.music.util.Validation.botInVoiceChannel;
+import static winston.commands.music.util.Validation.memberNotInVoiceChannel;
 
 @SuppressWarnings({"ConstantConditions"})
 public class Join implements ICommand {
@@ -18,17 +22,11 @@ public class Join implements ICommand {
     public void handle(CommandContext ctx) {
         TextChannel textChannel = ctx.getChannel();
         Member bot = ctx.getSelfMember();
-        GuildVoiceState botVoiceState = bot.getVoiceState();
-
-        if (botVoiceState.inVoiceChannel()) {
-            textChannel.sendMessage("I am already in a voice channel!").queue();
-            return;
-        }
-
         Member author = ctx.getMember();
         GuildVoiceState authorVoiceState = author.getVoiceState();
-        if (!authorVoiceState.inVoiceChannel()) {
-            textChannel.sendMessage("You need to be in a voice channel to use this command!").queue();
+        GuildVoiceState botVoiceState = bot.getVoiceState();
+
+        if (botInVoiceChannel(botVoiceState, textChannel) || memberNotInVoiceChannel(authorVoiceState, textChannel)) {
             return;
         }
 
@@ -36,7 +34,7 @@ public class Join implements ICommand {
         VoiceChannel authorVoiceChannel = authorVoiceState.getChannel();
         if (bot.hasPermission(Permission.VOICE_CONNECT)) {
             audioManager.openAudioConnection(authorVoiceChannel);
-            textChannel.sendMessage("Connecting to `\uD83D\uDD0A` **" + authorVoiceChannel.getName() + "** `\uD83D\uDD0A`").queue();
+            textChannel.sendMessage("Connected to `\uD83D\uDD0A` **#" + authorVoiceChannel.getName() + "** `\uD83D\uDD0A`").queue();
         } else {
             textChannel.sendMessage("I need Voice Permissions To Join '" + authorVoiceChannel.getName() + "'").queue();
         }
@@ -59,6 +57,6 @@ public class Join implements ICommand {
 
     @Override
     public List<String> getAliases() {
-        return ICommand.super.getAliases();
+        return Collections.singletonList("j");
     }
 }
