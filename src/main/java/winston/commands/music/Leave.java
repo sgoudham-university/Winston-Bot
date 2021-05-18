@@ -52,7 +52,7 @@ public class Leave implements ICommand {
 
     @Override
     public String getHelp() {
-        return null;
+        return "Leaves the connected voice channel";
     }
 
     @Override
