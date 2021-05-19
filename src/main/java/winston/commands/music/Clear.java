@@ -9,9 +9,11 @@ import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 import winston.commands.music.util.TrackScheduler;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
+import static winston.commands.music.util.Common.buildSimpleInfo;
 import static winston.commands.music.util.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
@@ -35,7 +37,7 @@ public class Clear implements ICommand {
         scheduler.getPlayer().stopTrack();
         scheduler.getQueue().clear();
 
-        textChannel.sendMessage("Queue Has Been Cleared & Stopped Current Song").queue();
+        textChannel.sendMessage(buildSimpleInfo("Queue Has Been Cleared ✔", Color.GREEN)).queue();
     }
 
     @Override
