@@ -45,14 +45,29 @@ public class Common {
     }
 
     public static void displayNowPlaying(CommandContext ctx, AudioPlayer audioPlayer) {
+        mergeSongInfo(ctx, audioPlayer, "Now Playing");
+    }
+
+    public static void displayResuming(CommandContext ctx, AudioPlayer audioPlayer) {
+        mergeSongInfo(ctx, audioPlayer, "Resuming");
+    }
+
+    public static void displayAlreadyPaused(CommandContext ctx, AudioPlayer audioPlayer) {
+        mergeSongInfo(ctx, audioPlayer, "Already Paused");
+    }
+
+    public static void displayPausing(CommandContext ctx, AudioPlayer audioPlayer) {
+        mergeSongInfo(ctx, audioPlayer, "Pausing");
+    }
+
+    private static void mergeSongInfo(CommandContext ctx, AudioPlayer audioPlayer, String status) {
         AudioTrack track = audioPlayer.getPlayingTrack();
         String position = formatTime(track.getPosition());
         String duration = formatTime(track.getDuration());
 
-        String embedTitle = "Now Playing";
         String embedDesc = "**[" + position + "s / " + duration + "s]**";
 
-        displaySong(ctx, track, embedTitle, embedDesc);
+        displaySong(ctx, track, status, embedDesc);
     }
 
     private static void displaySong(CommandContext ctx, AudioTrack track, String embedAuthor, String embedDesc) {
@@ -63,8 +78,9 @@ public class Common {
         String url = trackInfo.uri;
         int titleSize = Math.min(title.length(), 70);
         String suffix = titleSize < title.length() ? "..." : "";
+        String newTitle = title.substring(0, titleSize) + suffix;
 
-        MessageEmbed nowPlayingEmbed = buildNowPlayingEmbed(ctx, title + suffix, url, embedAuthor, embedDesc);
+        MessageEmbed nowPlayingEmbed = buildNowPlayingEmbed(ctx, newTitle, url, embedAuthor, embedDesc);
         textChannel.sendMessage(nowPlayingEmbed).queue();
     }
 
