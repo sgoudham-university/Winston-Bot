@@ -9,9 +9,11 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
+import static winston.commands.music.util.Common.buildSimpleInfo;
 import static winston.commands.music.util.Common.displayNowPlaying;
 import static winston.commands.music.util.Validation.*;
 
@@ -33,7 +35,12 @@ public class NowPlaying implements ICommand {
             return;
         }
 
-        displayNowPlaying(ctx, audioPlayer);
+        if (!audioPlayer.getPlayingTrack().getInfo().title.equals("Unknown title")) {
+            displayNowPlaying(ctx, audioPlayer);
+        } else {
+            textChannel.sendMessage(buildSimpleInfo("Winston Voice Line Currently Playing", Color.BLUE)).queue();
+        }
+
     }
 
     @Override

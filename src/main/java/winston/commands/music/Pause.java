@@ -9,8 +9,10 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 
+import java.awt.*;
 import java.util.List;
 
+import static winston.commands.music.util.Common.*;
 import static winston.commands.music.util.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
@@ -32,18 +34,12 @@ public class Pause implements ICommand {
         }
 
         if (audioPlayer.isPaused()) {
-            String title = audioPlayer.getPlayingTrack().getInfo().title;
-            String artist = audioPlayer.getPlayingTrack().getInfo().author;
-
-            textChannel.sendMessage("Already Paused: `" + title + "` by `" + artist + "`").queue();
+            displayAlreadyPaused(ctx, audioPlayer);
         } else if (audioPlayer.getPlayingTrack() != null) {
-            String title = audioPlayer.getPlayingTrack().getInfo().title;
-            String artist = audioPlayer.getPlayingTrack().getInfo().author;
-
             audioPlayer.setPaused(true);
-            textChannel.sendMessage("Pausing `" + title + "` by `" + artist + "`").queue();
+            displayPausing(ctx, audioPlayer);
         } else {
-            textChannel.sendMessage("No Song is Currently Playing!").queue();
+            textChannel.sendMessage(buildSimpleInfo("No Song To Pause!", Color.RED)).queue();
         }
     }
 
