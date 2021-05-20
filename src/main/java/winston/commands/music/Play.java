@@ -1,20 +1,20 @@
 package winston.commands.music;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import command.CommandContext;
 import command.ICommand;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
-import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 
+import java.awt.*;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
+import static winston.commands.music.util.Common.buildSimpleInfo;
 import static winston.commands.music.util.Common.joinVoiceChannel;
 import static winston.commands.music.util.Validation.memberNotInVoiceChannel;
 
@@ -23,15 +23,19 @@ public class Play implements ICommand {
 
     @Override
     public void handle(CommandContext ctx) throws Exception {
+        List<String> args = ctx.getArgs();
         TextChannel textChannel = ctx.getChannel();
         Member bot = ctx.getSelfMember();
         Member author = ctx.getMember();
         GuildVoiceState authorVoiceState = author.getVoiceState();
         GuildVoiceState botVoiceState = bot.getVoiceState();
-        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
-        AudioPlayer audioPlayer = musicManager.getAudioPlayer();
 
         if (memberNotInVoiceChannel(authorVoiceState, textChannel)) {
+            return;
+        }
+
+        if (args.isEmpty()) {
+            textChannel.sendMessage(buildSimpleInfo("Usage -> " + getUsage(), Color.YELLOW)).queue();
             return;
         }
 
@@ -39,26 +43,10 @@ public class Play implements ICommand {
             joinVoiceChannel(ctx);
         }
 
-        if (ctx.getArgs().isEmpty()) {
-            if (audioPlayer.isPaused()) {
-                audioPlayer.setPaused(false);
+        String link = String.join(" ", args);
+        link = !isUrl(link) ? "ytsearch:" + link : link;
 
-                String title = audioPlayer.getPlayingTrack().getInfo().title;
-                String artist = audioPlayer.getPlayingTrack().getInfo().author;
-                textChannel.sendMessage("Resuming `" + title + "` by `" + artist + "`").queue();
-
-                return;
-            } else {
-                textChannel.sendMessage("Usage Is: " + getUsage()).queue();
-            }
-        }
-
-        String link = String.join(" ", ctx.getArgs());
-        if (!isUrl(link)) {
-            link = "ytsearch:" + link;
-        }
-
-        PlayerManager.getInstance().loadAndPlay(ctx, link);
+        PlayerManager.getInstance().loadAndPlay(ctx, link, false);
     }
 
     private boolean isUrl(String link) {
