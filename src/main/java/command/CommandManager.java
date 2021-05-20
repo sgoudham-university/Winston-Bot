@@ -26,24 +26,24 @@ public class CommandManager {
                 new HeroInfo(), new Help(this), new BullyNuggs(),
                 new Wednesday(), new Join(), new Play(), new Pause(),
                 new Clear(), new Skip(), new NowPlaying(), new Queue(),
-                new Repeat(), new Leave()
+                new Repeat(), new Leave(), new Resume(), new Voice()
         };
 
         addCommand(allCommands);
     }
 
+    public void getCommandsMap() {
+
+    }
+
     private void addCommand(ICommand... commands) {
-        for (ICommand cmd : commands) {
-            boolean nameFound = allCommands.stream().anyMatch(it -> it.getName().equalsIgnoreCase(cmd.getName()));
+        for (ICommand command : commands) {
+            boolean nameFound = allCommands.stream().anyMatch(it -> it.getName().equalsIgnoreCase(command.getName()));
             if (nameFound) {
                 throw new IllegalArgumentException("Command Already Exists!");
             }
-            allCommands.add(cmd);
+            allCommands.add(command);
         }
-    }
-
-    public List<ICommand> getAllCommands() {
-        return allCommands;
     }
 
 
@@ -74,5 +74,9 @@ public class CommandManager {
             CommandContext ctx = new CommandContext(event, args);
             command.handle(ctx);
         }
+    }
+
+    public List<ICommand> getAllCommands() {
+        return allCommands;
     }
 }
