@@ -26,7 +26,8 @@ public class CommandManager {
                 new HeroInfo(), new Help(this), new BullyNuggs(),
                 new Wednesday(), new Join(), new Play(), new Pause(),
                 new Clear(), new Skip(), new NowPlaying(), new Queue(),
-                new Repeat(), new Leave(), new Resume(), new Voice()
+                new Repeat(), new Leave(), new Resume(), new Voice(),
+                new Shuffle()
         };
 
         addCommand(allCommands);
