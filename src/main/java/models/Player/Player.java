@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import models.Player.Achievement.Achievements;
 import models.Player.Competitive.Competitive;
 import models.Player.Endorsement.Endorsements;
 
@@ -37,15 +36,6 @@ public class Player {
     private String privacy;
 
     private String overbuffLink;
-    private Achievements achievements;
-
-    public Achievements getAchievements() {
-        return achievements;
-    }
-
-    public void setAchievements(Achievements achievements) {
-        this.achievements = achievements;
-    }
 
     public String getOverbuffLink() {
         return overbuffLink;
@@ -125,7 +115,6 @@ public class Player {
                 ", endorsements=" + endorsements +
                 ", privacy='" + privacy + '\'' +
                 ", overbuffLink='" + overbuffLink + '\'' +
-                ", achievements=" + achievements +
                 '}';
     }
 
@@ -138,18 +127,11 @@ public class Player {
             return false;
         }
         Player player = (Player) o;
-        return Objects.equals(username, player.username) &&
-                Objects.equals(avatar, player.avatar) &&
-                Objects.equals(level, player.level) &&
-                Objects.equals(competitive, player.competitive) &&
-                Objects.equals(endorsements, player.endorsements) &&
-                Objects.equals(privacy, player.privacy) &&
-                Objects.equals(overbuffLink, player.overbuffLink) &&
-                Objects.equals(achievements, player.achievements);
+        return Objects.equals(username, player.username) && Objects.equals(avatar, player.avatar) && Objects.equals(level, player.level) && Objects.equals(competitive, player.competitive) && Objects.equals(endorsements, player.endorsements) && Objects.equals(privacy, player.privacy) && Objects.equals(overbuffLink, player.overbuffLink);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, avatar, level, competitive, endorsements, privacy, overbuffLink, achievements);
+        return Objects.hash(username, avatar, level, competitive, endorsements, privacy, overbuffLink);
     }
 }

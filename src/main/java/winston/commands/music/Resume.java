@@ -12,11 +12,12 @@ import winston.commands.music.util.PlayerManager;
 import java.awt.*;
 import java.util.List;
 
-import static winston.commands.music.util.Common.*;
+import static winston.commands.music.util.Common.buildSimpleInfo;
+import static winston.commands.music.util.Common.displayResuming;
 import static winston.commands.music.util.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
-public class Pause implements ICommand {
+public class Resume implements ICommand {
 
     @Override
     public void handle(CommandContext ctx) throws Exception {
@@ -34,23 +35,21 @@ public class Pause implements ICommand {
         }
 
         if (audioPlayer.isPaused()) {
-            displayAlreadyPaused(ctx, audioPlayer);
-        } else if (audioPlayer.getPlayingTrack() != null) {
-            audioPlayer.setPaused(true);
-            displayPausing(ctx, audioPlayer);
+            audioPlayer.setPaused(false);
+            displayResuming(ctx, audioPlayer);
         } else {
-            textChannel.sendMessage(buildSimpleInfo("No Song To Pause!", Color.RED)).queue();
+            textChannel.sendMessage(buildSimpleInfo("No Song To Resume!", Color.YELLOW)).queue();
         }
     }
 
     @Override
     public String getName() {
-        return "pause";
+        return "resume";
     }
 
     @Override
     public String getHelp() {
-        return "Pauses current song being played";
+        return "Continues playing the previously paused song";
     }
 
     @Override

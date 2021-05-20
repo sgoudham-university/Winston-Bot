@@ -4,13 +4,17 @@ import command.CommandContext;
 import command.CommandManager;
 import command.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 import winston.bot.config.Config;
 import winston.bot.config.Logger;
 
 import java.awt.*;
 import java.util.List;
+
+import static winston.commands.music.util.Common.buildSimpleInfo;
 
 public class Help implements ICommand {
 
@@ -31,11 +35,11 @@ public class Help implements ICommand {
             return;
         }
 
-        String search = args.get(0);
-        ICommand command = commandManager.getCommand(search);
+        String userSearch = args.get(0);
+        ICommand command = commandManager.getCommand(userSearch);
 
         if (command == null) {
-            textChannel.sendMessage("No Command Found For: " + search).queue();
+            textChannel.sendMessage(buildSimpleInfo("No Command Found For: '" + userSearch + "'", Color.RED)).queue();
         } else {
             textChannel.sendMessage(command.getHelp()).queue();
             Logger.LOGGER.info("Help Sent For Command: " + command.getName());
@@ -50,12 +54,16 @@ public class Help implements ICommand {
     }
 
     private MessageEmbed buildHelpEmbed(List<ICommand> allCommands, CommandContext ctx) {
-        EmbedBuilder helpEmbed = new EmbedBuilder();
-        helpEmbed.setAuthor(ctx.getSelfMember().getEffectiveName(), ctx.getSelfMember().getUser().getAvatarUrl(), ctx.getSelfMember().getUser().getAvatarUrl());
-        helpEmbed.setTitle("Winston Commands");
-        helpEmbed.setDescription("`<argument>` This means the argument is **required**\n`[argument]` This means the argument is **optional**");
-        helpEmbed.setColor(Color.MAGENTA);
+        Member selfMember = ctx.getSelfMember();
+        User user = selfMember.getUser();
+
+        EmbedBuilder helpEmbed = new EmbedBuilder()
+                .setAuthor(selfMember.getEffectiveName(), user.getAvatarUrl(), user.getAvatarUrl())
+                .setTitle("Winston Commands")
+                .setDescription("`<argument>` This means the argument is **required**\n`[argument]` This means the argument is **optional**")
+                .setColor(Color.MAGENTA);
         addFields(allCommands, helpEmbed);
+
         return helpEmbed.build();
     }
 

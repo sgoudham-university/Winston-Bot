@@ -10,9 +10,11 @@ import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 import winston.commands.music.util.TrackScheduler;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
+import static winston.commands.music.util.Common.buildSimpleInfo;
 import static winston.commands.music.util.Common.displayNowPlaying;
 import static winston.commands.music.util.Validation.*;
 
@@ -38,6 +40,8 @@ public class Skip implements ICommand {
         scheduler.nextTrack();
         if (audioPlayer.getPlayingTrack() != null) {
             displayNowPlaying(ctx, audioPlayer);
+        } else {
+            textChannel.sendMessage(buildSimpleInfo("No More Songs To Play!", Color.YELLOW)).queue();
         }
     }
 

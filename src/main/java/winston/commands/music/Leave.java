@@ -35,6 +35,7 @@ public class Leave implements ICommand {
         }
 
         musicManager.getScheduler().setRepeating(false);
+        musicManager.getScheduler().getPlayer().setPaused(false);
         musicManager.getScheduler().getQueue().clear();
         musicManager.getAudioPlayer().stopTrack();
 

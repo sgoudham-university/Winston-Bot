@@ -23,35 +23,28 @@ public class PlayerManager {
     private final AudioPlayerManager audioPlayerManager;
 
     private PlayerManager() {
-        this.musicManagers = new HashMap<>();
-        this.audioPlayerManager = new DefaultAudioPlayerManager();
+        musicManagers = new HashMap<>();
+        audioPlayerManager = new DefaultAudioPlayerManager();
 
-        AudioSourceManagers.registerLocalSource(this.audioPlayerManager);
-        AudioSourceManagers.registerRemoteSources(this.audioPlayerManager);
-    }
-
-    public GuildMusicManager getMusicManager(Guild guild) {
-        return this.musicManagers.computeIfAbsent(guild.getIdLong(), (guildID) -> {
-            GuildMusicManager guildMusicManager = new GuildMusicManager(this.audioPlayerManager);
-            guild.getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
-
-            return guildMusicManager;
-        });
+        AudioSourceManagers.registerLocalSource(audioPlayerManager);
+        AudioSourceManagers.registerRemoteSources(audioPlayerManager);
     }
 
     public static PlayerManager getInstance() {
         return instance == null ? instance = new PlayerManager() : instance;
     }
 
-    public void loadAndPlay(CommandContext ctx, String trackUrl) {
+    public void loadAndPlay(CommandContext ctx, String trackUrl, boolean isLocalFile) {
         TextChannel textChannel = ctx.getChannel();
-        GuildMusicManager musicManager = this.getMusicManager(textChannel.getGuild());
+        GuildMusicManager musicManager = getMusicManager(textChannel.getGuild());
 
-        this.audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
+        audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
-                musicManager.getScheduler().queue(audioTrack);
-                displayAddedToQueue(ctx, audioTrack);
+                musicManager.getScheduler().queue(audioTrack, isLocalFile);
+                if (!isLocalFile) {
+                    displayAddedToQueue(ctx, audioTrack);
+                }
             }
 
             @Override
@@ -68,19 +61,28 @@ public class PlayerManager {
                             .append("`")
                             .queue();
 
-                    allTracks.forEach(musicManager.getScheduler()::queue);
+                    allTracks.forEach(track -> musicManager.getScheduler().queue(track, false));
                 }
             }
 
             @Override
             public void noMatches() {
-                textChannel.sendMessage("Nothing Found For: " + trackUrl).queue();
+                textChannel.sendMessage("Nothing Found For: '" + String.join(" ", ctx.getArgs()) + "'").queue();
             }
 
             @Override
             public void loadFailed(FriendlyException fde) {
                 textChannel.sendMessage("Could Not Play: " + fde.getMessage()).queue();
             }
+        });
+    }
+
+    public GuildMusicManager getMusicManager(Guild guild) {
+        return musicManagers.computeIfAbsent(guild.getIdLong(), (guildID) -> {
+            GuildMusicManager guildMusicManager = new GuildMusicManager(audioPlayerManager);
+            guild.getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
+
+            return guildMusicManager;
         });
     }
 }
