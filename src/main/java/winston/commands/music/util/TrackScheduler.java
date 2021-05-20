@@ -22,9 +22,9 @@ public class TrackScheduler extends AudioEventAdapter {
         queue = new LinkedBlockingDeque<>();
     }
 
-    public void queue(AudioTrack track, boolean atHead) {
+    public void queue(AudioTrack track, boolean isLocalFile) {
         if (!player.startTrack(track, true)) {
-            if (atHead) {
+            if (isLocalFile) {
                 queue.addFirst(track);
                 setReadyToPlayFile(true);
             } else {
