@@ -11,4 +11,5 @@ public interface ICommand {
     default List<String> getAliases() {
         return Collections.emptyList();
     }
+    String getPackage();
 }
