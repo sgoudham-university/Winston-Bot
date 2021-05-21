@@ -5,6 +5,8 @@ import command.ICommand;
 import net.dv8tion.jda.api.JDA;
 import winston.bot.config.Logger;
 
+import java.util.List;
+
 public class Ping implements ICommand {
 
     @Override
@@ -31,4 +33,10 @@ public class Ping implements ICommand {
     public String getName() {
         return "ping";
     }
+
+    @Override
+    public List<String> getAliases() { return ICommand.super.getAliases(); }
+
+    @Override
+    public String getPackage() { return "Miscellaneous"; }
 }

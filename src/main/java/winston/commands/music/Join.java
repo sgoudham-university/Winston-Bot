@@ -50,4 +50,7 @@ public class Join implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("j");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

@@ -58,4 +58,7 @@ public class Repeat implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("loop");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

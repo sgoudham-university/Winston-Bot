@@ -77,4 +77,7 @@ public class Play implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("p");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

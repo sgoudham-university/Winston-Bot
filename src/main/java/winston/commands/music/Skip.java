@@ -64,4 +64,7 @@ public class Skip implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("next");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

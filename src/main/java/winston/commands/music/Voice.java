@@ -88,4 +88,7 @@ public class Voice implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("say");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

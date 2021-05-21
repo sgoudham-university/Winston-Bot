@@ -67,4 +67,7 @@ public class Leave implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("disconnect");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

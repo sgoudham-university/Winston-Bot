@@ -55,4 +55,7 @@ public class NowPlaying implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("np");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

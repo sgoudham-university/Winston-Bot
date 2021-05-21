@@ -54,4 +54,7 @@ public class Shuffle implements ICommand {
     public List<String> getAliases() {
         return ICommand.super.getAliases();
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

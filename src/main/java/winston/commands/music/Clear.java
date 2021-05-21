@@ -59,4 +59,7 @@ public class Clear implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("stop");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

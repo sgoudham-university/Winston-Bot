@@ -115,4 +115,7 @@ public class Queue implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("q");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

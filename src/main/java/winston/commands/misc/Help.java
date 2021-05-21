@@ -81,4 +81,10 @@ public class Help implements ICommand {
     public String getHelp() {
         return "Shows this command!";
     }
+
+    @Override
+    public List<String> getAliases() { return ICommand.super.getAliases(); }
+
+    @Override
+    public String getPackage() { return "Miscellaneous"; }
 }

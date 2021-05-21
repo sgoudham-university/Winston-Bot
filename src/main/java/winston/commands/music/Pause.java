@@ -64,4 +64,7 @@ public class Pause implements ICommand {
     public List<String> getAliases() {
         return ICommand.super.getAliases();
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }
