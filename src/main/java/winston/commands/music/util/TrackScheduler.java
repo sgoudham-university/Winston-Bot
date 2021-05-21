@@ -8,11 +8,12 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
-    private final LinkedBlockingDeque<AudioTrack> queue;
+    private final BlockingDeque<AudioTrack> queue;
     private boolean repeating = false;
     private boolean readyToPlayFile = false;
     private AudioTrack currentTack;
@@ -56,10 +57,35 @@ public class TrackScheduler extends AudioEventAdapter {
         player.startTrack(queue.poll(), false);
     }
 
+    public void removeTrack() {
+        queue.removeFirst();
+    }
+
     public void shuffle() {
+        List<AudioTrack> trackList = getQueueAsList();
+        Collections.shuffle(trackList);
+        setListAsQueue(trackList);
+    }
+
+    public void skipTo(int index) {
+        List<AudioTrack> trackList = getQueueAsList();
+        trackList.subList(0, index - 1).clear();
+        setListAsQueue(trackList);
+    }
+
+    public void removeTrack(int index) {
+        List<AudioTrack> trackList = getQueueAsList();
+        trackList.remove(index - 1);
+        setListAsQueue(trackList);
+    }
+
+    private List<AudioTrack> getQueueAsList() {
         List<AudioTrack> trackList = new ArrayList<>();
         queue.drainTo(trackList);
-        Collections.shuffle(trackList);
+        return trackList;
+    }
+
+    private void setListAsQueue(List<AudioTrack> trackList) {
         queue.addAll(trackList);
     }
 
@@ -71,7 +97,7 @@ public class TrackScheduler extends AudioEventAdapter {
         return player;
     }
 
-    public LinkedBlockingDeque<AudioTrack> getQueue() {
+    public BlockingDeque<AudioTrack> getQueue() {
         return queue;
     }
 
