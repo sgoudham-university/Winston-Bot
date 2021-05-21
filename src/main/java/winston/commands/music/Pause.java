@@ -12,7 +12,9 @@ import winston.commands.music.util.PlayerManager;
 import java.awt.*;
 import java.util.List;
 
-import static winston.commands.music.util.Common.*;
+import static winston.commands.music.common.Display.displayAlreadyPaused;
+import static winston.commands.music.common.Display.displayPausing;
+import static winston.commands.music.util.Common.buildSimpleInfo;
 import static winston.commands.music.util.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
