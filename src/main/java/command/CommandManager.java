@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public class CommandManager {
 
     private final List<ICommand> allCommands = new ArrayList<>();
-    private final Map<String, List<ICommand>> commandsMap = initialiseCommandMap();
+    private final Map<String, List<ICommand>> commandsMap;
 
     public CommandManager() {
         ICommand[] allCommands = new ICommand[]{
@@ -28,10 +28,10 @@ public class CommandManager {
                 new Wednesday(), new Join(), new Play(), new Pause(),
                 new Clear(), new Skip(), new NowPlaying(), new Queue(),
                 new Repeat(), new Leave(), new Resume(), new Voice(),
-                new Shuffle()
+                new Shuffle(), new SkipTo()
         };
-
         addCommand(allCommands);
+        commandsMap = initialiseCommandMap();
     }
 
     private void addCommand(ICommand... commands) {
