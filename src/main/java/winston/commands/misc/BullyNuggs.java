@@ -50,4 +50,7 @@ public class BullyNuggs implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("nuggs");
     }
+
+    @Override
+    public String getPackage() { return "Miscellaneous"; }
 }
