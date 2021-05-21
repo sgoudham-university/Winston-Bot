@@ -2,23 +2,24 @@ package command;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import winston.bot.config.Config;
-import winston.commands.hero.HeroInfo;
 import winston.commands.misc.BullyNuggs;
 import winston.commands.misc.Help;
 import winston.commands.misc.Ping;
-import winston.commands.misc.Wednesday;
+import winston.commands.music.Queue;
 import winston.commands.music.*;
-import winston.commands.player.CompInfo;
-import winston.commands.player.PlayerInfo;
+import winston.commands.overwatch.CompInfo;
+import winston.commands.overwatch.HeroInfo;
+import winston.commands.overwatch.PlayerInfo;
+import winston.commands.overwatch.Wednesday;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class CommandManager {
+
     private final List<ICommand> allCommands = new ArrayList<>();
+    private final Map<String, List<ICommand>> commandsMap = initialiseCommandMap();
 
     public CommandManager() {
         ICommand[] allCommands = new ICommand[]{
@@ -31,10 +32,6 @@ public class CommandManager {
         };
 
         addCommand(allCommands);
-    }
-
-    public void getCommandsMap() {
-
     }
 
     private void addCommand(ICommand... commands) {
@@ -77,7 +74,23 @@ public class CommandManager {
         }
     }
 
+    private Map<String, List<ICommand>> initialiseCommandMap() {
+        Map<String, List<ICommand>> commandMap = new HashMap<>();
+
+        for (ICommand newCommand : allCommands) {
+            String commandPackage = newCommand.getPackage();
+            commandMap.computeIfAbsent(commandPackage, command -> new ArrayList<>());
+            commandMap.get(commandPackage).add(newCommand);
+        }
+
+        return commandMap;
+    }
+
     public List<ICommand> getAllCommands() {
         return allCommands;
+    }
+
+    public Map<String, List<ICommand>> getCommandsMap() {
+        return commandsMap;
     }
 }
