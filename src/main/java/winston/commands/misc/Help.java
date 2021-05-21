@@ -39,7 +39,7 @@ public class Help implements ICommand {
         ICommand command = commandManager.getCommand(userSearch);
 
         if (command == null) {
-            textChannel.sendMessage(buildSimpleInfo("No Command Found For: '" + userSearch + "'", Color.RED)).queue();
+            textChannel.sendMessage(buildSimpleInfo("No Command Found For: '" + String.join(" ", args) + "'", Color.RED)).queue();
         } else {
             textChannel.sendMessage(command.getHelp()).queue();
             Logger.LOGGER.info("Help Sent For Command: " + command.getName());
