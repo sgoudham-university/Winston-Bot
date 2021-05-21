@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 import static winston.commands.music.common.Display.getTrimmedTitle;
+import static winston.commands.music.common.Validation.queueIsEmpty;
 import static winston.commands.music.util.Common.formatTime;
-import static winston.commands.music.util.Validation.queueIsEmpty;
 
 public class Queue implements ICommand {
 

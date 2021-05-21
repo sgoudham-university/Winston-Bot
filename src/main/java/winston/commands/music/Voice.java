@@ -20,8 +20,8 @@ import java.util.Random;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static util.Constants.*;
+import static winston.commands.music.common.Validation.memberNotInVoiceChannel;
 import static winston.commands.music.util.Common.joinVoiceChannel;
-import static winston.commands.music.util.Validation.memberNotInVoiceChannel;
 
 @SuppressWarnings("ConstantConditions")
 public class Voice implements ICommand {
