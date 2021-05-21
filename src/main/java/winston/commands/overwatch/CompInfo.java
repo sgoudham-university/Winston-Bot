@@ -1,4 +1,4 @@
-package winston.commands.player;
+package winston.commands.overwatch;
 
 import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
@@ -99,4 +99,7 @@ public class CompInfo implements ICommand {
     public List<String> getAliases() {
         return Arrays.asList("competitive", "ranked");
     }
+
+    @Override
+    public String getPackage() { return "Overwatch"; }
 }

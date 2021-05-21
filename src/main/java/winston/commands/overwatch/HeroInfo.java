@@ -1,4 +1,4 @@
-package winston.commands.hero;
+package winston.commands.overwatch;
 
 import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
@@ -101,4 +101,7 @@ public class HeroInfo implements ICommand {
     public List<String> getAliases() {
         return Arrays.asList("character", "char");
     }
+
+    @Override
+    public String getPackage() { return "Overwatch"; }
 }

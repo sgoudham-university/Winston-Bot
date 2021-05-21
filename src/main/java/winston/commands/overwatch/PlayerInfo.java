@@ -1,4 +1,4 @@
-package winston.commands.player;
+package winston.commands.overwatch;
 
 import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
@@ -108,4 +108,10 @@ public class PlayerInfo implements ICommand {
     public String getHelp() {
         return "Returns General Information about the Player requested";
     }
+
+    @Override
+    public List<String> getAliases() { return ICommand.super.getAliases(); }
+
+    @Override
+    public String getPackage() { return "Overwatch"; }
 }
