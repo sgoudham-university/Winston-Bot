@@ -88,43 +88,33 @@ public class TrackScheduler extends AudioEventAdapter {
     private void setListAsQueue(List<AudioTrack> trackList) {
         queue.addAll(trackList);
     }
-
     public void setRepeating(boolean repeating) {
         this.repeating = repeating;
     }
-
     public AudioPlayer getPlayer() {
         return player;
     }
-
     public BlockingDeque<AudioTrack> getQueue() {
         return queue;
     }
-
     public boolean isRepeating() {
         return repeating;
     }
-
     public AudioTrack getCurrentTack() {
         return currentTack;
     }
-
     public void setCurrentTack(AudioTrack currentTack) {
         this.currentTack = currentTack;
     }
-
     public Long getCurrentPos() {
         return currentPos;
     }
-
     public void setCurrentPos(Long currentPos) {
         this.currentPos = currentPos;
     }
-
     public boolean isReadyToPlayFile() {
         return readyToPlayFile;
     }
-
     private void setReadyToPlayFile(boolean readyToPlayFile) {
         this.readyToPlayFile = readyToPlayFile;
     }
