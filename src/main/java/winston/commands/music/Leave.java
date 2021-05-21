@@ -14,8 +14,8 @@ import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
+import static winston.commands.music.common.Common.buildSimpleInfo;
 import static winston.commands.music.common.Validation.*;
-import static winston.commands.music.util.Common.buildSimpleInfo;
 
 @SuppressWarnings("ConstantConditions")
 public class Leave implements ICommand {

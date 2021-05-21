@@ -7,8 +7,8 @@ import command.CommandContext;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-import static winston.commands.music.util.Common.buildNowPlayingEmbed;
-import static winston.commands.music.util.Common.formatTime;
+import static winston.commands.music.common.Common.buildNowPlayingEmbed;
+import static winston.commands.music.common.Common.formatTime;
 
 public class Display {
     public static void displayAddedToQueue(CommandContext ctx, AudioTrack track) {

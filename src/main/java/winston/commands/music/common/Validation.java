@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import java.awt.*;
 import java.util.concurrent.BlockingQueue;
 
-import static winston.commands.music.util.Common.buildSimpleInfo;
+import static winston.commands.music.common.Common.buildSimpleInfo;
 
 public class Validation {
     private static final Color colour = Color.RED;

@@ -9,9 +9,9 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import java.util.Collections;
 import java.util.List;
 
+import static winston.commands.music.common.Common.joinVoiceChannel;
 import static winston.commands.music.common.Validation.botInVoiceChannel;
 import static winston.commands.music.common.Validation.memberNotInVoiceChannel;
-import static winston.commands.music.util.Common.joinVoiceChannel;
 
 @SuppressWarnings({"ConstantConditions"})
 public class Join implements ICommand {

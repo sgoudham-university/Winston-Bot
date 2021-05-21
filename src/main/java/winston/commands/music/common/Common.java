@@ -1,4 +1,4 @@
-package winston.commands.music.util;
+package winston.commands.music.common;
 
 import command.CommandContext;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -57,7 +57,7 @@ public class Common {
                 .setTimestamp(new Date().toInstant());
     }
 
-    public static MessageEmbed buildNowPlayingEmbed(CommandContext ctx, String title, String url, String embedAuthor, String embedDesc) {
+    static MessageEmbed buildNowPlayingEmbed(CommandContext ctx, String title, String url, String embedAuthor, String embedDesc) {
         String thumbnailUrl = ctx.getSelfUser().getEffectiveAvatarUrl();
 
         if (url.endsWith(".mp3")) {

@@ -14,7 +14,7 @@ import winston.bot.config.Logger;
 import java.awt.*;
 import java.util.List;
 
-import static winston.commands.music.util.Common.buildSimpleInfo;
+import static winston.commands.music.common.Common.buildSimpleInfo;
 
 public class Help implements ICommand {
 
