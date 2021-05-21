@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static winston.commands.music.util.Common.displayAddedToQueue;
+import static winston.commands.music.common.Display.displayAddedToQueue;
 
 public class PlayerManager {
     private static PlayerManager instance;
@@ -37,12 +37,14 @@ public class PlayerManager {
     public void loadAndPlay(CommandContext ctx, String trackUrl, boolean isLocalFile) {
         TextChannel textChannel = ctx.getChannel();
         GuildMusicManager musicManager = getMusicManager(textChannel.getGuild());
+        TrackScheduler scheduler = musicManager.getScheduler();
 
         audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
-                musicManager.getScheduler().queue(audioTrack, isLocalFile);
-                if (!isLocalFile) {
+                if (isLocalFile) {
+                    scheduler.queue(audioTrack, true);
+                } else {
                     displayAddedToQueue(ctx, audioTrack);
                 }
             }
@@ -61,7 +63,7 @@ public class PlayerManager {
                             .append("`")
                             .queue();
 
-                    allTracks.forEach(track -> musicManager.getScheduler().queue(track, false));
+                    allTracks.forEach(track -> scheduler.queue(track, false));
                 }
             }
 
@@ -81,7 +83,6 @@ public class PlayerManager {
         return musicManagers.computeIfAbsent(guild.getIdLong(), (guildID) -> {
             GuildMusicManager guildMusicManager = new GuildMusicManager(audioPlayerManager);
             guild.getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
-
             return guildMusicManager;
         });
     }
