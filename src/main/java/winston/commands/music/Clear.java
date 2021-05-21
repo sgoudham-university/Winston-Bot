@@ -35,7 +35,7 @@ public class Clear implements ICommand {
         }
 
         scheduler.getPlayer().stopTrack();
-        scheduler.getQueue().clear();
+        scheduler.getDeque().clear();
 
         textChannel.sendMessage(buildSimpleInfo("Queue Has Been Cleared ✔", Color.GREEN)).queue();
     }

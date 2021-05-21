@@ -13,7 +13,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
-    private final BlockingDeque<AudioTrack> queue;
+    private final BlockingDeque<AudioTrack> deque;
     private boolean repeating = false;
     private boolean readyToPlayFile = false;
     private AudioTrack currentTack;
@@ -21,16 +21,16 @@ public class TrackScheduler extends AudioEventAdapter {
 
     TrackScheduler(AudioPlayer player) {
         this.player = player;
-        queue = new LinkedBlockingDeque<>();
+        deque = new LinkedBlockingDeque<>();
     }
 
     public void queue(AudioTrack track, boolean isLocalFile) {
         if (!player.startTrack(track, true)) {
             if (isLocalFile) {
-                queue.addFirst(track);
+                deque.addFirst(track);
                 setReadyToPlayFile(true);
             } else {
-                queue.offer(track);
+                deque.offer(track);
             }
         }
     }
@@ -54,11 +54,11 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void nextTrack() {
-        player.startTrack(queue.poll(), false);
+        player.startTrack(deque.poll(), false);
     }
 
     public void removeTrack() {
-        queue.removeFirst();
+        deque.removeFirst();
     }
 
     public void shuffle() {
@@ -69,7 +69,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
     public void skipTo(int index) {
         List<AudioTrack> trackList = getQueueAsList();
-        trackList.subList(0, index - 1).clear();
+        trackList.subList(0, index).clear();
         setListAsQueue(trackList);
     }
 
@@ -81,12 +81,12 @@ public class TrackScheduler extends AudioEventAdapter {
 
     private List<AudioTrack> getQueueAsList() {
         List<AudioTrack> trackList = new ArrayList<>();
-        queue.drainTo(trackList);
+        deque.drainTo(trackList);
         return trackList;
     }
 
     private void setListAsQueue(List<AudioTrack> trackList) {
-        queue.addAll(trackList);
+        deque.addAll(trackList);
     }
     public void setRepeating(boolean repeating) {
         this.repeating = repeating;
@@ -94,8 +94,8 @@ public class TrackScheduler extends AudioEventAdapter {
     public AudioPlayer getPlayer() {
         return player;
     }
-    public BlockingDeque<AudioTrack> getQueue() {
-        return queue;
+    public BlockingDeque<AudioTrack> getDeque() {
+        return deque;
     }
     public boolean isRepeating() {
         return repeating;
