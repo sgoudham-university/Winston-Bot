@@ -2,12 +2,12 @@ package winston.commands.player;
 
 import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
-import com.github.ygimenez.type.PageType;
 import command.CommandContext;
 import command.ICommand;
 import models.Player.Player;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import org.apache.commons.text.WordUtils;
 import winston.bot.Overwatch;
 import winston.bot.config.Logger;
@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 public class PlayerInfo implements ICommand {
 
@@ -24,16 +25,19 @@ public class PlayerInfo implements ICommand {
     public void handle(CommandContext ctx) throws Exception {
 
         List<String> args = ctx.getArgs();
+        User author = ctx.getAuthor();
 
         Player player = new Overwatch().getPlayerStats(args);
         MessageEmbed playerInfoMenu = buildMenuEmbed(player, ctx);
         HashMap<String, Page> pages = new HashMap<>();
 
-        pages.put("1️⃣", new Page(PageType.EMBED, buildEndorsementEmbed(player, ctx)));
-        pages.put("2️⃣", new Page(PageType.EMBED, buildCompetitiveEmbed(player, ctx)));
-        pages.put("3️⃣", new Page(PageType.EMBED, playerInfoMenu));
+        pages.put("1️⃣", new Page(buildEndorsementEmbed(player, ctx)));
+        pages.put("2️⃣", new Page(buildCompetitiveEmbed(player, ctx)));
+        pages.put("3️⃣", new Page(playerInfoMenu));
 
-        ctx.getEvent().getChannel().sendMessage(playerInfoMenu).queue(success -> Pages.categorize(success, pages, 120, TimeUnit.SECONDS));
+        ctx.getEvent().getChannel().sendMessage(playerInfoMenu).queue(success ->
+                Pages.categorize(success, pages, 120, TimeUnit.SECONDS, Predicate.isEqual(author))
+        );
         Logger.LOGGER.info("Player Statistics Sent For {}!", args);
     }
 
