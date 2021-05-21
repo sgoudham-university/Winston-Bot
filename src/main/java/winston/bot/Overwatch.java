@@ -45,19 +45,19 @@ public class Overwatch {
         String link;
 
         try {
-            String platform = args.get(0);
+            String platform = args.get(0).toLowerCase();
             if (platform.equalsIgnoreCase("pc")) {
                 String[] battlenet = args.get(2).split("#");
                 url = "https://overwatch-api.tekrop.fr/player/"
                         + battlenet[0] + "-" + battlenet[1]
                         + "/info?"
                         + "platform=" + platform
-                        + "&region=" + args.get(1);
+                        + "&region=" + args.get(1).toLowerCase();
                 link = "https://www.overbuff.com/players/"
                         + platform + "/"
                         + battlenet[0] + "-" + battlenet[1];
             } else if (platform.equalsIgnoreCase("xbl") || platform.equalsIgnoreCase("psn")) {
-                String user = args.get(1);
+                String user = args.get(1).toLowerCase();
                 url = "https://overwatch-api.tekrop.fr/player/"
                         + user
                         + "/info?"
