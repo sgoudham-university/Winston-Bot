@@ -2,7 +2,6 @@ package winston.commands.music;
 
 import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
-import com.github.ygimenez.type.PageType;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import command.CommandContext;
@@ -22,7 +21,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
+import static winston.commands.music.common.Display.getTrimmedTitle;
 import static winston.commands.music.util.Common.formatTime;
 import static winston.commands.music.util.Validation.queueIsEmpty;
 
@@ -46,13 +47,16 @@ public class Queue implements ICommand {
         int songsRemaining = 1;
         while (songsRemaining > 0) {
             QueueEmbedInfo queueEmbedInfo = readSongs(trackList, author, ctx, embedInfo);
-            pages.add(new Page(PageType.EMBED, queueEmbedInfo.getQueueMessageEmbed()));
+            pages.add(new Page(queueEmbedInfo.getQueueMessageEmbed()));
             queueEmbedInfo.setCurrentPage(queueEmbedInfo.getCurrentPage() + 1);
             songsRemaining = trackList.size() - queueEmbedInfo.getTrackSize();
             queueEmbedInfo.setTrackSize(queueEmbedInfo.getTrackSize() + Math.min(songsRemaining, 10));
         }
 
-        textChannel.sendMessage((MessageEmbed) pages.get(0).getContent()).queue(success -> Pages.paginate(success, pages, 120, TimeUnit.SECONDS, 5));
+        Object embedContent = pages.get(0).getContent();
+        textChannel.sendMessage((MessageEmbed) embedContent).queue(success ->
+                Pages.paginate(success, pages, 120, TimeUnit.SECONDS, 5, true, Predicate.isEqual(author))
+        );
     }
 
     private QueueEmbedInfo readSongs(List<AudioTrack> trackList, User author, CommandContext ctx, QueueEmbedInfo embedInfo) {
@@ -65,16 +69,11 @@ public class Queue implements ICommand {
         for (int i = songsRead; i < trackSize; i++) {
             AudioTrack track = trackList.get(i);
             AudioTrackInfo trackInfo = track.getInfo();
-            String title = trackInfo.title;
-            String duration = formatTime(track.getDuration());
-            int titleSize = Math.min(title.length(), 40);
-            String suffix = titleSize < title.length() ? "..." : "";
+            String trackIndex = "**" + (i + 1) + ")**  ";
+            String duration = "`[" + formatTime(track.getDuration()) + "]`  ";
+            String title = getTrimmedTitle(trackInfo.title, 40);
 
-            queueEmbed.appendDescription("**" + (i + 1) + ")**  ")
-                    .appendDescription("`[" + duration + "]`  ")
-                    .appendDescription(title.substring(0, titleSize) + suffix)
-                    .appendDescription("\n");
-
+            queueEmbed.appendDescription(trackIndex + duration + title + "\n");
             embedInfo.setSongsRead(songsRead += 1);
         }
         embedInfo.setQueueMessageEmbed(queueEmbed.build());
