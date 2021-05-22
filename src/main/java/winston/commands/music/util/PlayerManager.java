@@ -42,7 +42,7 @@ public class PlayerManager {
         audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
-                scheduler.queue(audioTrack, true);
+                scheduler.queue(audioTrack, isLocalFile);
                 if (!isLocalFile) {
                     displayAddedToQueue(ctx, audioTrack);
                 }
