@@ -30,11 +30,11 @@ public class CommandManager {
                 new Repeat(), new Leave(), new Resume(), new Voice(),
                 new Shuffle(), new SkipTo()
         };
-        addCommand(allCommands);
+        initialiseAllCommands(allCommands);
         commandsMap = initialiseCommandMap();
     }
 
-    private void addCommand(ICommand... commands) {
+    private void initialiseAllCommands(ICommand... commands) {
         for (ICommand command : commands) {
             boolean nameFound = allCommands.stream().anyMatch(it -> it.getName().equalsIgnoreCase(command.getName()));
             if (nameFound) {
