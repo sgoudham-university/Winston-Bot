@@ -9,9 +9,9 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import java.util.Collections;
 import java.util.List;
 
-import static winston.commands.music.util.Common.joinVoiceChannel;
-import static winston.commands.music.util.Validation.botInVoiceChannel;
-import static winston.commands.music.util.Validation.memberNotInVoiceChannel;
+import static winston.commands.music.common.Common.joinVoiceChannel;
+import static winston.commands.music.common.Validation.botInVoiceChannel;
+import static winston.commands.music.common.Validation.memberNotInVoiceChannel;
 
 @SuppressWarnings({"ConstantConditions"})
 public class Join implements ICommand {
@@ -50,4 +50,7 @@ public class Join implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("j");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

@@ -12,8 +12,10 @@ import winston.commands.music.util.PlayerManager;
 import java.awt.*;
 import java.util.List;
 
-import static winston.commands.music.util.Common.*;
-import static winston.commands.music.util.Validation.*;
+import static winston.commands.music.common.Common.buildSimpleInfo;
+import static winston.commands.music.common.Display.displayAlreadyPaused;
+import static winston.commands.music.common.Display.displayPausing;
+import static winston.commands.music.common.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
 public class Pause implements ICommand {
@@ -62,4 +64,7 @@ public class Pause implements ICommand {
     public List<String> getAliases() {
         return ICommand.super.getAliases();
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

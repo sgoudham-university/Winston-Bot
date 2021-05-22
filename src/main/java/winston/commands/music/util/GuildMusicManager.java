@@ -9,21 +9,17 @@ public class GuildMusicManager {
     private final AudioPlayerSendHandler sendHandler;
 
     GuildMusicManager(AudioPlayerManager manager) {
-        this.audioPlayer = manager.createPlayer();
-        this.scheduler = new TrackScheduler(this.audioPlayer);
-        this.audioPlayer.addListener(this.scheduler);
-        this.sendHandler = new AudioPlayerSendHandler(this.audioPlayer);
-    }
-
-    AudioPlayerSendHandler getSendHandler() {
-        return sendHandler;
+        audioPlayer = manager.createPlayer();
+        scheduler = new TrackScheduler(audioPlayer);
+        audioPlayer.addListener(scheduler);
+        sendHandler = new AudioPlayerSendHandler(audioPlayer);
     }
 
     public AudioPlayer getAudioPlayer() {
         return audioPlayer;
     }
-
-    public TrackScheduler getScheduler() {
-        return scheduler;
+    AudioPlayerSendHandler getSendHandler() {
+        return sendHandler;
     }
+    public TrackScheduler getScheduler() { return scheduler; }
 }

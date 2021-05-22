@@ -14,9 +14,9 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
-import static winston.commands.music.util.Common.buildSimpleInfo;
-import static winston.commands.music.util.Common.joinVoiceChannel;
-import static winston.commands.music.util.Validation.memberNotInVoiceChannel;
+import static winston.commands.music.common.Common.buildSimpleInfo;
+import static winston.commands.music.common.Common.joinVoiceChannel;
+import static winston.commands.music.common.Validation.memberNotInVoiceChannel;
 
 @SuppressWarnings("ConstantConditions")
 public class Play implements ICommand {
@@ -77,4 +77,7 @@ public class Play implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("p");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

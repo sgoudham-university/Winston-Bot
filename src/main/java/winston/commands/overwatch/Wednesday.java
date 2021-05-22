@@ -1,4 +1,4 @@
-package winston.commands.misc;
+package winston.commands.overwatch;
 
 import command.CommandContext;
 import command.ICommand;
@@ -40,4 +40,7 @@ public class Wednesday implements ICommand {
     public List<String> getAliases() {
         return Arrays.asList("winstonwednesday", "ww");
     }
+
+    @Override
+    public String getPackage() { return "Overwatch"; }
 }

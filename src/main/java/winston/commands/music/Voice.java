@@ -20,8 +20,8 @@ import java.util.Random;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static util.Constants.*;
-import static winston.commands.music.util.Common.joinVoiceChannel;
-import static winston.commands.music.util.Validation.memberNotInVoiceChannel;
+import static winston.commands.music.common.Common.joinVoiceChannel;
+import static winston.commands.music.common.Validation.memberNotInVoiceChannel;
 
 @SuppressWarnings("ConstantConditions")
 public class Voice implements ICommand {
@@ -88,4 +88,7 @@ public class Voice implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("say");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

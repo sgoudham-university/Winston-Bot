@@ -14,8 +14,8 @@ import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
-import static winston.commands.music.util.Common.buildSimpleInfo;
-import static winston.commands.music.util.Validation.*;
+import static winston.commands.music.common.Common.buildSimpleInfo;
+import static winston.commands.music.common.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
 public class Leave implements ICommand {
@@ -36,7 +36,7 @@ public class Leave implements ICommand {
 
         musicManager.getScheduler().setRepeating(false);
         musicManager.getScheduler().getPlayer().setPaused(false);
-        musicManager.getScheduler().getQueue().clear();
+        musicManager.getScheduler().getDeque().clear();
         musicManager.getAudioPlayer().stopTrack();
 
         AudioManager audioManager = ctx.getGuild().getAudioManager();
@@ -67,4 +67,7 @@ public class Leave implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("disconnect");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

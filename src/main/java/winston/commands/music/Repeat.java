@@ -13,7 +13,7 @@ import winston.commands.music.util.TrackScheduler;
 import java.util.Collections;
 import java.util.List;
 
-import static winston.commands.music.util.Validation.*;
+import static winston.commands.music.common.Validation.*;
 
 @SuppressWarnings("ConstantConditions")
 public class Repeat implements ICommand {
@@ -58,4 +58,7 @@ public class Repeat implements ICommand {
     public List<String> getAliases() {
         return Collections.singletonList("loop");
     }
+
+    @Override
+    public String getPackage() { return "Music"; }
 }

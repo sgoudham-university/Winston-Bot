@@ -1,8 +1,7 @@
-package winston.commands.hero;
+package winston.commands.overwatch;
 
 import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
-import com.github.ygimenez.type.PageType;
 import command.CommandContext;
 import command.ICommand;
 import exception.HeroNotFoundException;
@@ -10,6 +9,7 @@ import models.Hero.Ability;
 import models.Hero.Hero;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import winston.bot.Overwatch;
 import winston.bot.config.Logger;
 
@@ -17,6 +17,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 public class HeroInfo implements ICommand {
 
@@ -24,18 +25,22 @@ public class HeroInfo implements ICommand {
     public void handle(CommandContext ctx) throws Exception {
 
         List<String> args = ctx.getArgs();
+        User author = ctx.getAuthor();
         Map<String, Hero> allHeroes = Overwatch.getAllHeroes();
         ArrayList<Page> pages = new ArrayList<>();
 
         try {
             Hero hero = allHeroes.get(args.get(0).toLowerCase());
 
-            pages.add(new Page(PageType.EMBED, buildHeroInfoEmbed(hero, ctx, hero.getAbilities().size() + 1)));
+            pages.add(new Page(buildHeroInfoEmbed(hero, ctx, hero.getAbilities().size() + 1)));
             for (int i = 0; i < hero.getAbilities().size(); i++) {
-                pages.add(new Page(PageType.EMBED, buildHeroAbilitiesEmbeds(hero, hero.getAbilities().get(i), ctx, i, hero.getAbilities().size() + 1)));
+                pages.add(new Page(buildHeroAbilitiesEmbeds(hero, hero.getAbilities().get(i), ctx, i, hero.getAbilities().size() + 1)));
             }
 
-            ctx.getEvent().getChannel().sendMessage((MessageEmbed) pages.get(0).getContent()).queue(success -> Pages.paginate(success, pages, 60, TimeUnit.SECONDS, 2));
+            Object content = pages.get(0).getContent();
+            ctx.getEvent().getChannel().sendMessage((MessageEmbed) content).queue(success ->
+                    Pages.paginate(success, pages, 120, TimeUnit.SECONDS, 2, true, Predicate.isEqual(author))
+            );
             Logger.LOGGER.info("Overwatch Hero: " + hero.getName() + " Information Sent!");
 
         } catch (NullPointerException e) {
@@ -96,4 +101,7 @@ public class HeroInfo implements ICommand {
     public List<String> getAliases() {
         return Arrays.asList("character", "char");
     }
+
+    @Override
+    public String getPackage() { return "Overwatch"; }
 }

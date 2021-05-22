@@ -1,6 +1,9 @@
 package winston.bot;
 
+import com.github.ygimenez.exception.InvalidHandlerException;
 import com.github.ygimenez.method.Pages;
+import com.github.ygimenez.model.Paginator;
+import com.github.ygimenez.model.PaginatorBuilder;
 import exception.FileReaderException;
 import listener.Listener;
 import listener.MyGuildMessageReceivedEvent;
@@ -36,14 +39,21 @@ public class Winston {
         overwatch.startup();
     }
 
-    public void start(String token) throws LoginException, FileReaderException {
-        Pages.activate(JDABuilder.createDefault(token)
+    public void start(String token) throws LoginException, FileReaderException, InvalidHandlerException {
+        JDA bot = JDABuilder.createDefault(token)
                 .setActivity(Activity.playing("Overwatch"))
                 .addEventListeners(new Listener(), new MyReadyEvent(), new MyGuildMessageReceivedEvent(), new MyMessageReceivedEvent())
                 .enableIntents(Arrays.asList(gatewayIntents))
                 .enableCache(CacheFlag.VOICE_STATE)
-                .build()
-        );
+                .build();
+
+        Paginator paginator = PaginatorBuilder.createPaginator()
+                .setHandler(bot)
+                .setDeleteOnCancel(false)
+                .shouldRemoveOnReact(true)
+                .build();
+
+        Pages.activate(paginator);
     }
 
     public Winston(JDA jda) {

@@ -1,13 +1,13 @@
-package winston.commands.player;
+package winston.commands.overwatch;
 
 import com.github.ygimenez.method.Pages;
 import com.github.ygimenez.model.Page;
-import com.github.ygimenez.type.PageType;
 import command.CommandContext;
 import command.ICommand;
 import models.Player.Player;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import org.apache.commons.text.WordUtils;
 import winston.bot.Overwatch;
 import winston.bot.config.Logger;
@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 public class CompInfo implements ICommand {
 
@@ -25,14 +26,18 @@ public class CompInfo implements ICommand {
     public void handle(CommandContext ctx) throws Exception {
 
         List<String> args = ctx.getArgs();
+        User author = ctx.getAuthor();
         ArrayList<Page> pages = new ArrayList<>();
 
         Player player = new Overwatch().getPlayerStats(args);
-        pages.add(new Page(PageType.EMBED, buildTankEmbed(player, ctx)));
-        pages.add(new Page(PageType.EMBED, buildDamageEmbed(player, ctx)));
-        pages.add(new Page(PageType.EMBED, buildSupportEmbed(player, ctx)));
+        pages.add(new Page(buildTankEmbed(player, ctx)));
+        pages.add(new Page(buildDamageEmbed(player, ctx)));
+        pages.add(new Page(buildSupportEmbed(player, ctx)));
 
-        ctx.getEvent().getChannel().sendMessage((MessageEmbed) pages.get(0).getContent()).queue(success -> Pages.paginate(success, pages, 60, TimeUnit.SECONDS));
+        Object embedContent = pages.get(0).getContent();
+        ctx.getEvent().getChannel().sendMessage((MessageEmbed) embedContent).queue(success ->
+                Pages.paginate(success, pages, 120, TimeUnit.SECONDS, Predicate.isEqual(author))
+        );
         Logger.LOGGER.info("Player Competitive Statistics Sent For {}!", args);
 
     }
@@ -94,4 +99,7 @@ public class CompInfo implements ICommand {
     public List<String> getAliases() {
         return Arrays.asList("competitive", "ranked");
     }
+
+    @Override
+    public String getPackage() { return "Overwatch"; }
 }
