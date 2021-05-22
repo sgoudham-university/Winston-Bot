@@ -94,7 +94,7 @@ public class HeroInfo implements ICommand {
 
     @Override
     public String getUsage() {
-        return "`!hero <name>`";
+        return "`hero <name>`";
     }
 
     @Override

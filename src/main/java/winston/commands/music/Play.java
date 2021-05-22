@@ -70,7 +70,7 @@ public class Play implements ICommand {
 
     @Override
     public String getUsage() {
-        return "`!play <link | text>`";
+        return "`play <link | text>`";
     }
 
     @Override

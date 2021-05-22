@@ -66,7 +66,7 @@ public class SkipTo implements ICommand {
     public String getHelp() { return "Skip to specific song within the queue"; }
 
     @Override
-    public String getUsage() { return "`!skipto <index>`"; }
+    public String getUsage() { return "`skipto <index>`"; }
 
     @Override
     public List<String> getAliases() { return ICommand.super.getAliases(); }
