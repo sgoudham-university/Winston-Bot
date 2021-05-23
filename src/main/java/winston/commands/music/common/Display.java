@@ -53,7 +53,7 @@ public class Display {
         String position = formatTime(track.getPosition());
         String duration = formatTime(track.getDuration());
 
-        String embedAuthor = status + " | [" + position + "s / " + duration + "s]";
+        String embedAuthor = status + "   |   [" + position + "s / " + duration + "s]";
         String embedDesc = getProgressBar(track);
 
         return displaySong(ctx, track, embedAuthor, embedDesc);
@@ -83,8 +83,10 @@ public class Display {
 
     private static EmbedBuilder getBaseEmbed(CommandContext ctx, String status) {
         User author = ctx.getAuthor();
+        String youtubeLogo = "https://www.vexels.com/media/users/3/137425/isolated/thumb/f2ea1ded4d037633f687ee389a571086-youtube-icon-logo-by-vexels.png";
+
         return new EmbedBuilder()
-                .setAuthor(status)
+                .setAuthor(status, null, youtubeLogo)
                 .setThumbnail(author.getEffectiveAvatarUrl())
                 .setFooter("Requested By " + author.getName(), ctx.getSelfUser().getAvatarUrl())
                 .setTimestamp(new Date().toInstant());
@@ -112,14 +114,16 @@ public class Display {
 
     private static String getProgressBar(AudioTrack track) {
         float percentage = (100f / track.getDuration() * track.getPosition());
+        int barLength = (int) Math.round((double) percentage / 3.33);
+        String playButton = "` ▶️ ";
+        String trackLine = "⎯";
+        String redCircle = "\uD83D\uDD34";
 
-        return "` ▶️ "
-                + StringUtils.repeat("⎯", (int) Math.round((double) percentage / 2.5))
-                + "\uD83D\uDD34"
-                + ""
-                + StringUtils.repeat("⎯", 30 - (int) Math.round((double) percentage / 2.5))
+        return playButton + StringUtils.repeat(trackLine, barLength) + redCircle
+                + StringUtils.repeat(trackLine, 30 - barLength)
                 + "  "
-                + String.format("%.2f%%", percentage) + "`";
+                + String.format("%.2f%%", percentage)
+                + "`";
     }
 
     public static String getTrimmedTitle(String title, int minSize) {
