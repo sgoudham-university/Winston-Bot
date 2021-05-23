@@ -8,7 +8,6 @@ import command.CommandContext;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import winston.bot.config.Logger;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static winston.commands.music.common.Common.buildSimpleInfo;
 import static winston.commands.music.common.Display.*;
 
 public class TrackScheduler extends AudioEventAdapter {
@@ -62,10 +60,6 @@ public class TrackScheduler extends AudioEventAdapter {
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-        if (deque.isEmpty()) {
-            ctx.getChannel().sendMessage(buildSimpleInfo("End of Queue!", Color.YELLOW)).queue();
-        }
-
         if (endReason.mayStartNext) {
             if (isRepeating()) {
                 this.player.startTrack(track.makeClone(), false);
