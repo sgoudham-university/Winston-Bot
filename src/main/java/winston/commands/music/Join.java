@@ -3,7 +3,6 @@ package winston.commands.music;
 import command.CommandContext;
 import command.ICommand;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.Collections;
@@ -19,10 +18,8 @@ public class Join implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         TextChannel textChannel = ctx.getChannel();
-        Member bot = ctx.getSelfMember();
-        Member author = ctx.getMember();
-        GuildVoiceState authorVoiceState = author.getVoiceState();
-        GuildVoiceState botVoiceState = bot.getVoiceState();
+        GuildVoiceState authorVoiceState = ctx.getMember().getVoiceState();
+        GuildVoiceState botVoiceState = ctx.getSelfMember().getVoiceState();
 
         if (botInVoiceChannel(botVoiceState, textChannel) || memberNotInVoiceChannel(authorVoiceState, textChannel)) {
             return;

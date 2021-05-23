@@ -101,7 +101,7 @@ public class PlayerInfo implements ICommand {
 
     @Override
     public String getUsage() {
-        return "`!info <platform> <region> <playerName>`";
+        return "`info <platform> <region> <playerName>`";
     }
 
     @Override

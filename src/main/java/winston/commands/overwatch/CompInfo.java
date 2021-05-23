@@ -92,7 +92,7 @@ public class CompInfo implements ICommand {
 
     @Override
     public String getUsage() {
-        return "`!comp <platform> <region> <playerName>`";
+        return "`comp <platform> <region> <playerName>`";
     }
 
     @Override

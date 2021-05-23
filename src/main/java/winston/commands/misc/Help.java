@@ -95,7 +95,7 @@ public class Help implements ICommand {
 
     @Override
     public String getUsage() {
-        return "`!help [command]`";
+        return "`help [command]`";
     }
 
     @Override

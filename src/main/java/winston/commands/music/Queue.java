@@ -19,13 +19,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 import static winston.commands.music.common.Common.formatTime;
 import static winston.commands.music.common.Display.getTrimmedTitle;
-import static winston.commands.music.common.Validation.queueIsEmpty;
+import static winston.commands.music.common.Validation.dequeIsEmpty;
 
 public class Queue implements ICommand {
 
@@ -34,15 +34,15 @@ public class Queue implements ICommand {
         List<Page> pages = new ArrayList<>();
         TextChannel textChannel = ctx.getChannel();
         User author = ctx.getAuthor();
-        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
-        BlockingQueue<AudioTrack> queue = musicManager.getScheduler().getDeque();
+        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx);
+        BlockingDeque<AudioTrack> deque = musicManager.getScheduler().getDeque();
 
-        if (queueIsEmpty(queue, textChannel)) {
+        if (dequeIsEmpty(deque, textChannel)) {
             return;
         }
 
-        List<AudioTrack> trackList = new ArrayList<>(queue);
-        QueueEmbedInfo embedInfo = new QueueEmbedInfo(queue, trackList);
+        List<AudioTrack> trackList = new ArrayList<>(deque);
+        QueueEmbedInfo embedInfo = new QueueEmbedInfo(deque, trackList);
 
         int songsRemaining = 1;
         while (songsRemaining > 0) {
@@ -92,7 +92,7 @@ public class Queue implements ICommand {
     private EmbedBuilder buildQueueEmbed(User author, CommandContext ctx, int currPage, int totalPages) {
         return getBaseEmbed(author, ctx, currPage, totalPages)
                 .setThumbnail(null)
-                .setTitle("Current Songs in Queue")
+                .setTitle("Current Tracks in Queue")
                 .setColor(Color.BLUE);
     }
 
@@ -103,7 +103,7 @@ public class Queue implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Shows the current songs within the queue";
+        return "Shows the current tracks within the queue";
     }
 
     @Override

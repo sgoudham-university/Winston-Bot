@@ -8,7 +8,6 @@ import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import command.CommandContext;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.HashMap;
@@ -36,16 +35,16 @@ public class PlayerManager {
 
     public void loadAndPlay(CommandContext ctx, String trackUrl, boolean isLocalFile) {
         TextChannel textChannel = ctx.getChannel();
-        GuildMusicManager musicManager = getMusicManager(textChannel.getGuild());
+        GuildMusicManager musicManager = getMusicManager(ctx);
         TrackScheduler scheduler = musicManager.getScheduler();
 
         audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
-                scheduler.queue(audioTrack, isLocalFile);
                 if (!isLocalFile) {
                     displayAddedToQueue(ctx, audioTrack);
                 }
+                scheduler.queue(audioTrack, isLocalFile);
             }
 
             @Override
@@ -78,10 +77,20 @@ public class PlayerManager {
         });
     }
 
-    public GuildMusicManager getMusicManager(Guild guild) {
-        return musicManagers.computeIfAbsent(guild.getIdLong(), (guildID) -> {
-            GuildMusicManager guildMusicManager = new GuildMusicManager(audioPlayerManager);
-            guild.getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
+    public GuildMusicManager getMusicManager(CommandContext ctx) {
+        updateTrackScheduler(ctx);
+
+        return musicManagers.computeIfAbsent(ctx.getGuild().getIdLong(), (guildID) -> {
+            GuildMusicManager guildMusicManager = new GuildMusicManager(audioPlayerManager, ctx);
+            ctx.getGuild().getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
+            return guildMusicManager;
+        });
+    }
+
+    private void updateTrackScheduler(CommandContext newCtx) {
+        musicManagers.computeIfPresent(newCtx.getGuild().getIdLong(), (guildId, ctx) -> {
+            GuildMusicManager guildMusicManager = musicManagers.get(guildId);
+            guildMusicManager.getScheduler().setCtx(newCtx);
             return guildMusicManager;
         });
     }

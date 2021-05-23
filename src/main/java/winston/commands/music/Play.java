@@ -3,7 +3,6 @@ package winston.commands.music;
 import command.CommandContext;
 import command.ICommand;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.PlayerManager;
 
@@ -25,10 +24,8 @@ public class Play implements ICommand {
     public void handle(CommandContext ctx) throws Exception {
         List<String> args = ctx.getArgs();
         TextChannel textChannel = ctx.getChannel();
-        Member bot = ctx.getSelfMember();
-        Member author = ctx.getMember();
-        GuildVoiceState authorVoiceState = author.getVoiceState();
-        GuildVoiceState botVoiceState = bot.getVoiceState();
+        GuildVoiceState authorVoiceState = ctx.getMember().getVoiceState();
+        GuildVoiceState botVoiceState = ctx.getSelfMember().getVoiceState();
 
         if (memberNotInVoiceChannel(authorVoiceState, textChannel)) {
             return;
@@ -65,12 +62,12 @@ public class Play implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Plays the given song";
+        return "Plays the given track";
     }
 
     @Override
     public String getUsage() {
-        return "`!play <link | text>`";
+        return "`play <link | text>`";
     }
 
     @Override

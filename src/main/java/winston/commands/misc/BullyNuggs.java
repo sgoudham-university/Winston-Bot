@@ -43,7 +43,7 @@ public class BullyNuggs implements ICommand {
 
     @Override
     public String getUsage() {
-        return "`!bullynuggs <on> | <off> | <stop> | <mode>`";
+        return "`bullynuggs <on> | <off> | <stop> | <mode>`";
     }
 
     @Override
