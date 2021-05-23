@@ -35,20 +35,22 @@ public class Seek implements ICommand {
             if (args.isEmpty()) {
                 textChannel.sendMessage(buildSimpleInfo("Please Specify Position (In Seconds) To Seek To!", Color.RED)).queue();
             } else {
-                if (seekPositionInvalid(playingTrack, args, textChannel)) {
+                String seekPosition = args.get(0);
+                if (numberFormatInvalid(seekPosition, textChannel)) {
                     return;
                 }
 
-                String seekPos = args.get(0);
-                long seekPosMill = Long.parseLong(seekPos) * 1000;
+                long seekPositionMilliseconds = convertToMilliseconds(Integer.parseInt(seekPosition));
+                if (seekPositionInvalid(playingTrack, seekPositionMilliseconds, textChannel)) {
+                    return;
+                }
 
-                playingTrack.setPosition(seekPosMill);
+                playingTrack.setPosition(seekPositionMilliseconds);
                 displayNowPlaying(ctx, audioPlayer);
             }
         } else {
             textChannel.sendMessage(buildSimpleInfo("Cannot Seek On This Track!", Color.RED)).queue();
         }
-
     }
 
     @Override

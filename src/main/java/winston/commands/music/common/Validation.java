@@ -94,22 +94,33 @@ public class Validation {
         return false;
     }
 
-    public static boolean seekPositionInvalid(AudioTrack audioTrack, List<String> args, TextChannel textChannel) {
-        int seekPos;
+    public static boolean seekPositionInvalid(AudioTrack audioTrack, long trackPositionMill, TextChannel textChannel) {
+        if (trackPositionMill < audioTrack.getPosition() || trackPositionMill > audioTrack.getDuration()) {
+            textChannel.sendMessage(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
+            return true;
+        }
+        return false;
+    }
 
+    public static boolean fastForwardInvalid(AudioTrack audioTrack, long trackPositionMill, TextChannel textChannel) {
+        if ((audioTrack.getPosition() + trackPositionMill) < audioTrack.getPosition() || trackPositionMill > audioTrack.getDuration()) {
+            textChannel.sendMessage(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean numberFormatInvalid(String userInput, TextChannel textChannel) {
         try {
-            seekPos = Integer.parseInt(args.get(0));
+            Integer.parseInt(userInput);
         } catch (NumberFormatException nfe) {
             textChannel.sendMessage(buildSimpleInfo("Please Enter A Valid Number!", colour)).queue();
             return true;
         }
-
-        int seekPosMill = seekPos * 1000;
-        if (seekPosMill < audioTrack.getPosition() || seekPosMill > audioTrack.getDuration()) {
-            textChannel.sendMessage(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
-            return true;
-        }
-
         return false;
+    }
+
+    public static int convertToMilliseconds(int trackPosition) {
+        return trackPosition * 1000;
     }
 }
