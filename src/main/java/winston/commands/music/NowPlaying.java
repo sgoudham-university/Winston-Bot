@@ -36,7 +36,7 @@ public class NowPlaying implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Shows the current song being played";
+        return "Shows the current track being played";
     }
 
     @Override

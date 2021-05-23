@@ -31,7 +31,7 @@ public class Pause implements ICommand {
         } else if (audioPlayer.getPlayingTrack() != null) {
             audioPlayer.setPaused(true);
         } else {
-            textChannel.sendMessage(buildSimpleInfo("No Song To Pause!", Color.RED)).queue();
+            textChannel.sendMessage(buildSimpleInfo("No Track To Pause!", Color.RED)).queue();
         }
     }
 
@@ -42,7 +42,7 @@ public class Pause implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Pauses current song being played";
+        return "Pauses current track being played";
     }
 
     @Override

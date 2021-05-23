@@ -92,7 +92,7 @@ public class Queue implements ICommand {
     private EmbedBuilder buildQueueEmbed(User author, CommandContext ctx, int currPage, int totalPages) {
         return getBaseEmbed(author, ctx, currPage, totalPages)
                 .setThumbnail(null)
-                .setTitle("Current Songs in Queue")
+                .setTitle("Current Tracks in Queue")
                 .setColor(Color.BLUE);
     }
 
@@ -103,7 +103,7 @@ public class Queue implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Shows the current songs within the queue";
+        return "Shows the current tracks within the queue";
     }
 
     @Override

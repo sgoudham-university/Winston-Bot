@@ -39,7 +39,7 @@ public class Clear implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Clears the current queue and stops playing the current song";
+        return "Clears the current queue and stops playing the current track";
     }
 
     @Override

@@ -29,7 +29,7 @@ public class Repeat implements ICommand {
         TrackScheduler scheduler = musicManager.getScheduler();
         scheduler.setRepeating(!scheduler.isRepeating());
 
-        textChannel.sendMessage(scheduler.isRepeating() ? "Looping Current Song!" : "Not Looping Current Song Anymore!").queue();
+        textChannel.sendMessage(scheduler.isRepeating() ? "Looping Current Track!" : "Not Looping Current Track Anymore!").queue();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class Repeat implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Loops the current song";
+        return "Loops the current track";
     }
 
     @Override

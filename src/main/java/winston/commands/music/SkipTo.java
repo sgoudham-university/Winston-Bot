@@ -28,7 +28,7 @@ public class SkipTo implements ICommand {
         }
 
         if (args.isEmpty()) {
-            textChannel.sendMessage(buildSimpleInfo("Please Specify Song Index To Skip To!", Color.RED)).queue();
+            textChannel.sendMessage(buildSimpleInfo("Please Specify Track Index To Skip To!", Color.RED)).queue();
         } else {
             if (trackIndexInvalid(scheduler, args, textChannel)) {
                 return;
@@ -43,7 +43,7 @@ public class SkipTo implements ICommand {
     public String getName() { return "skipto"; }
 
     @Override
-    public String getHelp() { return "Skip to specific song within the queue"; }
+    public String getHelp() { return "Skip to specific track within the queue"; }
 
     @Override
     public String getUsage() { return "`skipto <index>`"; }

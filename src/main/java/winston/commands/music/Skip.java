@@ -42,7 +42,7 @@ public class Skip implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Skips the current song";
+        return "Skips the current track";
     }
 
     @Override

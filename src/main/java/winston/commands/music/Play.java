@@ -62,7 +62,7 @@ public class Play implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Plays the given song";
+        return "Plays the given track";
     }
 
     @Override

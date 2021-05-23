@@ -28,7 +28,7 @@ public class Resume implements ICommand {
         if (audioPlayer.isPaused()) {
             audioPlayer.setPaused(false);
         } else {
-            textChannel.sendMessage(buildSimpleInfo("No Song To Resume!", Color.YELLOW)).queue();
+            textChannel.sendMessage(buildSimpleInfo("No Track To Resume!", Color.YELLOW)).queue();
         }
     }
 
@@ -39,7 +39,7 @@ public class Resume implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Continues playing the previously paused song";
+        return "Continues playing the previously paused track";
     }
 
     @Override
