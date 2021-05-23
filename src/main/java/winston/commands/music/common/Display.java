@@ -54,7 +54,7 @@ public class Display {
         String duration = formatTime(track.getDuration());
 
         String embedAuthor = status + "   |   [" + position + "s / " + duration + "s]";
-        String embedDesc = getProgressBar(track);
+        String embedDesc = getProgressBar(audioPlayer, track);
 
         return displaySong(ctx, track, embedAuthor, embedDesc);
     }
@@ -112,14 +112,14 @@ public class Display {
                 .build();
     }
 
-    private static String getProgressBar(AudioTrack track) {
+    private static String getProgressBar(AudioPlayer audioPlayer, AudioTrack track) {
         float percentage = (100f / track.getDuration() * track.getPosition());
         int barLength = (int) Math.round((double) percentage / 3.33);
         String playButton = "` ▶️ ";
         String trackLine = "⎯";
-        String redCircle = "\uD83D\uDD34";
+        String circle = audioPlayer.isPaused() ? "\uD83D\uDD35" : "\uD83D\uDD34";
 
-        return playButton + StringUtils.repeat(trackLine, barLength) + redCircle
+        return playButton + StringUtils.repeat(trackLine, barLength) + circle
                 + StringUtils.repeat(trackLine, 30 - barLength)
                 + "  "
                 + String.format("%.2f%%", percentage)
