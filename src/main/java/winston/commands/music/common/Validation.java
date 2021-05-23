@@ -93,4 +93,23 @@ public class Validation {
 
         return false;
     }
+
+    public static boolean seekPositionInvalid(AudioTrack audioTrack, List<String> args, TextChannel textChannel) {
+        int seekPos;
+
+        try {
+            seekPos = Integer.parseInt(args.get(0));
+        } catch (NumberFormatException nfe) {
+            textChannel.sendMessage(buildSimpleInfo("Please Enter A Valid Number!", colour)).queue();
+            return true;
+        }
+
+        int seekPosMill = seekPos * 1000;
+        if (seekPosMill < audioTrack.getPosition() || seekPosMill > audioTrack.getDuration()) {
+            textChannel.sendMessage(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
+            return true;
+        }
+
+        return false;
+    }
 }
