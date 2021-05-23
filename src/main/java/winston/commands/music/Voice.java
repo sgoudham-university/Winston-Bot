@@ -5,7 +5,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import command.CommandContext;
 import command.ICommand;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import util.Constants;
 import winston.commands.music.util.GuildMusicManager;
@@ -38,11 +37,9 @@ public class Voice implements ICommand {
     @Override
     public void handle(CommandContext ctx) throws Exception {
         TextChannel textChannel = ctx.getChannel();
-        Member bot = ctx.getSelfMember();
-        Member author = ctx.getMember();
-        GuildVoiceState authorVoiceState = author.getVoiceState();
-        GuildVoiceState botVoiceState = bot.getVoiceState();
-        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
+        GuildVoiceState authorVoiceState = ctx.getMember().getVoiceState();
+        GuildVoiceState botVoiceState = ctx.getSelfMember().getVoiceState();
+        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx);
         TrackScheduler scheduler = musicManager.getScheduler();
         AudioPlayer audioPlayer = musicManager.getAudioPlayer();
         AudioTrack playingTrack = audioPlayer.getPlayingTrack();

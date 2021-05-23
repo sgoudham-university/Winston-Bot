@@ -1,10 +1,7 @@
 package winston.commands.music;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import command.CommandContext;
 import command.ICommand;
-import net.dv8tion.jda.api.entities.GuildVoiceState;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
@@ -14,48 +11,31 @@ import java.awt.*;
 import java.util.List;
 
 import static winston.commands.music.common.Common.buildSimpleInfo;
-import static winston.commands.music.common.Display.displayNowPlaying;
-import static winston.commands.music.common.Validation.*;
+import static winston.commands.music.common.Validation.cantPerformOperation;
+import static winston.commands.music.common.Validation.trackIndexInvalid;
 
-@SuppressWarnings("ConstantConditions")
 public class SkipTo implements ICommand {
 
     @Override
     public void handle(CommandContext ctx) throws Exception {
         List<String> args = ctx.getArgs();
         TextChannel textChannel = ctx.getChannel();
-        Member bot = ctx.getSelfMember();
-        Member author = ctx.getMember();
-        GuildVoiceState authorVoiceState = author.getVoiceState();
-        GuildVoiceState botVoiceState = bot.getVoiceState();
-        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx.getGuild());
+        GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx);
         TrackScheduler scheduler = musicManager.getScheduler();
-        AudioPlayer audioPlayer = musicManager.getAudioPlayer();
 
-        if (botNotInVoiceChannel(botVoiceState, textChannel) || memberNotInVoiceChannel(authorVoiceState, textChannel)
-                || bothPartiesInDiffVoiceChannels(botVoiceState, authorVoiceState, textChannel)) {
+        if (cantPerformOperation(ctx)) {
             return;
         }
 
         if (args.isEmpty()) {
             textChannel.sendMessage(buildSimpleInfo("Please Specify Song Index To Skip To!", Color.RED)).queue();
         } else {
-            int index;
-
-            try {
-                index = Integer.parseInt(args.get(0));
-            } catch (NumberFormatException nfe) {
-                textChannel.sendMessage(buildSimpleInfo("Please Enter A Valid Number!", Color.RED)).queue();
+            if (trackIndexInvalid(scheduler, args, textChannel)) {
                 return;
             }
-
-            if (index < 1 || index > scheduler.getDeque().size()) {
-                textChannel.sendMessage(buildSimpleInfo("Please Enter Index That Is Valid For Current Queue!", Color.RED)).queue();
-            } else {
-                scheduler.skipTo(index - 1);
-                scheduler.nextTrack();
-                displayNowPlaying(ctx, audioPlayer);
-            }
+            int index = Integer.parseInt(args.get(0));
+            scheduler.skipTo(index - 1);
+            scheduler.nextTrack();
         }
     }
 
