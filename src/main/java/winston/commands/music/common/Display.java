@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
 
 import java.awt.*;
@@ -52,9 +53,10 @@ public class Display {
         String position = formatTime(track.getPosition());
         String duration = formatTime(track.getDuration());
 
-        String embedDesc = "**[" + position + "s / " + duration + "s]**";
+        String embedAuthor = status + " | [" + position + "s / " + duration + "s]";
+        String embedDesc = getProgressBar(track);
 
-        return displaySong(ctx, track, status, embedDesc);
+        return displaySong(ctx, track, embedAuthor, embedDesc);
     }
 
     private static void mergeSongInfo(CommandContext ctx, AudioTrack removedTrack) {
@@ -106,6 +108,18 @@ public class Display {
                 .setThumbnail(thumbnailUrl)
                 .setColor(Color.RED)
                 .build();
+    }
+
+    private static String getProgressBar(AudioTrack track) {
+        float percentage = (100f / track.getDuration() * track.getPosition());
+
+        return "` ▶️ "
+                + StringUtils.repeat("⎯", (int) Math.round((double) percentage / 2.5))
+                + "\uD83D\uDD34"
+                + ""
+                + StringUtils.repeat("⎯", 30 - (int) Math.round((double) percentage / 2.5))
+                + "  "
+                + String.format("%.2f%%", percentage) + "`";
     }
 
     public static String getTrimmedTitle(String title, int minSize) {
