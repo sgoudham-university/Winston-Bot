@@ -28,7 +28,8 @@ public class CommandManager {
                 new Wednesday(), new Join(), new Play(), new Pause(),
                 new Clear(), new Skip(), new NowPlaying(), new Queue(),
                 new Repeat(), new Leave(), new Resume(), new Voice(),
-                new Shuffle(), new SkipTo(), new Remove(), new Seek()
+                new Shuffle(), new SkipTo(), new Remove(), new Seek(),
+                new FastForward()
         };
         initialiseAllCommands(allCommands);
         commandsMap = initialiseCommandMap();
