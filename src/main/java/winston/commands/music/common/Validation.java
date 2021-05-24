@@ -110,6 +110,14 @@ public class Validation {
         return false;
     }
 
+    public static boolean rewindPositionInvalid(AudioTrack audioTrack, long trackPositionMill, TextChannel textChannel) {
+        if ((audioTrack.getPosition() - trackPositionMill) > audioTrack.getPosition() || trackPositionMill > audioTrack.getDuration()) {
+            textChannel.sendMessage(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
+            return true;
+        }
+        return false;
+    }
+
     public static boolean numberFormatInvalid(String userInput, TextChannel textChannel) {
         try {
             Integer.parseInt(userInput);
