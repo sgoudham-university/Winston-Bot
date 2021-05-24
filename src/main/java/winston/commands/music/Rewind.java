@@ -10,13 +10,13 @@ import winston.commands.music.util.PlayerManager;
 import winston.commands.music.util.TrackScheduler;
 
 import java.awt.*;
+import java.util.Collections;
 import java.util.List;
 
 import static winston.commands.music.common.Common.buildSimpleInfo;
-import static winston.commands.music.common.Display.displayNowPlaying;
 import static winston.commands.music.common.Validation.*;
 
-public class Seek implements ICommand {
+public class Rewind implements ICommand {
 
     @Override
     public void handle(CommandContext ctx) throws Exception {
@@ -31,46 +31,44 @@ public class Seek implements ICommand {
             return;
         }
 
-        if (playingTrack.isSeekable()) {
-            if (args.isEmpty()) {
-                textChannel.sendMessage(buildSimpleInfo("Please Specify Position (In Seconds) To Seek To!", Color.RED)).queue();
-            } else {
-                String seekPosition = args.get(0);
-                if (numberFormatInvalid(seekPosition, textChannel)) {
-                    return;
-                }
-
-                long seekPositionMilliseconds = convertToMilliseconds(Integer.parseInt(seekPosition));
-                if (seekPositionInvalid(playingTrack, seekPositionMilliseconds, textChannel)) {
-                    return;
-                }
-
-                playingTrack.setPosition(seekPositionMilliseconds);
-                displayNowPlaying(ctx, audioPlayer);
-            }
+        if (args.isEmpty()) {
+            textChannel.sendMessage(buildSimpleInfo("Please Specify (In Seconds) How Much You Want To Rewind By", Color.RED)).queue();
         } else {
-            textChannel.sendMessage(buildSimpleInfo("Cannot Seek On This Track!", Color.RED)).queue();
+            String rewindPosition = args.get(0);
+            if (numberFormatInvalid(rewindPosition, textChannel)) {
+                return;
+            }
+
+            long rewindPositionMilliseconds = convertToMilliseconds(Integer.parseInt(rewindPosition));
+            if (rewindPositionInvalid(playingTrack, rewindPositionMilliseconds, textChannel)) {
+                return;
+            }
+
+            long currentPosition = playingTrack.getPosition();
+            long newPosition = currentPosition - rewindPositionMilliseconds;
+            audioPlayer.startTrack(playingTrack.makeClone(), true);
+            playingTrack.setPosition(newPosition);
         }
     }
 
     @Override
     public String getName() {
-        return "seek";
+        return "rewind";
     }
 
     @Override
     public String getHelp() {
-        return "Seek to a specific position (seconds) within the current track";
+        return "Rewinds the track by a certain amount given (in seconds)";
     }
 
     @Override
     public String getUsage() {
-        return "`seek <position>`";
+        return "`rewind <index>`";
     }
 
     @Override
     public List<String> getAliases() {
-        return ICommand.super.getAliases();
+        return Collections.singletonList("back");
     }
 
     @Override

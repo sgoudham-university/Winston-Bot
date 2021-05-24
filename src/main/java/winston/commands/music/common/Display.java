@@ -44,6 +44,10 @@ public class Display {
         mergeSongInfo(ctx, audioPlayer, "Pausing");
     }
 
+    public static void displayFastForwarding(CommandContext ctx, AudioPlayer audioPlayer) {
+        mergeSongInfo(ctx, audioPlayer, "Fast Forwarding");
+    }
+
     public static void displayRemoved(CommandContext ctx, AudioTrack removedTrack) {
         mergeSongInfo(ctx, removedTrack);
     }

@@ -10,13 +10,14 @@ import winston.commands.music.util.PlayerManager;
 import winston.commands.music.util.TrackScheduler;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.List;
 
 import static winston.commands.music.common.Common.buildSimpleInfo;
-import static winston.commands.music.common.Display.displayNowPlaying;
+import static winston.commands.music.common.Display.displayFastForwarding;
 import static winston.commands.music.common.Validation.*;
 
-public class Seek implements ICommand {
+public class FastForward implements ICommand {
 
     @Override
     public void handle(CommandContext ctx) throws Exception {
@@ -33,44 +34,44 @@ public class Seek implements ICommand {
 
         if (playingTrack.isSeekable()) {
             if (args.isEmpty()) {
-                textChannel.sendMessage(buildSimpleInfo("Please Specify Position (In Seconds) To Seek To!", Color.RED)).queue();
+                textChannel.sendMessage(buildSimpleInfo("Please Specify (In Seconds) How Much You Want To Fast Forward By", Color.RED)).queue();
             } else {
-                String seekPosition = args.get(0);
-                if (numberFormatInvalid(seekPosition, textChannel)) {
+                String fastForwardPosition = args.get(0);
+                if (numberFormatInvalid(fastForwardPosition, textChannel)) {
                     return;
                 }
 
-                long seekPositionMilliseconds = convertToMilliseconds(Integer.parseInt(seekPosition));
-                if (seekPositionInvalid(playingTrack, seekPositionMilliseconds, textChannel)) {
+                long fastForwardPositionMilliseconds = convertToMilliseconds(Integer.parseInt(fastForwardPosition));
+                if (fastForwardInvalid(playingTrack, fastForwardPositionMilliseconds, textChannel)) {
                     return;
                 }
 
-                playingTrack.setPosition(seekPositionMilliseconds);
-                displayNowPlaying(ctx, audioPlayer);
+                playingTrack.setPosition(playingTrack.getPosition() + fastForwardPositionMilliseconds);
+                displayFastForwarding(ctx, audioPlayer);
             }
         } else {
-            textChannel.sendMessage(buildSimpleInfo("Cannot Seek On This Track!", Color.RED)).queue();
+            textChannel.sendMessage(buildSimpleInfo("Cannot Fast Forward On This Track!", Color.RED)).queue();
         }
     }
 
     @Override
     public String getName() {
-        return "seek";
+        return "fastforward";
     }
 
     @Override
     public String getHelp() {
-        return "Seek to a specific position (seconds) within the current track";
+        return "Fast forward specific amount (seconds) within the current track";
     }
 
     @Override
     public String getUsage() {
-        return "`seek <position>`";
+        return "`fastforward <position>`";
     }
 
     @Override
     public List<String> getAliases() {
-        return ICommand.super.getAliases();
+        return Arrays.asList("fw", "ff", "forward");
     }
 
     @Override
