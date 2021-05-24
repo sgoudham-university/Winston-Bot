@@ -48,6 +48,14 @@ public class Display {
         mergeSongInfo(ctx, audioPlayer, "Fast Forwarding");
     }
 
+    public static void displayRewinding(CommandContext ctx, AudioPlayer audioPlayer) {
+        mergeSongInfo(ctx, audioPlayer, "Rewinding");
+    }
+
+    public static void displayRestarting(CommandContext ctx, AudioPlayer audioPlayer) {
+        mergeSongInfo(ctx, audioPlayer, "Restarting");
+    }
+
     public static void displayRemoved(CommandContext ctx, AudioTrack removedTrack) {
         mergeSongInfo(ctx, removedTrack);
     }
