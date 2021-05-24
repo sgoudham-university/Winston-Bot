@@ -1,15 +1,17 @@
 package winston.commands.music;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import command.CommandContext;
 import command.ICommand;
 import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
-import winston.commands.music.util.TrackScheduler;
 
 import java.awt.*;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
 
 import static winston.commands.music.common.Common.buildSimpleInfo;
 import static winston.commands.music.common.Validation.cantPerformOperation;
@@ -20,14 +22,15 @@ public class Clear implements ICommand {
     public void handle(CommandContext ctx) throws Exception {
         TextChannel textChannel = ctx.getChannel();
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx);
-        TrackScheduler scheduler = musicManager.getScheduler();
+        AudioPlayer player = musicManager.getScheduler().getPlayer();
+        BlockingDeque<AudioTrack> deque = musicManager.getScheduler().getDeque();
 
         if (cantPerformOperation(ctx)) {
             return;
         }
 
-        scheduler.getPlayer().stopTrack();
-        scheduler.getDeque().clear();
+        player.stopTrack();
+        deque.clear();
 
         textChannel.sendMessage(buildSimpleInfo("Queue Has Been Cleared ✔", Color.GREEN)).queue();
     }
