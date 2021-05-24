@@ -100,7 +100,7 @@ public class Display {
         return new EmbedBuilder()
                 .setAuthor(status, null, youtubeLogo)
                 .setThumbnail(author.getEffectiveAvatarUrl())
-                .setFooter("Requested By " + author.getName(), ctx.getSelfUser().getAvatarUrl())
+                .setFooter("Requested By " + author.getName(), author.getEffectiveAvatarUrl())
                 .setTimestamp(new Date().toInstant());
     }
 
