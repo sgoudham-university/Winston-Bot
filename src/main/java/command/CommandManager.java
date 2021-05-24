@@ -29,7 +29,7 @@ public class CommandManager {
                 new Clear(), new Skip(), new NowPlaying(), new Queue(),
                 new Repeat(), new Leave(), new Resume(), new Voice(),
                 new Shuffle(), new SkipTo(), new Remove(), new Seek(),
-                new FastForward()
+                new FastForward(), new Rewind()
         };
         initialiseAllCommands(allCommands);
         commandsMap = initialiseCommandMap();
