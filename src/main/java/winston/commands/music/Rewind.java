@@ -46,7 +46,6 @@ public class Rewind implements ICommand {
 
             long currentPosition = playingTrack.getPosition();
             long newPosition = currentPosition - rewindPositionMilliseconds;
-            audioPlayer.startTrack(playingTrack.makeClone(), true);
             playingTrack.setPosition(newPosition);
         }
     }
