@@ -3,14 +3,17 @@ package winston.commands.music;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import command.CommandContext;
 import command.ICommand;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 import winston.commands.music.util.TrackScheduler;
 
+import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 
+import static winston.commands.music.common.Common.buildSimpleInfo;
 import static winston.commands.music.common.Validation.cantPerformOperation;
 import static winston.commands.music.common.Validation.noTrackPlaying;
 
@@ -29,7 +32,11 @@ public class Repeat implements ICommand {
         TrackScheduler scheduler = musicManager.getScheduler();
         scheduler.setRepeating(!scheduler.isRepeating());
 
-        textChannel.sendMessage(scheduler.isRepeating() ? "Looping Current Track!" : "Not Looping Current Track Anymore!").queue();
+        MessageEmbed messageEmbed = scheduler.isRepeating() ?
+                buildSimpleInfo("Looping Current Track!", Color.GREEN) :
+                buildSimpleInfo("Not Looping Current Track Anymore!", Color.RED);
+
+        textChannel.sendMessage(messageEmbed).queue();
     }
 
     @Override

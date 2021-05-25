@@ -96,25 +96,25 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void shuffle() {
-        List<AudioTrack> trackList = getQueueAsList();
+        List<AudioTrack> trackList = getDequeAsList();
         Collections.shuffle(trackList);
         setListAsDeque(trackList);
     }
 
     public void skipTo(int index) {
-        List<AudioTrack> trackList = getQueueAsList();
+        List<AudioTrack> trackList = getDequeAsList();
         trackList.subList(0, index).clear();
         setListAsDeque(trackList);
     }
 
     public AudioTrack removeTrack(int index) {
-        List<AudioTrack> trackList = getQueueAsList();
+        List<AudioTrack> trackList = getDequeAsList();
         AudioTrack removedTrack = trackList.remove(index);
         setListAsDeque(trackList);
         return removedTrack;
     }
 
-    private List<AudioTrack> getQueueAsList() {
+    private List<AudioTrack> getDequeAsList() {
         List<AudioTrack> trackList = new ArrayList<>();
         deque.drainTo(trackList);
         return trackList;

@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static winston.commands.music.common.Common.buildSimpleInfo;
+import static winston.commands.music.common.Display.displayRewinding;
 import static winston.commands.music.common.Validation.*;
 
 public class Rewind implements ICommand {
@@ -46,8 +47,8 @@ public class Rewind implements ICommand {
 
             long currentPosition = playingTrack.getPosition();
             long newPosition = currentPosition - rewindPositionMilliseconds;
-            audioPlayer.startTrack(playingTrack.makeClone(), true);
             playingTrack.setPosition(newPosition);
+            displayRewinding(ctx, audioPlayer);
         }
     }
 

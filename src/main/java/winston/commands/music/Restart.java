@@ -8,41 +8,37 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 
-import java.awt.*;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
 
-import static winston.commands.music.common.Common.buildSimpleInfo;
+import static winston.commands.music.common.Display.displayRestarting;
 import static winston.commands.music.common.Validation.cantPerformOperation;
+import static winston.commands.music.common.Validation.noTrackPlaying;
 
-public class Clear implements ICommand {
+public class Restart implements ICommand {
 
     @Override
     public void handle(CommandContext ctx) throws Exception {
         TextChannel textChannel = ctx.getChannel();
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx);
-        AudioPlayer player = musicManager.getScheduler().getPlayer();
-        BlockingDeque<AudioTrack> deque = musicManager.getScheduler().getDeque();
+        AudioPlayer audioPlayer = musicManager.getAudioPlayer();
 
-        if (cantPerformOperation(ctx)) {
+        if (cantPerformOperation(ctx) || noTrackPlaying(audioPlayer, textChannel)) {
             return;
         }
 
-        player.stopTrack();
-        deque.clear();
-
-        textChannel.sendMessage(buildSimpleInfo("Queue Has Been Cleared ✔", Color.GREEN)).queue();
+        AudioTrack playingTrack = audioPlayer.getPlayingTrack();
+        playingTrack.setPosition(0);
+        displayRestarting(ctx, audioPlayer);
     }
 
     @Override
     public String getName() {
-        return "clear";
+        return "restart";
     }
 
     @Override
     public String getHelp() {
-        return "Clears the current queue and stops playing the current track";
+        return "Plays the current track from the beginning";
     }
 
     @Override
@@ -52,9 +48,11 @@ public class Clear implements ICommand {
 
     @Override
     public List<String> getAliases() {
-        return Collections.singletonList("stop");
+        return ICommand.super.getAliases();
     }
 
     @Override
-    public String getPackage() { return "Music"; }
+    public String getPackage() {
+        return "Music";
+    }
 }

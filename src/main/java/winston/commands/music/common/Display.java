@@ -48,6 +48,14 @@ public class Display {
         mergeSongInfo(ctx, audioPlayer, "Fast Forwarding");
     }
 
+    public static void displayRewinding(CommandContext ctx, AudioPlayer audioPlayer) {
+        mergeSongInfo(ctx, audioPlayer, "Rewinding");
+    }
+
+    public static void displayRestarting(CommandContext ctx, AudioPlayer audioPlayer) {
+        mergeSongInfo(ctx, audioPlayer, "Restarting");
+    }
+
     public static void displayRemoved(CommandContext ctx, AudioTrack removedTrack) {
         mergeSongInfo(ctx, removedTrack);
     }
@@ -92,7 +100,7 @@ public class Display {
         return new EmbedBuilder()
                 .setAuthor(status, null, youtubeLogo)
                 .setThumbnail(author.getEffectiveAvatarUrl())
-                .setFooter("Requested By " + author.getName(), ctx.getSelfUser().getAvatarUrl())
+                .setFooter("Requested By " + author.getName(), author.getEffectiveAvatarUrl())
                 .setTimestamp(new Date().toInstant());
     }
 
