@@ -9,7 +9,7 @@ import winston.commands.music.util.PlayerManager;
 import winston.commands.music.util.TrackScheduler;
 
 import java.awt.*;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import static winston.commands.music.common.Common.buildSimpleInfo;
@@ -52,7 +52,7 @@ public class Skip implements ICommand {
 
     @Override
     public List<String> getAliases() {
-        return Collections.singletonList("next");
+        return Arrays.asList("next", "s");
     }
 
     @Override
