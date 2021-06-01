@@ -14,16 +14,15 @@ import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 import winston.commands.music.util.QueueEmbedInfo;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
 import static winston.commands.music.common.Common.formatTime;
+import static winston.commands.music.common.Display.buildQueueEmbed;
 import static winston.commands.music.common.Display.getTrimmedTitle;
 import static winston.commands.music.common.Validation.dequeIsEmpty;
 
@@ -79,21 +78,6 @@ public class Queue implements ICommand {
         embedInfo.setQueueMessageEmbed(queueEmbed.build());
 
         return embedInfo;
-    }
-
-    private EmbedBuilder getBaseEmbed(User author, CommandContext ctx, int currPage, int totalPages) {
-        return new EmbedBuilder()
-                .setAuthor("Page " + currPage + " / " + totalPages)
-                .setThumbnail(author.getEffectiveAvatarUrl())
-                .setFooter("Requested By " + author.getName(), ctx.getSelfUser().getAvatarUrl())
-                .setTimestamp(new Date().toInstant());
-    }
-
-    private EmbedBuilder buildQueueEmbed(User author, CommandContext ctx, int currPage, int totalPages) {
-        return getBaseEmbed(author, ctx, currPage, totalPages)
-                .setThumbnail(null)
-                .setTitle("Current Tracks in Queue")
-                .setColor(Color.BLUE);
     }
 
     @Override
