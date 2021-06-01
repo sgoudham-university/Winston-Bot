@@ -14,6 +14,7 @@ import org.apache.commons.text.WordUtils;
 import java.awt.*;
 import java.net.URI;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static winston.commands.music.common.Common.formatTime;
@@ -102,6 +103,40 @@ public class Display {
                 .setThumbnail(author.getEffectiveAvatarUrl())
                 .setFooter("Requested By " + author.getName(), author.getEffectiveAvatarUrl())
                 .setTimestamp(new Date().toInstant());
+    }
+
+    private static EmbedBuilder getBaseEmbedWithPageCounter(User author, CommandContext ctx, int currPage, int totalPages) {
+        return new EmbedBuilder()
+                .setAuthor("Page " + currPage + " / " + totalPages)
+                .setThumbnail(author.getEffectiveAvatarUrl())
+                .setFooter("Requested By " + author.getName(), ctx.getSelfUser().getAvatarUrl())
+                .setTimestamp(new Date().toInstant());
+    }
+
+    public static EmbedBuilder buildQueueEmbed(User author, CommandContext ctx, int currPage, int totalPages) {
+        return getBaseEmbedWithPageCounter(author, ctx, currPage, totalPages)
+                .setThumbnail(null)
+                .setTitle("Current Tracks in Queue")
+                .setColor(Color.BLUE);
+    }
+
+    public static MessageEmbed buildSearchEmbed(CommandContext ctx, List<AudioTrack> searchResults, int numberOfTracksReturned) {
+        EmbedBuilder searchEmbed = getBaseEmbed(ctx, "Search Results");
+        searchEmbed.setThumbnail(null);
+        searchEmbed.setTitle(numberOfTracksReturned + " Results Found  |  :exclamation: Type 'exit' To Exit");
+        searchEmbed.setColor(Color.red);
+
+        for (int i = 0; i < numberOfTracksReturned; i++) {
+            AudioTrack track = searchResults.get(i);
+            AudioTrackInfo trackInfo = track.getInfo();
+            String trackIndex = "**" + (i + 1) + ")**  ";
+            String duration = "`[" + formatTime(track.getDuration()) + "]`  ";
+            String title = getTrimmedTitle(trackInfo.title, 40);
+
+            searchEmbed.appendDescription(trackIndex + duration + title + "\n");
+        }
+
+        return searchEmbed.build();
     }
 
     private static MessageEmbed buildNowPlayingEmbed(CommandContext ctx, String title, String url, String status, String trackPos) {

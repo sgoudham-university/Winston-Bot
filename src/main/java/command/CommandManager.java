@@ -1,5 +1,6 @@
 package command;
 
+import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import winston.bot.config.Config;
 import winston.commands.misc.BullyNuggs;
@@ -21,7 +22,7 @@ public class CommandManager {
     private final List<ICommand> allCommands = new ArrayList<>();
     private final Map<String, List<ICommand>> commandsMap;
 
-    public CommandManager() {
+    public CommandManager(EventWaiter eventWaiter) {
         ICommand[] allCommands = new ICommand[]{
                 new Ping(), new PlayerInfo(), new CompInfo(),
                 new HeroInfo(), new Help(this), new BullyNuggs(),
@@ -29,7 +30,7 @@ public class CommandManager {
                 new Clear(), new Skip(), new NowPlaying(), new Queue(),
                 new Repeat(), new Leave(), new Resume(), new Voice(),
                 new Shuffle(), new SkipTo(), new Remove(), new Seek(),
-                new FastForward(), new Rewind(), new Restart()
+                new FastForward(), new Rewind(), new Restart(), new Search(eventWaiter)
         };
         initialiseAllCommands(allCommands);
         commandsMap = initialiseCommandMap();

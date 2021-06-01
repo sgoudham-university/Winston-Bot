@@ -7,14 +7,12 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.PlayerManager;
 
 import java.awt.*;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
 import static winston.commands.music.common.Common.buildSimpleInfo;
 import static winston.commands.music.common.Common.joinVoiceChannel;
+import static winston.commands.music.common.Validation.isUrl;
 import static winston.commands.music.common.Validation.memberNotInVoiceChannel;
 
 @SuppressWarnings("ConstantConditions")
@@ -44,15 +42,6 @@ public class Play implements ICommand {
         link = !isUrl(link) ? "ytsearch:" + link : link;
 
         PlayerManager.getInstance().loadAndPlay(ctx, link, false);
-    }
-
-    private boolean isUrl(String link) {
-        try {
-            new URL(link).toURI();
-        } catch (URISyntaxException | MalformedURLException exp) {
-            return false;
-        }
-        return true;
     }
 
     @Override

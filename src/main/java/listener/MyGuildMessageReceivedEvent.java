@@ -1,5 +1,6 @@
 package listener;
 
+import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import command.CommandManager;
 import exception.HeroNotFoundException;
 import exception.PlayerNotFoundException;
@@ -11,7 +12,11 @@ import winston.bot.config.Config;
 
 public class MyGuildMessageReceivedEvent extends ListenerAdapter {
 
-    private final CommandManager commandManager = new CommandManager();
+    private final CommandManager commandManager;
+
+    public MyGuildMessageReceivedEvent(EventWaiter eventWaiter) {
+         commandManager = new CommandManager(eventWaiter);
+    }
 
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {

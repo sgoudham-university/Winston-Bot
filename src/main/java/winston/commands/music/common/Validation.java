@@ -8,6 +8,9 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.TrackScheduler;
 
 import java.awt.*;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.List;
 import java.util.concurrent.BlockingDeque;
 
@@ -130,5 +133,14 @@ public class Validation {
 
     public static int convertToMilliseconds(int trackPosition) {
         return trackPosition * 1000;
+    }
+
+    public static boolean isUrl(String link) {
+        try {
+            new URL(link).toURI();
+        } catch (URISyntaxException | MalformedURLException exp) {
+            return false;
+        }
+        return true;
     }
 }
