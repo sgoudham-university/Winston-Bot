@@ -22,6 +22,7 @@ import static winston.commands.music.common.Common.buildSimpleInfo;
 import static winston.commands.music.common.Display.buildSearchEmbed;
 import static winston.commands.music.common.Display.displayAddedToQueue;
 import static winston.commands.music.common.Validation.numberFormatInvalid;
+import static winston.commands.music.common.Validation.searchInvalid;
 
 public class PlayerManager {
     private static PlayerManager instance;
@@ -55,8 +56,9 @@ public class PlayerManager {
 
             @Override
             public void playlistLoaded(AudioPlaylist audioPlaylist) {
-                int numberOfTracksToLoad = Math.min(audioPlaylist.getTracks().size(), 10);
-                MessageEmbed searchEmbed = buildSearchEmbed(ctx, audioPlaylist.getTracks(), numberOfTracksToLoad);
+                List<AudioTrack> searchResults = audioPlaylist.getTracks();
+                int numberOfTracksToLoad = Math.min(searchResults.size(), 10);
+                MessageEmbed searchEmbed = buildSearchEmbed(ctx, searchResults, numberOfTracksToLoad);
 
                 textChannel.sendMessage(searchEmbed).queue((message -> eventWaiter.waitForEvent(
                         GuildMessageReceivedEvent.class,
@@ -66,14 +68,19 @@ public class PlayerManager {
 
                             if (userSearch.equalsIgnoreCase("exit")) {
                                 textChannel.sendMessage(buildSimpleInfo("Exited", Color.GREEN)).queue();
+                                return;
                             }
 
                             if (numberFormatInvalid(userSearch, textChannel)) {
                                 return;
                             }
 
-                            int trackIndexInt = Integer.parseInt(userSearch);
-                            trackLoaded(audioPlaylist.getTracks().get(trackIndexInt - 1));
+                            int searchIndex = Integer.parseInt(userSearch);
+                            if (searchInvalid(searchIndex, searchResults, textChannel)) {
+                                return;
+                            }
+
+                            trackLoaded(searchResults.get(searchIndex - 1));
                         }
                 )));
             }
