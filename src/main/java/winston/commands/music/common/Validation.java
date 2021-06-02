@@ -121,11 +121,19 @@ public class Validation {
         return false;
     }
 
+    public static boolean searchInvalid(int userSearch, List<AudioTrack> searchResults, TextChannel textChannel) {
+        if (userSearch < 1 || userSearch > searchResults.size()) {
+            textChannel.sendMessage(buildSimpleInfo("Search Index Invalid! Please Search Again!", colour)).queue();
+            return true;
+        }
+        return false;
+    }
+
     public static boolean numberFormatInvalid(String userInput, TextChannel textChannel) {
         try {
             Integer.parseInt(userInput);
         } catch (NumberFormatException nfe) {
-            textChannel.sendMessage(buildSimpleInfo("Please Enter A Valid Number!", colour)).queue();
+            textChannel.sendMessage(buildSimpleInfo("Invalid Number Entered!", colour)).queue();
             return true;
         }
         return false;
