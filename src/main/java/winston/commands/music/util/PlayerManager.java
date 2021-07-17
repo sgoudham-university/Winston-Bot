@@ -13,12 +13,10 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static winston.commands.music.common.Common.buildSimpleInfo;
 import static winston.commands.music.common.Display.buildSearchEmbed;
 import static winston.commands.music.common.Display.displayAddedToQueue;
 import static winston.commands.music.common.Validation.numberFormatInvalid;
@@ -67,7 +65,7 @@ public class PlayerManager {
                             String userSearch = event.getMessage().getContentRaw();
 
                             if (userSearch.equalsIgnoreCase("exit")) {
-                                textChannel.sendMessage(buildSimpleInfo("Exited", Color.GREEN)).queue();
+                                textChannel.deleteMessageById(message.getId()).and(textChannel.deleteMessageById(event.getMessageId())).submit();
                                 return;
                             }
 
