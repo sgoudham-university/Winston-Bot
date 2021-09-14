@@ -24,7 +24,7 @@ public class Shuffle implements ICommand {
         }
 
         musicManager.getScheduler().shuffle();
-        textChannel.sendMessage(buildSimpleInfo("Queue Shuffled! ✔", Color.GREEN)).queue();
+        textChannel.sendMessageEmbeds(buildSimpleInfo("Queue Shuffled! ✔", Color.GREEN)).queue();
     }
 
     @Override

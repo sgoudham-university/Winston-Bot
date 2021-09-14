@@ -35,7 +35,7 @@ public class CompInfo implements ICommand {
         pages.add(new Page(buildSupportEmbed(player, ctx)));
 
         Object embedContent = pages.get(0).getContent();
-        ctx.getEvent().getChannel().sendMessage((MessageEmbed) embedContent).queue(success ->
+        ctx.getEvent().getChannel().sendMessageEmbeds((MessageEmbed) embedContent).queue(success ->
                 Pages.paginate(success, pages, 120, TimeUnit.SECONDS, Predicate.isEqual(author))
         );
         Logger.LOGGER.info("Player Competitive Statistics Sent For {}!", args);

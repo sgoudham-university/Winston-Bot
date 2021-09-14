@@ -31,7 +31,7 @@ public class Validation {
 
     public static boolean botInVoiceChannel(GuildVoiceState botVoiceState, TextChannel textChannel) {
         if (botVoiceState.inVoiceChannel()) {
-            textChannel.sendMessage(buildSimpleInfo("I am already in a voice channel!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("I am already in a voice channel!", colour)).queue();
             return true;
         }
         return false;
@@ -39,7 +39,7 @@ public class Validation {
 
     private static boolean botNotInVoiceChannel(GuildVoiceState botVoiceState, TextChannel textChannel) {
         if (!botVoiceState.inVoiceChannel()) {
-            textChannel.sendMessage(buildSimpleInfo("I need to be in a voice channel to use this command!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("I need to be in a voice channel to use this command!", colour)).queue();
             return true;
         }
         return false;
@@ -48,7 +48,7 @@ public class Validation {
     @SuppressWarnings("ConstantConditions")
     private static boolean bothPartiesInDiffVoiceChannels(GuildVoiceState botVoiceState, GuildVoiceState authorVoiceState, TextChannel textChannel) {
         if (!authorVoiceState.getChannel().equals(botVoiceState.getChannel())) {
-            textChannel.sendMessage(buildSimpleInfo("This command requires both parties to be in the same voice channel!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("This command requires both parties to be in the same voice channel!", colour)).queue();
             return true;
         }
         return false;
@@ -56,7 +56,7 @@ public class Validation {
 
     public static boolean memberNotInVoiceChannel(GuildVoiceState memberVoiceState, TextChannel textChannel) {
         if (!memberVoiceState.inVoiceChannel()) {
-            textChannel.sendMessage(buildSimpleInfo("You need to be in a voice channel to use this command!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("You need to be in a voice channel to use this command!", colour)).queue();
             return true;
         }
         return false;
@@ -64,7 +64,7 @@ public class Validation {
 
     public static boolean noTrackPlaying(AudioPlayer audioPlayer, TextChannel textChannel) {
         if (audioPlayer.getPlayingTrack() == null) {
-            textChannel.sendMessage(buildSimpleInfo("There is no track playing currently!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("There is no track playing currently!", colour)).queue();
             return true;
         }
         return false;
@@ -72,7 +72,7 @@ public class Validation {
 
     public static boolean dequeIsEmpty(BlockingDeque<AudioTrack> deque, TextChannel textChannel) {
         if (deque.isEmpty()) {
-            textChannel.sendMessage(buildSimpleInfo("The queue is currently empty", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("The queue is currently empty", colour)).queue();
             return true;
         }
         return false;
@@ -85,12 +85,12 @@ public class Validation {
         try {
             index = Integer.parseInt(args.get(0));
         } catch (NumberFormatException nfe) {
-            textChannel.sendMessage(buildSimpleInfo("Please Enter A Valid Number!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Please Enter A Valid Number!", colour)).queue();
             return true;
         }
 
         if (index < 1 || index > deque.size()) {
-            textChannel.sendMessage(buildSimpleInfo("Please Enter Index That Is Valid For Current Queue!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Please Enter Index That Is Valid For Current Queue!", colour)).queue();
             return true;
         }
 
@@ -99,7 +99,7 @@ public class Validation {
 
     public static boolean seekPositionInvalid(AudioTrack audioTrack, long trackPositionMill, TextChannel textChannel) {
         if (trackPositionMill < audioTrack.getPosition() || trackPositionMill > audioTrack.getDuration()) {
-            textChannel.sendMessage(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
             return true;
         }
         return false;
@@ -107,7 +107,7 @@ public class Validation {
 
     public static boolean fastForwardInvalid(AudioTrack audioTrack, long trackPositionMill, TextChannel textChannel) {
         if ((audioTrack.getPosition() + trackPositionMill) < audioTrack.getPosition() || trackPositionMill > audioTrack.getDuration()) {
-            textChannel.sendMessage(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
             return true;
         }
         return false;
@@ -115,7 +115,7 @@ public class Validation {
 
     public static boolean rewindPositionInvalid(AudioTrack audioTrack, long trackPositionMill, TextChannel textChannel) {
         if ((audioTrack.getPosition() - trackPositionMill) > audioTrack.getPosition() || trackPositionMill > audioTrack.getDuration()) {
-            textChannel.sendMessage(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Please Enter Index That Is Valid For Current Track!", colour)).queue();
             return true;
         }
         return false;
@@ -123,7 +123,7 @@ public class Validation {
 
     public static boolean searchInvalid(int userSearch, List<AudioTrack> searchResults, TextChannel textChannel) {
         if (userSearch < 1 || userSearch > searchResults.size()) {
-            textChannel.sendMessage(buildSimpleInfo("Search Index Invalid! Please Search Again!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Search Index Invalid! Please Search Again!", colour)).queue();
             return true;
         }
         return false;
@@ -133,7 +133,7 @@ public class Validation {
         try {
             Integer.parseInt(userInput);
         } catch (NumberFormatException nfe) {
-            textChannel.sendMessage(buildSimpleInfo("Invalid Number Entered!", colour)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Invalid Number Entered!", colour)).queue();
             return true;
         }
         return false;

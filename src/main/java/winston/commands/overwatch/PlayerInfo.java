@@ -35,7 +35,7 @@ public class PlayerInfo implements ICommand {
         pages.put("2️⃣", new Page(buildCompetitiveEmbed(player, ctx)));
         pages.put("3️⃣", new Page(playerInfoMenu));
 
-        ctx.getEvent().getChannel().sendMessage(playerInfoMenu).queue(success ->
+        ctx.getEvent().getChannel().sendMessageEmbeds(playerInfoMenu).queue(success ->
                 Pages.categorize(success, pages, 120, TimeUnit.SECONDS, Predicate.isEqual(author))
         );
         Logger.LOGGER.info("Player Statistics Sent For {}!", args);

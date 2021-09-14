@@ -33,7 +33,7 @@ public class Rewind implements ICommand {
         }
 
         if (args.isEmpty()) {
-            textChannel.sendMessage(buildSimpleInfo("Please Specify (In Seconds) How Much You Want To Rewind By", Color.RED)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Please Specify (In Seconds) How Much You Want To Rewind By", Color.RED)).queue();
         } else {
             String rewindPosition = args.get(0);
             if (numberFormatInvalid(rewindPosition, textChannel)) {

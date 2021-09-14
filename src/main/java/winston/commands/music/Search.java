@@ -32,7 +32,7 @@ public class Search implements ICommand {
 
         String link = String.join(" ", args);
         if (isUrl(link)) {
-            textChannel.sendMessage(buildSimpleInfo("Links Are Not Accepted. Use The Play Command!", Color.RED)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Links Are Not Accepted. Use The Play Command!", Color.RED)).queue();
         } else {
             PlayerManager.getInstance().searchAndPlay(ctx, eventWaiter, "ytsearch:" + link);
         }

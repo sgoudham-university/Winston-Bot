@@ -31,7 +31,7 @@ public class Skip implements ICommand {
 
         scheduler.nextTrack();
         if (audioPlayer.getPlayingTrack() == null) {
-            textChannel.sendMessage(buildSimpleInfo("End of Queue!", Color.YELLOW)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("End of Queue!", Color.YELLOW)).queue();
         }
     }
 

@@ -35,7 +35,7 @@ public class Common {
             message = "I need Voice Permissions To Join '" + authorVoiceChannel.getName() + "'";
             colour = Color.RED;
         }
-        textChannel.sendMessage(buildSimpleInfo(message, colour)).queue();
+        textChannel.sendMessageEmbeds(buildSimpleInfo(message, colour)).queue();
     }
 
     public static MessageEmbed buildSimpleInfo(String message, Color colour) {

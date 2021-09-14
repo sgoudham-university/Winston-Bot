@@ -33,7 +33,7 @@ public class Remove implements ICommand {
         }
 
         if (deque.isEmpty()) {
-            textChannel.sendMessage(buildSimpleInfo("No Tracks In Queue To Remove!", Color.RED)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("No Tracks In Queue To Remove!", Color.RED)).queue();
         } else {
             AudioTrack removedTrack;
 

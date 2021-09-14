@@ -90,7 +90,7 @@ public class Display {
         MessageEmbed nowPlayingEmbed = buildNowPlayingEmbed(ctx, title, url, status, trackPos);
 
         AtomicReference<Long> messageID = new AtomicReference<>();
-        textChannel.sendMessage(nowPlayingEmbed).queue(message -> messageID.set(message.getIdLong()));
+        textChannel.sendMessageEmbeds(nowPlayingEmbed).queue(message -> messageID.set(message.getIdLong()));
         return messageID;
     }
 

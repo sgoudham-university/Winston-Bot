@@ -32,7 +32,7 @@ public class Clear implements ICommand {
         player.stopTrack();
         deque.clear();
 
-        textChannel.sendMessage(buildSimpleInfo("Queue Has Been Cleared ✔", Color.GREEN)).queue();
+        textChannel.sendMessageEmbeds(buildSimpleInfo("Queue Has Been Cleared ✔", Color.GREEN)).queue();
     }
 
     @Override
