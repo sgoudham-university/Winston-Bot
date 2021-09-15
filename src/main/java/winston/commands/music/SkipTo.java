@@ -28,7 +28,7 @@ public class SkipTo implements ICommand {
         }
 
         if (args.isEmpty()) {
-            textChannel.sendMessage(buildSimpleInfo("Please Specify Track Index To Skip To!", Color.RED)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Please Specify Track Index To Skip To!", Color.RED)).queue();
         } else {
             if (trackIndexInvalid(scheduler, args, textChannel)) {
                 return;

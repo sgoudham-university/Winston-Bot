@@ -10,15 +10,12 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 
 import java.awt.*;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 public class Common {
     public static String formatTime(long timeInMillis) {
-        long hours = timeInMillis / TimeUnit.HOURS.toMillis(1);
-        long minutes = timeInMillis / TimeUnit.MINUTES.toMillis(1);
-        long seconds = timeInMillis % TimeUnit.MINUTES.toMillis(1) / TimeUnit.SECONDS.toMillis(1);
-
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        Duration duration = Duration.ofMillis(timeInMillis);
+        return String.format("%02d:%02d:%02d", duration.toHoursPart(), duration.toMinutesPart(), duration.toSecondsPart());
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -38,7 +35,7 @@ public class Common {
             message = "I need Voice Permissions To Join '" + authorVoiceChannel.getName() + "'";
             colour = Color.RED;
         }
-        textChannel.sendMessage(buildSimpleInfo(message, colour)).queue();
+        textChannel.sendMessageEmbeds(buildSimpleInfo(message, colour)).queue();
     }
 
     public static MessageEmbed buildSimpleInfo(String message, Color colour) {

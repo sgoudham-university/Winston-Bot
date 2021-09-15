@@ -33,7 +33,7 @@ public class Seek implements ICommand {
 
         if (playingTrack.isSeekable()) {
             if (args.isEmpty()) {
-                textChannel.sendMessage(buildSimpleInfo("Please Specify Position (In Seconds) To Seek To!", Color.RED)).queue();
+                textChannel.sendMessageEmbeds(buildSimpleInfo("Please Specify Position (In Seconds) To Seek To!", Color.RED)).queue();
             } else {
                 String seekPosition = args.get(0);
                 if (numberFormatInvalid(seekPosition, textChannel)) {
@@ -49,7 +49,7 @@ public class Seek implements ICommand {
                 displayNowPlaying(ctx, audioPlayer);
             }
         } else {
-            textChannel.sendMessage(buildSimpleInfo("Cannot Seek On This Track!", Color.RED)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Cannot Seek On This Track!", Color.RED)).queue();
         }
     }
 

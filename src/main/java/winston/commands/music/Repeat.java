@@ -36,7 +36,7 @@ public class Repeat implements ICommand {
                 buildSimpleInfo("Looping Current Track!", Color.GREEN) :
                 buildSimpleInfo("Not Looping Current Track Anymore!", Color.RED);
 
-        textChannel.sendMessage(messageEmbed).queue();
+        textChannel.sendMessageEmbeds(messageEmbed).queue();
     }
 
     @Override

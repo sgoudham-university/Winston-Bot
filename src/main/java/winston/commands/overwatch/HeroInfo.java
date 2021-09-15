@@ -38,7 +38,7 @@ public class HeroInfo implements ICommand {
             }
 
             Object content = pages.get(0).getContent();
-            ctx.getEvent().getChannel().sendMessage((MessageEmbed) content).queue(success ->
+            ctx.getEvent().getChannel().sendMessageEmbeds((MessageEmbed) content).queue(success ->
                     Pages.paginate(success, pages, 120, TimeUnit.SECONDS, 2, true, Predicate.isEqual(author))
             );
             Logger.LOGGER.info("Overwatch Hero: " + hero.getName() + " Information Sent!");

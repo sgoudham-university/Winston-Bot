@@ -30,7 +30,7 @@ public class Play implements ICommand {
         }
 
         if (args.isEmpty()) {
-            textChannel.sendMessage(buildSimpleInfo("Usage -> " + getUsage(), Color.YELLOW)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Usage -> " + getUsage(), Color.YELLOW)).queue();
             return;
         }
 

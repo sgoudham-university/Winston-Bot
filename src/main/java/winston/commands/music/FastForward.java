@@ -34,7 +34,7 @@ public class FastForward implements ICommand {
 
         if (playingTrack.isSeekable()) {
             if (args.isEmpty()) {
-                textChannel.sendMessage(buildSimpleInfo("Please Specify (In Seconds) How Much You Want To Fast Forward By", Color.RED)).queue();
+                textChannel.sendMessageEmbeds(buildSimpleInfo("Please Specify (In Seconds) How Much You Want To Fast Forward By", Color.RED)).queue();
             } else {
                 String fastForwardPosition = args.get(0);
                 if (numberFormatInvalid(fastForwardPosition, textChannel)) {
@@ -50,7 +50,7 @@ public class FastForward implements ICommand {
                 displayFastForwarding(ctx, audioPlayer);
             }
         } else {
-            textChannel.sendMessage(buildSimpleInfo("Cannot Fast Forward On This Track!", Color.RED)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Cannot Fast Forward On This Track!", Color.RED)).queue();
         }
     }
 

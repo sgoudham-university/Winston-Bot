@@ -28,7 +28,7 @@ public class Resume implements ICommand {
         if (audioPlayer.isPaused()) {
             audioPlayer.setPaused(false);
         } else {
-            textChannel.sendMessage(buildSimpleInfo("No Track To Resume!", Color.YELLOW)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("No Track To Resume!", Color.YELLOW)).queue();
         }
     }
 

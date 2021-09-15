@@ -31,7 +31,7 @@ public class Pause implements ICommand {
         } else if (audioPlayer.getPlayingTrack() != null) {
             audioPlayer.setPaused(true);
         } else {
-            textChannel.sendMessage(buildSimpleInfo("No Track To Pause!", Color.RED)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("No Track To Pause!", Color.RED)).queue();
         }
     }
 

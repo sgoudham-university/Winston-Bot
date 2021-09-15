@@ -53,9 +53,7 @@ public class Queue implements ICommand {
         }
 
         Object embedContent = pages.get(0).getContent();
-        textChannel.sendMessage((MessageEmbed) embedContent).queue(success ->
-                Pages.paginate(success, pages, 120, TimeUnit.SECONDS, 5, true, Predicate.isEqual(author))
-        );
+        textChannel.sendMessageEmbeds((MessageEmbed) embedContent).queue(success -> Pages.paginate(success, pages, 120, TimeUnit.SECONDS, 5, true, Predicate.isEqual(author)));
     }
 
     private QueueEmbedInfo readSongs(List<AudioTrack> trackList, User author, CommandContext ctx, QueueEmbedInfo embedInfo) {
@@ -101,5 +99,7 @@ public class Queue implements ICommand {
     }
 
     @Override
-    public String getPackage() { return "Music"; }
+    public String getPackage() {
+        return "Music";
+    }
 }

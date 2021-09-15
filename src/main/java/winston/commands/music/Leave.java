@@ -38,7 +38,7 @@ public class Leave implements ICommand {
 
         String message = "\uD83D\uDD0A Leaving #" + connectedChannel.getName() + " \uD83D\uDD0A";
         Color colour = Color.YELLOW;
-        textChannel.sendMessage(buildSimpleInfo(message, colour)).queue();
+        textChannel.sendMessageEmbeds(buildSimpleInfo(message, colour)).queue();
     }
 
     @Override

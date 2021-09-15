@@ -6,55 +6,64 @@ import command.ICommand;
 import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
-import winston.commands.music.util.TrackScheduler;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.List;
 
 import static winston.commands.music.common.Common.buildSimpleInfo;
 import static winston.commands.music.common.Validation.cantPerformOperation;
-import static winston.commands.music.common.Validation.noTrackPlaying;
+import static winston.commands.music.common.Validation.numberFormatInvalid;
 
-public class Skip implements ICommand {
+public class Volume implements ICommand {
 
     @Override
     public void handle(CommandContext ctx) throws Exception {
+        List<String> args = ctx.getArgs();
         TextChannel textChannel = ctx.getChannel();
         GuildMusicManager musicManager = PlayerManager.getInstance().getMusicManager(ctx);
         AudioPlayer audioPlayer = musicManager.getAudioPlayer();
-        TrackScheduler scheduler = musicManager.getScheduler();
 
-        if (cantPerformOperation(ctx) || noTrackPlaying(audioPlayer, textChannel)) {
+        if (cantPerformOperation(ctx)) {
             return;
         }
 
-        scheduler.nextTrack();
-        if (audioPlayer.getPlayingTrack() == null) {
-            textChannel.sendMessageEmbeds(buildSimpleInfo("End of Queue!", Color.YELLOW)).queue();
+        if (args.isEmpty()) {
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Usage -> " + getUsage(), Color.YELLOW)).queue();
+            return;
         }
+
+        String newVolume = args.get(0);
+        if (numberFormatInvalid(newVolume, textChannel)) {
+            return;
+        }
+
+        int oldVolume = audioPlayer.getVolume();
+        audioPlayer.setVolume(Integer.parseInt(newVolume));
+        textChannel.sendMessage("Player volume changed from `" + oldVolume + "` to `" + newVolume + "`").queue();
     }
 
     @Override
     public String getName() {
-        return "skip";
+        return "volume";
     }
 
     @Override
     public String getHelp() {
-        return "Skips the current track";
+        return "Sets the volume level of the Bot";
     }
 
     @Override
     public String getUsage() {
-        return null;
+        return "`volume <level>`";
     }
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("next", "s");
+        return ICommand.super.getAliases();
     }
 
     @Override
-    public String getPackage() { return "Music"; }
+    public String getPackage() {
+        return "Music";
+    }
 }

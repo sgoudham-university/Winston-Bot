@@ -50,7 +50,7 @@ public class Help implements ICommand {
             }
 
             Object embedContent = pages.get(0).getContent();
-            textChannel.sendMessage((MessageEmbed) embedContent).queue(success ->
+            textChannel.sendMessageEmbeds((MessageEmbed) embedContent).queue(success ->
                     Pages.paginate(success, pages, 120, TimeUnit.SECONDS, 2, true, Predicate.isEqual(author))
             );
             Logger.LOGGER.info("Help For All Commands Sent!");
@@ -61,7 +61,7 @@ public class Help implements ICommand {
         ICommand command = commandManager.getCommand(userSearch);
 
         if (command == null) {
-            textChannel.sendMessage(buildSimpleInfo("No Command Found For: '" + String.join(" ", args) + "'", Color.RED)).queue();
+            textChannel.sendMessageEmbeds(buildSimpleInfo("No Command Found For: '" + String.join(" ", args) + "'", Color.RED)).queue();
         } else {
             textChannel.sendMessage(command.getHelp()).queue();
             Logger.LOGGER.info("Help Sent For Command: " + command.getName());
