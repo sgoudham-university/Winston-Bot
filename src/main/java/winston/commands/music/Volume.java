@@ -7,8 +7,10 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import winston.commands.music.util.GuildMusicManager;
 import winston.commands.music.util.PlayerManager;
 
+import java.awt.*;
 import java.util.List;
 
+import static winston.commands.music.common.Common.buildSimpleInfo;
 import static winston.commands.music.common.Validation.cantPerformOperation;
 import static winston.commands.music.common.Validation.numberFormatInvalid;
 
@@ -22,6 +24,11 @@ public class Volume implements ICommand {
         AudioPlayer audioPlayer = musicManager.getAudioPlayer();
 
         if (cantPerformOperation(ctx)) {
+            return;
+        }
+
+        if (args.isEmpty()) {
+            textChannel.sendMessageEmbeds(buildSimpleInfo("Usage -> " + getUsage(), Color.YELLOW)).queue();
             return;
         }
 
