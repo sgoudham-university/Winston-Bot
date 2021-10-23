@@ -1,0 +1,16 @@
+micronaut:
+  application:
+    name: winston
+
+bot:
+  token: ${WINSTON_TOKEN}
+  guild:
+    id: 787825881712033802
+#       id: 621621615930638336
+  config:
+    registerCommands: true
+    registerCommandsGlobally: false
+    registerCommandsForGuild: true
+
+youtubeLogo: "https://www.vexels.com/media/users/3/137425/isolated/thumb/f2ea1ded4d037633f687ee389a571086-youtube-icon-logo-by-vexels.png"
+winstonWednesday: "classpath:winstonWednesday.mp4"
