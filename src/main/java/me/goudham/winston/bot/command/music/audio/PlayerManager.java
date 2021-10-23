@@ -9,17 +9,17 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import me.goudham.winston.service.Display;
 import me.goudham.winston.service.EmbedService;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class PlayerManager {
@@ -144,14 +144,7 @@ public class PlayerManager {
             slashCommandEvent.getGuild().getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
         }
         guildMusicManager.getTrackScheduler().setEvent(slashCommandEvent);
+        musicManagers.put(slashCommandEvent.getGuild().getIdLong(), guildMusicManager);
         return guildMusicManager;
-    }
-
-    private void updateTrackScheduler(SlashCommandEvent newEvent) {
-        musicManagers.computeIfPresent(newEvent.getGuild().getIdLong(), (guildId, ctx) -> {
-            GuildMusicManager guildMusicManager = musicManagers.get(guildId);
-            guildMusicManager.getTrackScheduler().setEvent(newEvent);
-            return guildMusicManager;
-        });
     }
 }
