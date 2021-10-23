@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image "maven:3.8.1-adoptopenjdk-11"
+            image "maven:3.8.3-amazoncorretto-17"
             args '-v /root/.m2:/root/.m2'
         }
     }
@@ -37,9 +37,7 @@ pipeline {
 
                       sshCommand remote: remote, command: 'sudo systemctl stop winston.service'
                       sshCommand remote: remote, command: 'rm Winston-Bot/*.jar', failOnError:'false'
-                      sshCommand remote: remote, command: 'rm -rf Winston-Bot/src', failOnError:'false'
-                      sshPut remote: remote, from: 'target/Winston-Bot-jar-with-dependencies.jar', into: 'Winston-Bot/'
-                      sshPut remote: remote, from: 'src', into: 'Winston-Bot/'
+                      sshPut remote: remote, from: 'target/winston.jar', into: 'Winston-Bot/'
                       sshCommand remote: remote, command: "echo VERSION=${VERSION} > Winston-Bot/version.txt"
                       sshCommand remote: remote, command: 'sudo systemctl start winston.service'
                     }
