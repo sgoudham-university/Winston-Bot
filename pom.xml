@@ -97,6 +97,7 @@
     </dependencies>
 
     <build>
+        <finalName>winston</finalName>
         <plugins>
             <plugin>
                 <groupId>io.micronaut.build</groupId>
