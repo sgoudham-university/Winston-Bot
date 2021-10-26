@@ -14,8 +14,8 @@ public class WinstonBot implements Winston {
 
     @Inject
     public WinstonBot(Guild guild,
-                   @Value("${bot.config.registerCommands}") boolean registerCommands,
-                   CommandManager commandManager) {
+                      @Value("${bot.config.registerCommands}") boolean registerCommands,
+                      CommandManager commandManager) {
         this.guild = guild;
         this.registerCommands = registerCommands;
         this.commandManager = commandManager;
