@@ -12,7 +12,7 @@ public class GuildMusicManager {
 
     GuildMusicManager(AudioPlayerManager manager, SlashCommandEvent slashCommandEvent, Display display) {
         audioPlayer = manager.createPlayer();
-        trackScheduler = new TrackScheduler(audioPlayer, slashCommandEvent, display);
+        trackScheduler = new TrackScheduler(audioPlayer, manager, slashCommandEvent, display);
         audioPlayer.addListener(trackScheduler);
         sendHandler = new AudioPlayerSendHandler(audioPlayer);
     }
@@ -21,7 +21,7 @@ public class GuildMusicManager {
         return audioPlayer;
     }
 
-    public AudioPlayerSendHandler getSendHandler() {
+    AudioPlayerSendHandler getSendHandler() {
         return sendHandler;
     }
 

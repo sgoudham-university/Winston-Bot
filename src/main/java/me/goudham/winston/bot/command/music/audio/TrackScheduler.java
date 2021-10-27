@@ -1,35 +1,44 @@
 package me.goudham.winston.bot.command.music.audio;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
+import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
+import com.sedmelluq.discord.lavaplayer.track.AudioReference;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.atomic.AtomicReference;
+import me.goudham.winston.bot.command.music.audio.spotify.SpotifyAudioSourceManager;
+import me.goudham.winston.bot.command.music.audio.spotify.SpotifyAudioTrack;
+import me.goudham.winston.domain.music.TrackMetaData;
 import me.goudham.winston.service.Display;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.atomic.AtomicReference;
+
 public class TrackScheduler extends AudioEventAdapter {
     private SlashCommandEvent event;
     private final AudioPlayer player;
     private final Display display;
+    private final AudioPlayerManager audioPlayerManager;
     private final BlockingDeque<AudioTrack> deque = new LinkedBlockingDeque<>();
     private AtomicReference<Long> previousEmbedMessageId = null;
     private boolean repeating = false;
     private boolean isSlashCommand = false;
     private static final Logger logger = LoggerFactory.getLogger(TrackScheduler.class);
 
-    public TrackScheduler(AudioPlayer player, SlashCommandEvent event, Display display) {
+    TrackScheduler(AudioPlayer player, AudioPlayerManager audioPlayerManager, SlashCommandEvent event, Display display) {
         this.player = player;
         this.event = event;
         this.display = display;
+        this.audioPlayerManager = audioPlayerManager;
     }
 
     @Override
@@ -72,7 +81,18 @@ public class TrackScheduler extends AudioEventAdapter {
         if (isSlashCommand) {
             this.isSlashCommand = true;
         }
-        player.startTrack(deque.poll(), false);
+
+        AudioTrack audioTrack = deque.poll();
+        if (audioTrack instanceof SpotifyAudioTrack spotifyAudioTrack) {
+            TrackMetaData trackUserData = spotifyAudioTrack.getUserData(TrackMetaData.class);
+            String query = "sptsearch:" + trackUserData.name() + " " + trackUserData.artists();
+            SpotifyAudioSourceManager spotifyAudioSourceManager = trackUserData.spotifyAudioSourceManager();
+            AudioPlaylist audioPlaylist = (AudioPlaylist) spotifyAudioSourceManager.loadItem(audioPlayerManager, new AudioReference(query, null));
+            audioTrack = audioPlaylist.getTracks().get(0);
+            audioTrack.setUserData(trackUserData);
+        }
+
+        player.startTrack(audioTrack, false);
     }
 
     public AudioTrack removeTrack() {

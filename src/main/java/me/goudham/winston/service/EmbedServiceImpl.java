@@ -12,9 +12,8 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
-import org.apache.commons.text.WordUtils;
 
-import java.awt.*;
+import java.awt.Color;
 import java.net.URI;
 import java.time.Instant;
 import java.util.List;
@@ -24,12 +23,19 @@ import java.util.Random;
 public class EmbedServiceImpl implements EmbedService {
     private final Random random = new Random();
     private final String youtubeLogo;
+    private final String spotifyLogo;
     private final TimeUtils timeUtils;
     private final TitleUtils titleUtils;
 
     @Inject
-    public EmbedServiceImpl(@Value("${youtubeLogo}") String youtubeLogo, TimeUtils timeUtils, TitleUtils titleUtils) {
+    public EmbedServiceImpl(
+            @Value("${youtubeLogo}") String youtubeLogo,
+            @Value("${spotifyLogo}") String spotifyLogo,
+            TimeUtils timeUtils,
+            TitleUtils titleUtils
+    ) {
         this.youtubeLogo = youtubeLogo;
+        this.spotifyLogo = spotifyLogo;
         this.timeUtils = timeUtils;
         this.titleUtils = titleUtils;
     }
@@ -96,19 +102,23 @@ public class EmbedServiceImpl implements EmbedService {
     }
 
     @Override
-    public MessageEmbed getNowPlayingEmbed(SlashCommandEvent slashCommandEvent, String title, String url, String status, String trackPos) {
-        String thumbnailUrl = slashCommandEvent.getUser().getEffectiveAvatarUrl();
+    public MessageEmbed getNowPlayingEmbed(SlashCommandEvent slashCommandEvent, String title, String url, String image, String status, String trackPos) {
+        String thumbnailUrl;
+        String iconUrl;
 
-        if (url.endsWith(".mp3")) {
-            title = WordUtils.capitalize(url.split("audio")[1].substring(1).replace("_", " "));
-            url = "";
+        // This check doubles as a isSpotifyLink check (have fun future Goudham)
+        if (!image.isBlank()) {
+            thumbnailUrl = image;
+            iconUrl = spotifyLogo;
         } else {
             URI uri = URI.create(url);
             String videoID = uri.getQuery().split("v=")[1];
             thumbnailUrl = "https://img.youtube.com/vi/" + videoID + "/0.jpg";
+            iconUrl = youtubeLogo;
         }
 
         return getBaseEmbed(slashCommandEvent, status)
+                .setAuthor(status, null, iconUrl)
                 .setTitle(title, url)
                 .setDescription(trackPos)
                 .setThumbnail(thumbnailUrl)
