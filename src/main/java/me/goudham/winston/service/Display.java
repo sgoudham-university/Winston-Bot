@@ -5,12 +5,14 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import java.util.concurrent.atomic.AtomicReference;
+import me.goudham.winston.domain.music.TrackMetaData;
 import me.goudham.winston.service.util.TimeUtils;
 import me.goudham.winston.service.util.TitleUtils;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 @Singleton
 public class Display {
@@ -88,9 +90,11 @@ public class Display {
 
     private AtomicReference<Long> displaySong(SlashCommandEvent slashCommandEvent, AudioTrack track, String status, String trackPos, boolean isSlashCommand) {
         AudioTrackInfo trackInfo = track.getInfo();
+        TrackMetaData userData = track.getUserData(TrackMetaData.class);
         String title = titleUtils.getTrimmedTitle(trackInfo.title, 70);
-        String url = trackInfo.uri;
-        MessageEmbed nowPlayingEmbed = embedService.getNowPlayingEmbed(slashCommandEvent, title, url, status, trackPos);
+        String url = userData == null ? trackInfo.uri : userData.uri();
+        String image = userData == null ? "" : userData.image();
+        MessageEmbed nowPlayingEmbed = embedService.getNowPlayingEmbed(slashCommandEvent, title, url, image, status, trackPos);
 
         AtomicReference<Long> messageID = new AtomicReference<>();
         if (isSlashCommand) {

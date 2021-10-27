@@ -3,20 +3,23 @@ package me.goudham.winston.bot.command.music.audio;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import me.goudham.winston.bot.command.music.audio.spotify.SpotifyAudioSourceManager;
 import me.goudham.winston.service.Display;
 import me.goudham.winston.service.EmbedService;
+import me.goudham.winston.service.SpotifyService;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 
 import java.awt.Color;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,14 +29,14 @@ public class PlayerManager {
     private final Display display;
     private final EmbedService embedService;
     private final Map<Long, GuildMusicManager> musicManagers = new HashMap<>();
-    private final AudioPlayerManager audioPlayerManager = new DefaultAudioPlayerManager();
+    private final AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
     @Inject
-    public PlayerManager(Display display, EmbedService embedService) {
+    public PlayerManager(Display display, EmbedService embedService, SpotifyService spotifyService) {
         this.display = display;
         this.embedService = embedService;
-        AudioSourceManagers.registerLocalSource(audioPlayerManager);
-        AudioSourceManagers.registerRemoteSources(audioPlayerManager);
+        playerManager.registerSourceManager(new SpotifyAudioSourceManager(true, spotifyService));
+        playerManager.registerSourceManager(new YoutubeAudioSourceManager(true));
     }
 
     public void searchAndPlay(SlashCommandEvent slashCommandEvent, String userSearch) {
@@ -41,7 +44,7 @@ public class PlayerManager {
         GuildMusicManager musicManager = getMusicManager(slashCommandEvent);
         TrackScheduler scheduler = musicManager.getTrackScheduler();
 
-        audioPlayerManager.loadItemOrdered(musicManager, userSearch, new AudioLoadResultHandler() {
+        playerManager.loadItemOrdered(musicManager, userSearch, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
                 display.displayAddedToQueue(slashCommandEvent, audioTrack, false);
@@ -93,12 +96,12 @@ public class PlayerManager {
         });
     }
 
-    public void loadAndPlay(SlashCommandEvent slashCommandEvent, String trackUrl, boolean isSlashCommand) {
+    public void loadAndPlay(SlashCommandEvent slashCommandEvent, String trackUrl, boolean isSlashCommand, boolean shuffle) {
         MessageChannel textChannel = slashCommandEvent.getChannel();
         GuildMusicManager musicManager = getMusicManager(slashCommandEvent);
         TrackScheduler scheduler = musicManager.getTrackScheduler();
 
-        audioPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
+        playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
                 display.displayAddedToQueue(slashCommandEvent, audioTrack, isSlashCommand);
@@ -111,6 +114,9 @@ public class PlayerManager {
                     trackLoaded(audioPlaylist.getTracks().get(0));
                 } else {
                     List<AudioTrack> allTracks = audioPlaylist.getTracks();
+                    if (shuffle) {
+                        Collections.shuffle(allTracks);
+                    }
 
                     MessageEmbed simpleInfoEmbed = embedService.getSimpleInfoEmbedWithDesc("**Added** `" + allTracks.size() + "` **Tracks From Playlist** `" + audioPlaylist.getName() + "`", Color.GREEN);
                     if (isSlashCommand) {
@@ -137,10 +143,57 @@ public class PlayerManager {
         });
     }
 
+//    public void loadAndPlaySpotify(SlashCommandEvent slashCommandEvent, String trackUrl, boolean isSlashCommand, boolean shuffle) {
+//        MessageChannel textChannel = slashCommandEvent.getChannel();
+//        GuildMusicManager musicManager = getMusicManager(slashCommandEvent);
+//        TrackScheduler scheduler = musicManager.getTrackScheduler();
+//
+//        spotifyPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
+//            @Override
+//            public void trackLoaded(AudioTrack audioTrack) {
+//                display.displayAddedToQueue(slashCommandEvent, audioTrack, isSlashCommand);
+//                scheduler.queue(audioTrack);
+//            }
+//
+//            @Override
+//            public void playlistLoaded(AudioPlaylist audioPlaylist) {
+//                if (audioPlaylist.isSearchResult()) {
+//                    trackLoaded(audioPlaylist.getTracks().get(0));
+//                } else {
+//                    List<AudioTrack> allTracks = audioPlaylist.getTracks();
+//                    if (shuffle) {
+//                        Collections.shuffle(allTracks);
+//                    }
+//
+//                    MessageEmbed simpleInfoEmbed = embedService.getSimpleInfoEmbedWithDesc("**Added** `" + allTracks.size() + "` **Tracks From Playlist** `" + audioPlaylist.getName() + "`", Color.GREEN);
+//                    if (isSlashCommand) {
+//                        slashCommandEvent.replyEmbeds(simpleInfoEmbed).queue();
+//                    } else {
+//                        textChannel.sendMessageEmbeds(simpleInfoEmbed).queue();
+//                    }
+//
+//                    allTracks.forEach(scheduler::queue);
+//                }
+//            }
+//
+//            @Override
+//            public void noMatches() {
+//                OptionMapping trackOption = slashCommandEvent.getOption("input");
+//                String track = trackOption == null ? "Track Unknown" : trackOption.getAsString();
+//                textChannel.sendMessage("Nothing Found For: '" + track + "'").queue();
+//            }
+//
+//            @Override
+//            public void loadFailed(FriendlyException fe) {
+//                textChannel.sendMessage("Could Not Play: " + fe.getMessage()).queue();
+//            }
+//        });
+//    }
+
     public GuildMusicManager getMusicManager(SlashCommandEvent slashCommandEvent) {
         GuildMusicManager guildMusicManager = musicManagers.get(slashCommandEvent.getGuild().getIdLong());
         if (guildMusicManager == null) {
-            guildMusicManager = new GuildMusicManager(audioPlayerManager, slashCommandEvent, display);
+            guildMusicManager = new GuildMusicManager(playerManager, slashCommandEvent, display);
             slashCommandEvent.getGuild().getAudioManager().setSendingHandler(guildMusicManager.getSendHandler());
         }
         guildMusicManager.getTrackScheduler().setEvent(slashCommandEvent);

@@ -2,11 +2,12 @@ package me.goudham.winston.listener;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import java.util.Map;
 import me.goudham.winston.domain.QueuePages;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 @Singleton
 public class ButtonClickListener extends ListenerAdapter {
@@ -33,7 +34,10 @@ public class ButtonClickListener extends ListenerAdapter {
                 queuePages.decrementIndexByOne();
                 event.editMessageEmbeds(queuePages.getEmbedAtCurrentIndex()).queue();
             }
-            case "delete" -> event.getMessage().delete().queue();
+            case "delete" -> {
+                event.getMessage().delete().queue();
+                queueEmbeds.remove(uuid);
+            }
             case "forward" -> {
                 queuePages.incrementIndexByOne();
                 event.editMessageEmbeds(queuePages.getEmbedAtCurrentIndex()).queue();

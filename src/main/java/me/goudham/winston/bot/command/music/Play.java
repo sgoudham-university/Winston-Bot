@@ -3,9 +3,9 @@ package me.goudham.winston.bot.command.music;
 import io.micronaut.context.annotation.Executable;
 import jakarta.inject.Inject;
 import me.goudham.winston.bot.command.music.audio.PlayerManager;
+import me.goudham.winston.command.annotation.Choice;
 import me.goudham.winston.command.annotation.Option;
 import me.goudham.winston.command.annotation.SlashCommand;
-import me.goudham.winston.service.EmbedService;
 import me.goudham.winston.service.MusicService;
 import me.goudham.winston.service.ValidationService;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
@@ -22,6 +22,18 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
                         name = "input",
                         description = "Track name or youtube playlist link",
                         isRequired = true
+                ),
+                @Option(
+                        optionType = OptionType.STRING,
+                        name = "shuffle",
+                        description = "Shuffle the playlist prior to playing",
+                        isRequired = false,
+                        choices = {
+                                @Choice(
+                                        name = "yes",
+                                        stringValue = "yes"
+                                )
+                        }
                 )
         }
 )
@@ -40,6 +52,7 @@ public class Play {
     @Executable
     public void handle(SlashCommandEvent slashCommandEvent) {
         String inputLink = slashCommandEvent.getOption("input").getAsString();
+        boolean shuffle = slashCommandEvent.getOption("shuffle") != null;
         GuildVoiceState authorVoiceState = slashCommandEvent.getMember().getVoiceState();
         GuildVoiceState botVoiceState = slashCommandEvent.getGuild().getSelfMember().getVoiceState();
 
@@ -47,13 +60,19 @@ public class Play {
             return;
         }
 
-        String validatedInputLink = !validationService.isUrl(inputLink) ? "ytsearch:" + inputLink : inputLink;
+        String validatedInputLink;
+        if (validationService.isUrl(inputLink)) {
+            validatedInputLink = inputLink;
+        } else {
+            validatedInputLink = "ytsearch:" + inputLink;
+        }
+
         if (!botVoiceState.inVoiceChannel()) {
             MessageEmbed joinVoiceChannelEmbed = musicService.joinVoiceChannel(slashCommandEvent);
             slashCommandEvent.replyEmbeds(joinVoiceChannelEmbed).queue();
-            playerManager.loadAndPlay(slashCommandEvent, validatedInputLink, false);
+            playerManager.loadAndPlay(slashCommandEvent, validatedInputLink, false, shuffle);
         } else {
-            playerManager.loadAndPlay(slashCommandEvent, validatedInputLink, true);
+            playerManager.loadAndPlay(slashCommandEvent, validatedInputLink, true, shuffle);
         }
     }
 }
