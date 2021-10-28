@@ -53,7 +53,7 @@ public class SpotifyServiceImpl implements SpotifyService {
             refreshAccessToken();
         }
         GetPlaylistRequest getPlaylistRequest = spotifyApi.getPlaylist(playlistId).build();
-        String name = "";
+        String name;
         List<Track> tracks = new ArrayList<>();
 
         try {
@@ -65,9 +65,9 @@ public class SpotifyServiceImpl implements SpotifyService {
             if (exp instanceof SpotifyWebApiException swae) {
                 if (swae.getMessage().contains("401")) {
                     refreshAccessToken();
-                    return getPlaylist(playlistId);
                 }
             }
+            return getPlaylist(playlistId);
         }
 
         return new Playlist(name, tracks);
@@ -86,12 +86,10 @@ public class SpotifyServiceImpl implements SpotifyService {
             if (exp instanceof SpotifyWebApiException swae) {
                 if (swae.getMessage().contains("401")) {
                     refreshAccessToken();
-                    return getPlaylistTracks(playlistId, offset);
                 }
             }
+            return getPlaylistTracks(playlistId, offset);
         }
-
-        return null;
     }
 
     private void getTracks(List<Track> tracks, String playlistId, int offset) {
@@ -136,6 +134,11 @@ public class SpotifyServiceImpl implements SpotifyService {
             image = track.getAlbum().getImages()[1].getUrl();
         } catch (IOException | SpotifyWebApiException | ParseException exp) {
             exp.printStackTrace();
+            if (exp instanceof SpotifyWebApiException swae) {
+                if (swae.getMessage().contains("401")) {
+                    refreshAccessToken();
+                }
+            }
             return getTrack(trackId);
         }
 
