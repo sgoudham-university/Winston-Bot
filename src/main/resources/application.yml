@@ -5,8 +5,8 @@ micronaut:
 bot:
   token: ${WINSTON_TOKEN}
   guild:
-#    id: 787825881712033802
-       id: 621621615930638336
+    id: 787825881712033802
+#    id: 621621615930638336
   config:
     registerCommands: true
     registerCommandsGlobally: false
