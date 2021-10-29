@@ -8,6 +8,7 @@ import me.goudham.winston.bot.command.music.audio.GuildMusicManager;
 import me.goudham.winston.bot.command.music.audio.PlayerManager;
 import me.goudham.winston.bot.command.music.audio.QueueEmbedInfo;
 import me.goudham.winston.command.annotation.SlashCommand;
+import me.goudham.winston.domain.QueueButton;
 import me.goudham.winston.domain.QueuePages;
 import me.goudham.winston.service.EmbedService;
 import me.goudham.winston.service.ValidationService;
@@ -33,10 +34,10 @@ public class Queue {
     private final PlayerManager playerManager;
     private final TitleUtils titleUtils;
     private final TimeUtils timeUtils;
-    private final Map<String, QueuePages> queueEmbeds;
+    private final Map<String, QueueButton> queueEmbeds;
 
     @Inject
-    public Queue(ValidationService validationService, EmbedService embedService, PlayerManager playerManager, TitleUtils titleUtils, TimeUtils timeUtils, Map<String, QueuePages> queueEmbeds) {
+    public Queue(ValidationService validationService, EmbedService embedService, PlayerManager playerManager, TitleUtils titleUtils, TimeUtils timeUtils, Map<String, QueueButton> queueEmbeds) {
         this.validationService = validationService;
         this.embedService = embedService;
         this.titleUtils = titleUtils;
@@ -68,12 +69,9 @@ public class Queue {
             queueEmbedInfo.setTrackSize(queueEmbedInfo.getTrackSize() + Math.min(songsRemaining, 10));
         }
 
-        QueuePages queuePages = new QueuePages(0, pages);
+        QueueButton queueButton = new QueueButton();
         String uuidAsString = UUID.randomUUID().toString();
-        queueEmbeds.put(uuidAsString, queuePages);
-
-        MessageEmbed embedContent = pages.get(0);
-        slashCommandEvent.replyEmbeds(embedContent)
+        slashCommandEvent.replyEmbeds(pages.get(0))
                 .addActionRow(
                         Button.secondary(uuidAsString + "_previousByTwo", Emoji.fromMarkdown("⏮")).withDisabled(pages.size() <= 2),
                         Button.secondary(uuidAsString + "_previous", Emoji.fromMarkdown("⬅")).withDisabled(pages.size() == 1),
@@ -81,7 +79,10 @@ public class Queue {
                         Button.secondary(uuidAsString + "_forward", Emoji.fromMarkdown("➡")).withDisabled(pages.size() == 1),
                         Button.secondary(uuidAsString + "_forwardByTwo", Emoji.fromMarkdown("⏭")).withDisabled(pages.size() <= 2)
                 )
-                .queue();
+                .queue(success -> queueButton.setInteractionHook(success.getInteraction().getHook()));
+        QueuePages queuePages = new QueuePages(0, pages);
+        queueButton.setQueuePages(queuePages);
+        queueEmbeds.put(uuidAsString, queueButton);
     }
 
     private QueueEmbedInfo readSongs(List<AudioTrack> trackList, User author, QueueEmbedInfo embedInfo) {
