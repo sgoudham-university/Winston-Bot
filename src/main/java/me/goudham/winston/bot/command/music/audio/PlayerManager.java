@@ -9,6 +9,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import me.goudham.winston.bot.command.music.audio.spotify.SpotifyAlbum;
 import me.goudham.winston.bot.command.music.audio.spotify.SpotifyAudioSourceManager;
 import me.goudham.winston.domain.music.TrackMetaData;
 import me.goudham.winston.domain.music.TrackUser;
@@ -121,7 +122,14 @@ public class PlayerManager {
                         Collections.shuffle(allTracks);
                     }
 
-                    MessageEmbed simpleInfoEmbed = embedService.getSimpleInfoEmbedWithDesc("**Added** `" + allTracks.size() + "` **Tracks From Playlist** `" + audioPlaylist.getName() + "`", Color.GREEN);
+                    String message;
+                    if (audioPlaylist instanceof SpotifyAlbum spotifyAlbum) {
+                        message = "**Added** `" + allTracks.size() + "` **Tracks From Album** `" + spotifyAlbum.getName() + "` **By** `" + spotifyAlbum.getArtists() + "`";
+                    } else {
+                        message = "**Added** `" + allTracks.size() + "` **Tracks From Playlist** `" + audioPlaylist.getName() + "`";
+                    }
+
+                    MessageEmbed simpleInfoEmbed = embedService.getSimpleInfoEmbedWithDesc(message, Color.GREEN);
                     if (isSlashCommand) {
                         slashCommandEvent.replyEmbeds(simpleInfoEmbed).queue();
                     } else {

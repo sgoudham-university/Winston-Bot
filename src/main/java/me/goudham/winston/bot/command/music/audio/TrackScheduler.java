@@ -13,17 +13,21 @@ import me.goudham.winston.domain.music.TrackMetaData;
 import me.goudham.winston.service.Display;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
+import net.dv8tion.jda.api.managers.AudioManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class TrackScheduler extends AudioEventAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(TrackScheduler.class);
     private SlashCommandEvent event;
     private final AudioPlayer player;
     private final Display display;
@@ -32,7 +36,7 @@ public class TrackScheduler extends AudioEventAdapter {
     private AtomicReference<Long> previousEmbedMessageId = null;
     private boolean repeating = false;
     private boolean isSlashCommand = false;
-    private static final Logger logger = LoggerFactory.getLogger(TrackScheduler.class);
+    private Timer timer = new Timer("Winston");
 
     TrackScheduler(AudioPlayer player, AudioPlayerManager audioPlayerManager, SlashCommandEvent event, Display display) {
         this.player = player;
@@ -43,10 +47,13 @@ public class TrackScheduler extends AudioEventAdapter {
 
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
+        resetTimer();
+
         if (!isSlashCommand) {
             if (previousEmbedMessageId != null && previousEmbedMessageId.get() != null) {
                 event.getChannel().deleteMessageById(previousEmbedMessageId.get()).queue(
-                        message -> {},
+                        message -> {
+                        },
                         failure -> {
                             if (failure instanceof ErrorResponseException ere) {
                                 logger.info(ere.getMessage());
@@ -67,6 +74,7 @@ public class TrackScheduler extends AudioEventAdapter {
                 this.player.startTrack(track.makeClone(), false);
             } else {
                 nextTrack(false);
+                startTimer();
             }
         }
     }
@@ -126,6 +134,30 @@ public class TrackScheduler extends AudioEventAdapter {
 
     private void setListAsDeque(List<AudioTrack> trackList) {
         deque.addAll(trackList);
+    }
+
+    private void resetTimer() {
+        timer.cancel();
+        timer = new Timer("Winston");
+    }
+
+    private void startTimer() {
+        try {
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    repeating = false;
+                    player.setPaused(false);
+                    deque.clear();
+                    player.stopTrack();
+                    AudioManager audioManager = event.getGuild().getAudioManager();
+                    audioManager.closeAudioConnection();
+                }
+            };
+            timer.schedule(task, 300000L);
+        } catch (IllegalStateException ise) {
+            System.out.println(ise.getMessage());
+        }
     }
 
     public void setRepeating(boolean repeating) {
