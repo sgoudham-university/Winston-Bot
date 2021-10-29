@@ -99,6 +99,11 @@
             <artifactId>spotify-web-api-java</artifactId>
             <version>6.5.4</version>
         </dependency>
+        <dependency>
+            <groupId>net.jodah</groupId>
+            <artifactId>expiringmap</artifactId>
+            <version>0.5.10</version>
+        </dependency>
     </dependencies>
 
     <build>
