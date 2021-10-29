@@ -6,10 +6,12 @@ import me.goudham.winston.bot.command.music.audio.PlayerManager;
 import me.goudham.winston.command.annotation.Choice;
 import me.goudham.winston.command.annotation.Option;
 import me.goudham.winston.command.annotation.SlashCommand;
+import me.goudham.winston.domain.music.TrackUser;
 import me.goudham.winston.service.MusicService;
 import me.goudham.winston.service.ValidationService;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 
@@ -51,6 +53,8 @@ public class Play {
 
     @Executable
     public void handle(SlashCommandEvent slashCommandEvent) {
+        User user = slashCommandEvent.getMember().getUser();
+        TrackUser requester = new TrackUser(user.getName() + "#" + user.getDiscriminator(), user.getEffectiveAvatarUrl());
         String inputLink = slashCommandEvent.getOption("input").getAsString();
         boolean shuffle = slashCommandEvent.getOption("shuffle") != null;
         GuildVoiceState authorVoiceState = slashCommandEvent.getMember().getVoiceState();
@@ -70,9 +74,9 @@ public class Play {
         if (!botVoiceState.inVoiceChannel()) {
             MessageEmbed joinVoiceChannelEmbed = musicService.joinVoiceChannel(slashCommandEvent);
             slashCommandEvent.replyEmbeds(joinVoiceChannelEmbed).queue();
-            playerManager.loadAndPlay(slashCommandEvent, validatedInputLink, false, shuffle);
+            playerManager.loadAndPlay(slashCommandEvent, validatedInputLink, requester, false, shuffle);
         } else {
-            playerManager.loadAndPlay(slashCommandEvent, validatedInputLink, true, shuffle);
+            playerManager.loadAndPlay(slashCommandEvent, validatedInputLink, requester, true, shuffle);
         }
     }
 }

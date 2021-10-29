@@ -61,7 +61,7 @@ public class Queue {
 
         int songsRemaining = 1;
         while (songsRemaining > 0) {
-            QueueEmbedInfo queueEmbedInfo = readSongs(trackList, author, slashCommandEvent, embedInfo);
+            QueueEmbedInfo queueEmbedInfo = readSongs(trackList, author, embedInfo);
             pages.add(queueEmbedInfo.getQueueMessageEmbed());
             queueEmbedInfo.setCurrentPage(queueEmbedInfo.getCurrentPage() + 1);
             songsRemaining = trackList.size() - queueEmbedInfo.getTrackSize();
@@ -84,12 +84,12 @@ public class Queue {
                 .queue();
     }
 
-    private QueueEmbedInfo readSongs(List<AudioTrack> trackList, User author, SlashCommandEvent slashCommandEvent, QueueEmbedInfo embedInfo) {
+    private QueueEmbedInfo readSongs(List<AudioTrack> trackList, User author, QueueEmbedInfo embedInfo) {
         int songsRead = embedInfo.getSongsRead();
         int trackSize = embedInfo.getTrackSize();
         int currPage = embedInfo.getCurrentPage();
         int totalPages = embedInfo.getTotalPages();
-        EmbedBuilder queueEmbed = embedService.getQueueEmbed(author, slashCommandEvent, currPage, totalPages);
+        EmbedBuilder queueEmbed = embedService.getQueueEmbed(author, currPage, totalPages);
 
         for (int i = songsRead; i < trackSize; i++) {
             AudioTrack track = trackList.get(i);

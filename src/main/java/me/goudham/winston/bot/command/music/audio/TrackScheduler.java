@@ -85,8 +85,8 @@ public class TrackScheduler extends AudioEventAdapter {
         AudioTrack audioTrack = deque.poll();
         if (audioTrack instanceof SpotifyAudioTrack spotifyAudioTrack) {
             TrackMetaData trackUserData = spotifyAudioTrack.getUserData(TrackMetaData.class);
-            String query = "sptsearch:" + trackUserData.name() + " " + trackUserData.artists();
-            SpotifyAudioSourceManager spotifyAudioSourceManager = trackUserData.spotifyAudioSourceManager();
+            String query = "sptsearch:" + trackUserData.getName() + " " + trackUserData.getArtists();
+            SpotifyAudioSourceManager spotifyAudioSourceManager = trackUserData.getAudioSourceManager();
             AudioPlaylist audioPlaylist = (AudioPlaylist) spotifyAudioSourceManager.loadItem(audioPlayerManager, new AudioReference(query, null));
             audioTrack = audioPlaylist.getTracks().get(0);
             audioTrack.setUserData(trackUserData);

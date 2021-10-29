@@ -10,6 +10,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import me.goudham.winston.bot.command.music.audio.spotify.SpotifyAudioSourceManager;
+import me.goudham.winston.domain.music.TrackMetaData;
+import me.goudham.winston.domain.music.TrackUser;
 import me.goudham.winston.service.Display;
 import me.goudham.winston.service.EmbedService;
 import me.goudham.winston.service.SpotifyService;
@@ -96,7 +98,7 @@ public class PlayerManager {
         });
     }
 
-    public void loadAndPlay(SlashCommandEvent slashCommandEvent, String trackUrl, boolean isSlashCommand, boolean shuffle) {
+    public void loadAndPlay(SlashCommandEvent slashCommandEvent, String trackUrl, TrackUser trackUser, boolean isSlashCommand, boolean shuffle) {
         MessageChannel textChannel = slashCommandEvent.getChannel();
         GuildMusicManager musicManager = getMusicManager(slashCommandEvent);
         TrackScheduler scheduler = musicManager.getTrackScheduler();
@@ -104,6 +106,7 @@ public class PlayerManager {
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
+                setTrackUser(audioTrack, trackUser);
                 display.displayAddedToQueue(slashCommandEvent, audioTrack, isSlashCommand);
                 scheduler.queue(audioTrack);
             }
@@ -125,7 +128,10 @@ public class PlayerManager {
                         textChannel.sendMessageEmbeds(simpleInfoEmbed).queue();
                     }
 
-                    allTracks.forEach(scheduler::queue);
+                    allTracks.forEach(audioTrack -> {
+                        setTrackUser(audioTrack, trackUser);
+                        scheduler.queue(audioTrack);
+                    });
                 }
             }
 
@@ -143,52 +149,14 @@ public class PlayerManager {
         });
     }
 
-//    public void loadAndPlaySpotify(SlashCommandEvent slashCommandEvent, String trackUrl, boolean isSlashCommand, boolean shuffle) {
-//        MessageChannel textChannel = slashCommandEvent.getChannel();
-//        GuildMusicManager musicManager = getMusicManager(slashCommandEvent);
-//        TrackScheduler scheduler = musicManager.getTrackScheduler();
-//
-//        spotifyPlayerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
-//            @Override
-//            public void trackLoaded(AudioTrack audioTrack) {
-//                display.displayAddedToQueue(slashCommandEvent, audioTrack, isSlashCommand);
-//                scheduler.queue(audioTrack);
-//            }
-//
-//            @Override
-//            public void playlistLoaded(AudioPlaylist audioPlaylist) {
-//                if (audioPlaylist.isSearchResult()) {
-//                    trackLoaded(audioPlaylist.getTracks().get(0));
-//                } else {
-//                    List<AudioTrack> allTracks = audioPlaylist.getTracks();
-//                    if (shuffle) {
-//                        Collections.shuffle(allTracks);
-//                    }
-//
-//                    MessageEmbed simpleInfoEmbed = embedService.getSimpleInfoEmbedWithDesc("**Added** `" + allTracks.size() + "` **Tracks From Playlist** `" + audioPlaylist.getName() + "`", Color.GREEN);
-//                    if (isSlashCommand) {
-//                        slashCommandEvent.replyEmbeds(simpleInfoEmbed).queue();
-//                    } else {
-//                        textChannel.sendMessageEmbeds(simpleInfoEmbed).queue();
-//                    }
-//
-//                    allTracks.forEach(scheduler::queue);
-//                }
-//            }
-//
-//            @Override
-//            public void noMatches() {
-//                OptionMapping trackOption = slashCommandEvent.getOption("input");
-//                String track = trackOption == null ? "Track Unknown" : trackOption.getAsString();
-//                textChannel.sendMessage("Nothing Found For: '" + track + "'").queue();
-//            }
-//
-//            @Override
-//            public void loadFailed(FriendlyException fe) {
-//                textChannel.sendMessage("Could Not Play: " + fe.getMessage()).queue();
-//            }
-//        });
-//    }
+    private void setTrackUser(AudioTrack audioTrack, TrackUser trackUser) {
+        TrackMetaData userData = audioTrack.getUserData(TrackMetaData.class);
+        if (userData == null) {
+            userData = new TrackMetaData("", "", "", "", null, null);
+            audioTrack.setUserData(userData);
+        }
+        userData.setTrackUser(trackUser);
+    }
 
     public GuildMusicManager getMusicManager(SlashCommandEvent slashCommandEvent) {
         GuildMusicManager guildMusicManager = musicManagers.get(slashCommandEvent.getGuild().getIdLong());
