@@ -3,14 +3,18 @@ package me.goudham.winston.command;
 import io.micronaut.context.annotation.Value;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import java.util.List;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 @Singleton
 class SlashCommandManager implements CommandManager {
+    private static final Logger logger = LoggerFactory.getLogger(SlashCommandManager.class);
     private final boolean registerCommandsGlobally;
     private final boolean registerCommandsForGuild;
     private final CommandLoader commandLoader;
@@ -18,9 +22,9 @@ class SlashCommandManager implements CommandManager {
 
     @Inject
     SlashCommandManager(@Value("${bot.config.registerCommandsGlobally}") boolean registerCommandsGlobally,
-                               @Value("${bot.config.registerCommandsForGuild}") boolean registerCommandsForGuild,
-                               CommandLoader commandLoader,
-                               JDA jda) {
+                        @Value("${bot.config.registerCommandsForGuild}") boolean registerCommandsForGuild,
+                        CommandLoader commandLoader,
+                        JDA jda) {
         this.registerCommandsGlobally = registerCommandsGlobally;
         this.registerCommandsForGuild = registerCommandsForGuild;
         this.commandLoader = commandLoader;
@@ -35,8 +39,14 @@ class SlashCommandManager implements CommandManager {
     @Override
     public void registerSlashCommands(Guild guild) {
         CommandListUpdateAction commands = null;
-        if (registerCommandsGlobally) commands = jda.updateCommands();
-        if (registerCommandsForGuild) commands = guild.updateCommands();
+        if (registerCommandsGlobally) {
+            commands = jda.updateCommands();
+            logger.info("Updating Commands Globally");
+        }
+        if (registerCommandsForGuild) {
+            commands = guild.updateCommands();
+            logger.info("Updating Commands For Guild: " + guild.getName());
+        }
 
         if (commands != null) {
             List<CommandData> registeredSlashCommands = commandLoader.registerSlashCommands();
