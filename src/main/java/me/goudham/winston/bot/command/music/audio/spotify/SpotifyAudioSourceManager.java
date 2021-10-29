@@ -25,6 +25,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import com.sedmelluq.discord.lavaplayer.track.BasicAudioPlaylist;
 import jakarta.inject.Inject;
+import me.goudham.winston.domain.music.Album;
 import me.goudham.winston.domain.music.Playlist;
 import me.goudham.winston.domain.music.Track;
 import me.goudham.winston.domain.music.TrackMetaData;
@@ -194,7 +195,20 @@ public class SpotifyAudioSourceManager implements AudioSourceManager, HttpConfig
             return new BasicAudioPlaylist(playlist.name(), audioTracks, null, false);
         }
 
+        @Override
+        public AudioItem album(String albumId) {
+            Album album = spotifyService.getAlbum(albumId);
+            List<AudioTrack> audioTracks = album.tracks().stream()
+                    .map(this::createAudioTrack)
+                    .collect(Collectors.toList());
+
+            AudioTrack audioTrack = populateFirstTrack(audioTracks.get(0));
+            audioTracks.set(0, audioTrack);
+            return new SpotifyAlbum(album.name(), album.artists(), audioTracks, null, false);
+        }
+
         private AudioTrack createAudioTrack(Track track) {
+            // You don't really need to return audioTrack here but did so for improved readability
             AudioTrackInfo audioTrackInfo = new AudioTrackInfo(track.artists() + " - " + track.name(), track.artists(), 0L, "", false, track.uri());
             AudioTrack audioTrack = new SpotifyAudioTrack(audioTrackInfo, SpotifyAudioSourceManager.this);
             audioTrack.setUserData(new TrackMetaData(track.name(), track.artists(), track.uri(), track.image(), audioTrack, SpotifyAudioSourceManager.this));
