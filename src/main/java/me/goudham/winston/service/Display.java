@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import me.goudham.winston.domain.music.TrackMetaData;
+import me.goudham.winston.domain.music.TrackUser;
 import me.goudham.winston.service.util.TimeUtils;
 import me.goudham.winston.service.util.TitleUtils;
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -92,9 +93,10 @@ public class Display {
         AudioTrackInfo trackInfo = track.getInfo();
         TrackMetaData userData = track.getUserData(TrackMetaData.class);
         String title = titleUtils.getTrimmedTitle(trackInfo.title, 70);
-        String url = userData == null ? trackInfo.uri : userData.uri();
-        String image = userData == null ? "" : userData.image();
-        MessageEmbed nowPlayingEmbed = embedService.getNowPlayingEmbed(slashCommandEvent, title, url, image, status, trackPos);
+        String url = userData.getUri().isBlank() ? trackInfo.uri : userData.getUri();
+        String image = userData.getImage().isBlank() ? "" : userData.getImage();
+        TrackUser trackUser = userData.getTrackUser();
+        MessageEmbed nowPlayingEmbed = embedService.getNowPlayingEmbed(slashCommandEvent, title, url, image, trackUser, status, trackPos);
 
         AtomicReference<Long> messageID = new AtomicReference<>();
         if (isSlashCommand) {

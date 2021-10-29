@@ -5,6 +5,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import io.micronaut.context.annotation.Value;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import me.goudham.winston.domain.music.TrackUser;
 import me.goudham.winston.service.util.TimeUtils;
 import me.goudham.winston.service.util.TitleUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -59,11 +60,11 @@ public class EmbedServiceImpl implements EmbedService {
     }
 
     @Override
-    public EmbedBuilder getBaseEmbedWithPageCounter(User author, SlashCommandEvent slashCommandEvent, int currPage, int totalPages) {
+    public EmbedBuilder getBaseEmbedWithPageCounter(User author, int currPage, int totalPages) {
         return new EmbedBuilder()
                 .setAuthor("Page " + currPage + " / " + totalPages)
                 .setThumbnail(author.getEffectiveAvatarUrl())
-                .setFooter("Requested By " + author.getName(), slashCommandEvent.getUser().getEffectiveAvatarUrl())
+                .setFooter("Requested By " + author.getName(), author.getEffectiveAvatarUrl())
                 .setTimestamp(Instant.now());
     }
 
@@ -74,8 +75,8 @@ public class EmbedServiceImpl implements EmbedService {
     }
 
     @Override
-    public EmbedBuilder getQueueEmbed(User author, SlashCommandEvent slashCommandEvent, int currPage, int totalPages) {
-        return getBaseEmbedWithPageCounter(author, slashCommandEvent, currPage, totalPages)
+    public EmbedBuilder getQueueEmbed(User author, int currPage, int totalPages) {
+        return getBaseEmbedWithPageCounter(author, currPage, totalPages)
                 .setThumbnail(null)
                 .setTitle("Current Tracks in Queue")
                 .setColor(Color.BLUE);
@@ -102,19 +103,22 @@ public class EmbedServiceImpl implements EmbedService {
     }
 
     @Override
-    public MessageEmbed getNowPlayingEmbed(SlashCommandEvent slashCommandEvent, String title, String url, String image, String status, String trackPos) {
+    public MessageEmbed getNowPlayingEmbed(SlashCommandEvent slashCommandEvent, String title, String url, String image, TrackUser trackUser, String status, String trackPos) {
         String thumbnailUrl;
         String iconUrl;
+        Color colour;
 
         // This check doubles as a isSpotifyLink check (have fun future Goudham)
         if (!image.isBlank()) {
             thumbnailUrl = image;
             iconUrl = spotifyLogo;
+            colour = Color.GREEN;
         } else {
             URI uri = URI.create(url);
             String videoID = uri.getQuery().split("v=")[1];
             thumbnailUrl = "https://img.youtube.com/vi/" + videoID + "/0.jpg";
             iconUrl = youtubeLogo;
+            colour = Color.RED;
         }
 
         return getBaseEmbed(slashCommandEvent, status)
@@ -122,7 +126,8 @@ public class EmbedServiceImpl implements EmbedService {
                 .setTitle(title, url)
                 .setDescription(trackPos)
                 .setThumbnail(thumbnailUrl)
-                .setColor(Color.RED)
+                .setFooter("Requested By " + trackUser.name(), trackUser.avatarUrl())
+                .setColor(colour)
                 .build();
     }
 
