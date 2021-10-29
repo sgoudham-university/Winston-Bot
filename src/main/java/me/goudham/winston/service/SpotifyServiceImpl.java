@@ -6,12 +6,16 @@ import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
 import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
 import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.PlaylistTrack;
+import com.wrapper.spotify.model_objects.specification.TrackSimplified;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
+import com.wrapper.spotify.requests.data.albums.GetAlbumRequest;
+import com.wrapper.spotify.requests.data.albums.GetAlbumsTracksRequest;
 import com.wrapper.spotify.requests.data.playlists.GetPlaylistRequest;
 import com.wrapper.spotify.requests.data.playlists.GetPlaylistsItemsRequest;
 import com.wrapper.spotify.requests.data.tracks.GetTrackRequest;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import me.goudham.winston.domain.music.Album;
 import me.goudham.winston.domain.music.Playlist;
 import me.goudham.winston.domain.music.Track;
 import org.apache.hc.core5.http.ParseException;
@@ -48,6 +52,38 @@ public class SpotifyServiceImpl implements SpotifyService {
     }
 
     @Override
+    public Track getTrack(String trackId) {
+        if (accessTokenExpired()) {
+            refreshAccessToken();
+        }
+        GetTrackRequest getTrackRequest = spotifyApi.getTrack(trackId).build();
+        String name;
+        String artistNames;
+        String uri;
+        String image;
+
+        try {
+            com.wrapper.spotify.model_objects.specification.Track track = getTrackRequest.execute();
+            name = track.getName();
+            artistNames = Arrays.stream(track.getArtists())
+                    .map(ArtistSimplified::getName)
+                    .collect(Collectors.joining(", "));
+            uri = track.getExternalUrls().get("spotify");
+            image = track.getAlbum().getImages()[1].getUrl();
+        } catch (IOException | SpotifyWebApiException | ParseException exp) {
+            exp.printStackTrace();
+            if (exp instanceof SpotifyWebApiException swae) {
+                if (swae.getMessage().contains("401")) {
+                    refreshAccessToken();
+                }
+            }
+            return getTrack(trackId);
+        }
+
+        return new Track(name, artistNames, uri, image);
+    }
+
+    @Override
     public Playlist getPlaylist(String playlistId) {
         if (accessTokenExpired()) {
             refreshAccessToken();
@@ -59,7 +95,7 @@ public class SpotifyServiceImpl implements SpotifyService {
         try {
             com.wrapper.spotify.model_objects.specification.Playlist playlist = getPlaylistRequest.execute();
             name = playlist.getName();
-            getTracks(tracks, playlistId, 0);
+            getPlaylistTracks(tracks, playlistId, 0);
         } catch (IOException | SpotifyWebApiException | ParseException exp) {
             exp.printStackTrace();
             if (exp instanceof SpotifyWebApiException swae) {
@@ -92,7 +128,7 @@ public class SpotifyServiceImpl implements SpotifyService {
         }
     }
 
-    private void getTracks(List<Track> tracks, String playlistId, int offset) {
+    private void getPlaylistTracks(List<Track> tracks, String playlistId, int offset) {
         Paging<PlaylistTrack> playlistTracks = getPlaylistTracks(playlistId, offset);
 
         tracks.addAll(Arrays.stream(playlistTracks.getItems())
@@ -109,29 +145,29 @@ public class SpotifyServiceImpl implements SpotifyService {
                 }).toList());
         if (playlistTracks.getNext() != null) {
             offset += 100;
-            getTracks(tracks, playlistId, offset);
+            getPlaylistTracks(tracks, playlistId, offset);
         }
     }
 
     @Override
-    public Track getTrack(String trackId) {
+    public Album getAlbum(String albumId) {
         if (accessTokenExpired()) {
             refreshAccessToken();
         }
-        GetTrackRequest getTrackRequest = spotifyApi.getTrack(trackId).build();
+        GetAlbumRequest getAlbumRequest = spotifyApi.getAlbum(albumId).build();
         String name;
-        String artistNames;
-        String uri;
+        String artists;
         String image;
+        List<Track> tracks = new ArrayList<>();
 
         try {
-            com.wrapper.spotify.model_objects.specification.Track track = getTrackRequest.execute();
-            name = track.getName();
-            artistNames = Arrays.stream(track.getArtists())
+            com.wrapper.spotify.model_objects.specification.Album album = getAlbumRequest.execute();
+            name = album.getName();
+            artists = Arrays.stream(album.getArtists())
                     .map(ArtistSimplified::getName)
                     .collect(Collectors.joining(", "));
-            uri = track.getExternalUrls().get("spotify");
-            image = track.getAlbum().getImages()[1].getUrl();
+            image = album.getImages()[1].getUrl();
+            getAlbumTracks(tracks, albumId, image, 0);
         } catch (IOException | SpotifyWebApiException | ParseException exp) {
             exp.printStackTrace();
             if (exp instanceof SpotifyWebApiException swae) {
@@ -139,10 +175,48 @@ public class SpotifyServiceImpl implements SpotifyService {
                     refreshAccessToken();
                 }
             }
-            return getTrack(trackId);
+            return getAlbum(albumId);
         }
 
-        return new Track(name, artistNames, uri, image);
+        return new Album(artists, name, image, tracks);
+    }
+
+    private Paging<TrackSimplified> getAlbumTracks(String albumId, int offset) {
+        GetAlbumsTracksRequest getAlbumsTracksRequest = spotifyApi
+                .getAlbumsTracks(albumId)
+                .offset(offset)
+                .limit(50)
+                .build();
+
+        try {
+            return getAlbumsTracksRequest.execute();
+        } catch (IOException | SpotifyWebApiException | ParseException exp) {
+            exp.printStackTrace();
+            if (exp instanceof SpotifyWebApiException swae) {
+                if (swae.getMessage().contains("401")) {
+                    refreshAccessToken();
+                }
+            }
+            return getAlbumTracks(albumId, offset);
+        }
+    }
+
+    private void getAlbumTracks(List<Track> tracks, String albumId, String albumImage, int offset) {
+        Paging<TrackSimplified> albumTracks = getAlbumTracks(albumId, offset);
+
+        tracks.addAll(Arrays.stream(albumTracks.getItems())
+                .map(track -> {
+                    String name = track.getName();
+                    String artistNames = Arrays.stream(track.getArtists())
+                            .map(ArtistSimplified::getName)
+                            .collect(Collectors.joining(", "));
+                    String uri = track.getExternalUrls().get("spotify");
+                    return new Track(name, artistNames, uri, albumImage);
+                }).toList());
+        if (albumTracks.getNext() != null) {
+            offset += 50;
+            getAlbumTracks(tracks, albumId, albumImage, offset);
+        }
     }
 
     @Override
