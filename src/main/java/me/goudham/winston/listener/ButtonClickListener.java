@@ -2,6 +2,7 @@ package me.goudham.winston.listener;
 
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
+import me.goudham.winston.domain.QueueButton;
 import me.goudham.winston.domain.QueuePages;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -11,10 +12,10 @@ import java.util.Map;
 
 @Singleton
 public class ButtonClickListener extends ListenerAdapter {
-    private final Map<String, QueuePages> queueEmbeds;
+    private final Map<String, QueueButton> queueEmbeds;
 
     @Inject
-    public ButtonClickListener(Map<String, QueuePages> queueEmbeds) {
+    public ButtonClickListener(Map<String, QueueButton> queueEmbeds) {
         this.queueEmbeds = queueEmbeds;
     }
 
@@ -23,7 +24,8 @@ public class ButtonClickListener extends ListenerAdapter {
         String[] uuidAndType = event.getComponentId().split("_");
         String uuid = uuidAndType[0];
         String type = uuidAndType[1];
-        QueuePages queuePages = queueEmbeds.get(uuid);
+        QueueButton queueButton = queueEmbeds.get(uuid);
+        QueuePages queuePages = queueButton.getQueuePages();
 
         switch (type) {
             case "previousByTwo" -> {
