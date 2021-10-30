@@ -73,8 +73,8 @@ public class TrackScheduler extends AudioEventAdapter {
             if (repeating) {
                 this.player.startTrack(track.makeClone(), false);
             } else {
-                nextTrack(false);
                 startTimer();
+                nextTrack(false);
             }
         }
     }
@@ -138,6 +138,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
     private void resetTimer() {
         timer.cancel();
+        timer.purge();
         timer = new Timer("Winston");
     }
 
@@ -156,7 +157,7 @@ public class TrackScheduler extends AudioEventAdapter {
             };
             timer.schedule(task, 300000L);
         } catch (IllegalStateException ise) {
-            System.out.println(ise.getMessage());
+            ise.printStackTrace();
         }
     }
 
