@@ -142,7 +142,7 @@ public class TrackScheduler extends AudioEventAdapter {
         timer = new Timer("Winston");
     }
 
-    private void startTimer() {
+    public void startTimer() {
         try {
             TimerTask task = new TimerTask() {
                 @Override
