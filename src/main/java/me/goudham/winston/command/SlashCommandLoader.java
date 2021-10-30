@@ -8,15 +8,6 @@ import io.micronaut.core.beans.BeanMethod;
 import io.micronaut.inject.ExecutableMethod;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.OptionalInt;
 import me.goudham.winston.command.annotation.Choice;
 import me.goudham.winston.command.annotation.Option;
 import me.goudham.winston.command.annotation.SlashCommand;
@@ -30,8 +21,13 @@ import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 import net.dv8tion.jda.internal.utils.tuple.ImmutablePair;
 import net.dv8tion.jda.internal.utils.tuple.Pair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Singleton
 class SlashCommandLoader implements CommandLoader {
@@ -48,7 +44,6 @@ class SlashCommandLoader implements CommandLoader {
 
     @Override
     public void populateCommandMap() {
-        Logger logger = LoggerFactory.getLogger(getClass());
         for (BeanIntrospection<Object> slashCommandIntrospection : slashCommandIntrospections) {
             AnnotationValue<SlashCommand> slashCommand = slashCommandIntrospection.getDeclaredAnnotation(SlashCommand.class);
             Collection<BeanMethod<Object, Object>> subCommands = slashCommandIntrospection.getBeanMethods();
@@ -131,7 +126,9 @@ class SlashCommandLoader implements CommandLoader {
 
                 if (subCommandGroups.length < 1 && !noHandleMethod) {
                     List<OptionData> optionData = loadOptions(slashCommand);
-                    if (optionData != null) commandData.addOptions(optionData);
+                    if (optionData != null) {
+                        commandData.addOptions(optionData);
+                    }
                     storeIntoCommandMap(slashCommandIntrospection, name, "handle");
                 } else {
                     List<SubcommandData> subCommandList = new ArrayList<>();
@@ -194,7 +191,9 @@ class SlashCommandLoader implements CommandLoader {
         List<OptionData> optionDataList = loadOptions(subCommand);
 
         SubcommandData subcommandData = new SubcommandData(subCommandName, subCommandDescription);
-        if (optionDataList != null) subcommandData.addOptions(optionDataList);
+        if (optionDataList != null) {
+            subcommandData.addOptions(optionDataList);
+        }
 
         return subcommandData;
     }
@@ -212,7 +211,9 @@ class SlashCommandLoader implements CommandLoader {
 
                 OptionData optionData = new OptionData(optionType, name, description, isRequired);
                 List<net.dv8tion.jda.api.interactions.commands.Command.Choice> choiceList = loadChoices(option);
-                if (choiceList != null) optionData.addChoices(choiceList);
+                if (choiceList != null) {
+                    optionData.addChoices(choiceList);
+                }
 
                 optionList.add(optionData);
             }
@@ -232,30 +233,27 @@ class SlashCommandLoader implements CommandLoader {
                 net.dv8tion.jda.api.interactions.commands.Command.Choice choiceData = null;
                 String name = choice.stringValue("name").orElseThrow();
 
-                OptionalInt optionalInt = choice.intValue("intValue");
-                int intValue = 0;
-                if (optionalInt.isPresent()) {
-                    intValue = optionalInt.getAsInt();
+                boolean isIntPresent = choice.isPresent("intValue");
+                boolean isStringPresent = choice.isPresent("stringValue");
+                boolean isDoublePresent = choice.isPresent("doubleValue");
+
+                boolean choiceInvalid = isIntPresent == isStringPresent ? isIntPresent : isDoublePresent;
+                if (choiceInvalid) {
+                    throw new RuntimeException(
+                            "Slash Command -> [%s]: 2 or More Values Are Present! Please Only Use One Int/String or Double"
+                                    .formatted(slashCommand.get("name", String.class).get())
+                    );
                 }
 
-                OptionalDouble optionalDouble = choice.doubleValue("doubleValue");
-                double doubleValue = Double.NaN;
-                if (optionalDouble.isPresent()) {
-                    doubleValue = optionalDouble.getAsDouble();
-                }
-
-                Optional<String> optionalString = choice.stringValue("stringValue");
-                String stringValue = "";
-                if (optionalString.isPresent()) {
-                    stringValue = optionalString.get();
-                }
-
-                if (intValue != 0) {
+                if (isIntPresent) {
+                    int intValue = choice.intValue("intValue").getAsInt();
                     choiceData = new net.dv8tion.jda.api.interactions.commands.Command.Choice(name, intValue);
-                } else if (!Double.isNaN(doubleValue)) {
-                    choiceData = new net.dv8tion.jda.api.interactions.commands.Command.Choice(name, doubleValue);
-                } else if (!stringValue.isBlank()) {
+                } else if (isStringPresent) {
+                    String stringValue = choice.stringValue("stringValue").get();
                     choiceData = new net.dv8tion.jda.api.interactions.commands.Command.Choice(name, stringValue);
+                } else if (isDoublePresent) {
+                    double doubleValue = choice.doubleValue("doubleValue").getAsDouble();
+                    choiceData = new net.dv8tion.jda.api.interactions.commands.Command.Choice(name, doubleValue);
                 }
 
                 choiceList.add(choiceData);
