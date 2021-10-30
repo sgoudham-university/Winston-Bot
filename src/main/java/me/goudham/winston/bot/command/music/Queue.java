@@ -10,6 +10,7 @@ import me.goudham.winston.bot.command.music.audio.QueueEmbedInfo;
 import me.goudham.winston.command.annotation.SlashCommand;
 import me.goudham.winston.domain.QueueButton;
 import me.goudham.winston.domain.QueuePages;
+import me.goudham.winston.domain.music.TrackMetaData;
 import me.goudham.winston.service.EmbedService;
 import me.goudham.winston.service.ValidationService;
 import me.goudham.winston.service.util.TimeUtils;
@@ -98,8 +99,9 @@ public class Queue {
             String trackIndex = "**" + (i + 1) + ")**  ";
             String duration = "`[" + timeUtils.formatTime(track.getDuration()) + "]`  ";
             String title = titleUtils.getTrimmedTitle(trackInfo.title, 40);
+            String user = " **[" + track.getUserData(TrackMetaData.class).getTrackUser().name().split("#")[0] + "]**";
 
-            queueEmbed.appendDescription(trackIndex + duration + title + "\n");
+            queueEmbed.appendDescription(trackIndex + duration + title + user + "\n");
             embedInfo.setSongsRead(songsRead += 1);
         }
         embedInfo.setQueueMessageEmbed(queueEmbed.build());
