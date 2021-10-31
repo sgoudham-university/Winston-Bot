@@ -126,13 +126,13 @@ public class TrackScheduler extends AudioEventAdapter {
         return removedTrack;
     }
 
-    private List<AudioTrack> getDequeAsList() {
+    public List<AudioTrack> getDequeAsList() {
         List<AudioTrack> trackList = new ArrayList<>();
         deque.drainTo(trackList);
         return trackList;
     }
 
-    private void setListAsDeque(List<AudioTrack> trackList) {
+    public void setListAsDeque(List<AudioTrack> trackList) {
         deque.addAll(trackList);
     }
 
