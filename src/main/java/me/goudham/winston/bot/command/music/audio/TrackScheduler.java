@@ -73,8 +73,8 @@ public class TrackScheduler extends AudioEventAdapter {
             if (repeating) {
                 this.player.startTrack(track.makeClone(), false);
             } else {
-                nextTrack(false);
                 startTimer();
+                nextTrack(false);
             }
         }
     }
@@ -126,22 +126,23 @@ public class TrackScheduler extends AudioEventAdapter {
         return removedTrack;
     }
 
-    private List<AudioTrack> getDequeAsList() {
+    public List<AudioTrack> getDequeAsList() {
         List<AudioTrack> trackList = new ArrayList<>();
         deque.drainTo(trackList);
         return trackList;
     }
 
-    private void setListAsDeque(List<AudioTrack> trackList) {
+    public void setListAsDeque(List<AudioTrack> trackList) {
         deque.addAll(trackList);
     }
 
     private void resetTimer() {
         timer.cancel();
+        timer.purge();
         timer = new Timer("Winston");
     }
 
-    private void startTimer() {
+    public void startTimer() {
         try {
             TimerTask task = new TimerTask() {
                 @Override
@@ -156,7 +157,7 @@ public class TrackScheduler extends AudioEventAdapter {
             };
             timer.schedule(task, 300000L);
         } catch (IllegalStateException ise) {
-            System.out.println(ise.getMessage());
+            ise.printStackTrace();
         }
     }
 

@@ -64,7 +64,7 @@ public class EmbedServiceImpl implements EmbedService {
         return new EmbedBuilder()
                 .setAuthor("Page " + currPage + " / " + totalPages)
                 .setThumbnail(author.getEffectiveAvatarUrl())
-                .setFooter("Requested By " + author.getName(), author.getEffectiveAvatarUrl())
+                .setFooter("Requested By " + author.getName() + "#" + author.getDiscriminator(), author.getEffectiveAvatarUrl())
                 .setTimestamp(Instant.now());
     }
 

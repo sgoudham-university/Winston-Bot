@@ -45,7 +45,7 @@ class SlashCommandManager implements CommandManager {
         }
         if (registerCommandsForGuild) {
             commands = guild.updateCommands();
-            logger.info("Updating Commands For Guild: " + guild.getName());
+            logger.warn("Updating Commands For Guild: " + guild.getName());
         }
 
         if (commands != null) {

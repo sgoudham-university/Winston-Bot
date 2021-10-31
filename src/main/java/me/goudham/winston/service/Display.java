@@ -66,7 +66,11 @@ public class Display {
     }
 
     public void displayRemoved(SlashCommandEvent event, AudioTrack removedTrack, boolean isSlashCommand) {
-        mergeSongInfo(event, removedTrack, isSlashCommand);
+        mergeSongInfo(event, removedTrack, "Removed", isSlashCommand);
+    }
+
+    public void displayPlayingNext(SlashCommandEvent slashCommandEvent, AudioTrack audioTrack, boolean isSlashCommand) {
+        mergeSongInfo(slashCommandEvent, audioTrack, "Playing Next", isSlashCommand);
     }
 
     private AtomicReference<Long> mergeSongInfo(SlashCommandEvent slashCommandEvent, AudioPlayer audioPlayer, String status, boolean isSlashCommand) {
@@ -80,13 +84,13 @@ public class Display {
         return displaySong(slashCommandEvent, track, embedAuthor, embedDesc, isSlashCommand);
     }
 
-    private void mergeSongInfo(SlashCommandEvent event, AudioTrack removedTrack, boolean isSlashCommand) {
-        String position = timeUtils.formatTime(removedTrack.getPosition());
-        String duration = timeUtils.formatTime(removedTrack.getDuration());
+    private void mergeSongInfo(SlashCommandEvent event, AudioTrack audioTrack, String status, boolean isSlashCommand) {
+        String position = timeUtils.formatTime(audioTrack.getPosition());
+        String duration = timeUtils.formatTime(audioTrack.getDuration());
 
         String trackPos = "**[" + position + "s / " + duration + "s]**";
 
-        displaySong(event, removedTrack, "Removed", trackPos, isSlashCommand);
+        displaySong(event, audioTrack, status, trackPos, isSlashCommand);
     }
 
     private AtomicReference<Long> displaySong(SlashCommandEvent slashCommandEvent, AudioTrack track, String status, String trackPos, boolean isSlashCommand) {
