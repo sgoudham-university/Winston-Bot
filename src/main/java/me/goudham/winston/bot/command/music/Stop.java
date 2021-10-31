@@ -43,7 +43,7 @@ public class Stop {
         trackScheduler.startTimer();
 
         String message = "\uD83D\uDD0A Stopping Music & Clearing Queue \uD83D\uDD0A";
-        Color colour = Color.YELLOW;
+        Color colour = Color.GREEN;
         slashCommandEvent.replyEmbeds(embedService.getSimpleInfoEmbed(message, colour)).queue();
     }
 }
