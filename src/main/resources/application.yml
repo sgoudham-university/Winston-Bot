@@ -7,9 +7,9 @@ bot:
   guild:
     id: 621621615930638336
   config:
-    registerCommands: false
-    registerCommandsGlobally: false
-    registerCommandsForGuild: true
+    registerCommands: true
+    registerCommandsGlobally: true
+    registerCommandsForGuild: false
 
 spotify:
   client:
