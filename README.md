@@ -1,7 +1,7 @@
 <h1 align="center">Winston | Personal Project for HTLANL</h1>
 
 <p align="center">
-    <img src="https://goudham.me/jenkins/job/Winston/job/main/badge/icon"/>
+    <img src="https://goudham.me/jenkins/job/sgoudham-university/job/Winston-Bot/job/main/badge/icon"/>
     <a href="https://codecov.io/gh/sgoudham-university/Winston-Bot">
     <img src="https://codecov.io/gh/sgoudham-university/Winston-Bot/branch/main/graph/badge.svg?token=Q40v3fyItO"/>
     </a>
