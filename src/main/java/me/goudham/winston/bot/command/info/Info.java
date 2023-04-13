@@ -2,8 +2,10 @@ package me.goudham.winston.bot.command.info;
 
 import io.micronaut.context.annotation.Executable;
 import jakarta.inject.Inject;
+
 import java.util.EnumSet;
 import java.util.List;
+
 import me.goudham.winston.command.annotation.Option;
 import me.goudham.winston.command.annotation.SlashCommand;
 import me.goudham.winston.command.annotation.SubCommand;
@@ -43,31 +45,31 @@ public class Info {
     @SuppressWarnings("ConstantConditions")
     @Executable
     @SubCommand(
-            name = "user",
-            description = "Retrieve your or another member's information",
-            options = {
-                    @Option(
-                            optionType = OptionType.USER,
-                            name = "member",
-                            description = "A member within the server",
-                            isRequired = false
-                    )
-            }
+        name = "user",
+        description = "Retrieve your or another member's information",
+        options = {
+            @Option(
+                optionType = OptionType.USER,
+                name = "member",
+                description = "A member within the server",
+                isRequired = false
+            )
+        }
     )
     public void userCommand(@NotNull SlashCommandEvent slashCommandEvent) {
         OptionMapping optionalMember = slashCommandEvent.getOption("member");
         Member member = optionalMember == null ? slashCommandEvent.getMember() : optionalMember.getAsMember();
 
         MessageEmbed messageEmbed = embedService.getBaseEmbed()
-                .setTitle(infoService.getMemberOnlineStatus(member) + " " + member.getUser().getAsTag() + " " + infoService.getMemberBadges(member))
-                .setColor(infoService.getMemberColour(member))
-                .setThumbnail(member.getUser().getEffectiveAvatarUrl() + "?size=4096")
-                .addField("Registered", infoService.getCreationDate(member), false)
-                .addField("Joined", infoService.getJoinedDate(member), false)
-                .addField("Top Role", infoService.getTopRole(member), false)
-                .addField("Roles (" + member.getRoles().size() + ")", infoService.getMemberRoles(member, 20), false)
-                .setFooter("ID: " + member.getId())
-                .build();
+            .setTitle(infoService.getMemberOnlineStatus(member) + " " + member.getUser().getAsTag() + " " + infoService.getMemberBadges(member))
+            .setColor(infoService.getMemberColour(member))
+            .setThumbnail(member.getUser().getEffectiveAvatarUrl() + "?size=4096")
+            .addField("Registered", infoService.getCreationDate(member), false)
+            .addField("Joined", infoService.getJoinedDate(member), false)
+            .addField("Top Role", infoService.getTopRole(member), false)
+            .addField("Roles (" + member.getRoles().size() + ")", infoService.getMemberRoles(member, 20), false)
+            .setFooter("ID: " + member.getId())
+            .build();
 
         slashCommandEvent.replyEmbeds(messageEmbed).queue();
     }
@@ -75,16 +77,16 @@ public class Info {
     @SuppressWarnings("ConstantConditions")
     @Executable
     @SubCommand(
-            name = "role",
-            description = "Retrieve your highest role or another role's information",
-            options = {
-                    @Option(
-                            optionType = OptionType.ROLE,
-                            name = "role",
-                            description = "A role within the server",
-                            isRequired = false
-                    )
-            }
+        name = "role",
+        description = "Retrieve your highest role or another role's information",
+        options = {
+            @Option(
+                optionType = OptionType.ROLE,
+                name = "role",
+                description = "A role within the server",
+                isRequired = false
+            )
+        }
     )
     public void roleCommand(@NotNull SlashCommandEvent slashCommandEvent) {
         OptionMapping optionalRole = slashCommandEvent.getOption("role");
@@ -111,13 +113,13 @@ public class Info {
         String isHoisted = role.isHoisted() ? Constants.CHECK : Constants.CROSS;
         String isManaged = role.isManaged() ? Constants.CHECK : Constants.CROSS;
         String miscString = """
-                Mentionable: $isMentionable
-                Hoisted: $isHoisted
-                Managed: $isManaged
-                """
-                .replace("$isMentionable", isMentionable)
-                .replace("$isHoisted", isHoisted)
-                .replace("$isManaged", isManaged);
+            Mentionable: $isMentionable
+            Hoisted: $isHoisted
+            Managed: $isManaged
+            """
+            .replace("$isMentionable", isMentionable)
+            .replace("$isHoisted", isHoisted)
+            .replace("$isManaged", isManaged);
 
         EnumSet<Permission> permissions = role.getPermissions(slashCommandEvent.getGuildChannel());
         System.out.println(permissions);
@@ -127,16 +129,16 @@ public class Info {
             long botCount = members.stream().filter(member -> member.getUser().isBot()).count();
 
             MessageEmbed messageEmbed = embedService.getBaseEmbed()
-                    .setTitle("@" + role.getName() + " Information")
-                    .setDescription(role.getAsMention() + "\n" + "**Colour:** " + roleColour)
-                    .setColor(role.getColor())
-                    .setThumbnail(guild.getIconUrl() + "?size=4096")
-                    .addField("Creation At", infoService.getCreationDate(role), false)
-                    .addField("Members (" + members.size() + ")", "Humans: " + humanCount + "\nBots: " + botCount, true)
-                    .addField("Misc", miscString, true)
-                    .addField("List of Members (" + members.size() + ")", infoService.getListOfMembers(members, 20), false)
-                    .setFooter("ID: " + role.getId())
-                    .build();
+                .setTitle("@" + role.getName() + " Information")
+                .setDescription(role.getAsMention() + "\n" + "**Colour:** " + roleColour)
+                .setColor(role.getColor())
+                .setThumbnail(guild.getIconUrl() + "?size=4096")
+                .addField("Creation At", infoService.getCreationDate(role), false)
+                .addField("Members (" + members.size() + ")", "Humans: " + humanCount + "\nBots: " + botCount, true)
+                .addField("Misc", miscString, true)
+                .addField("List of Members (" + members.size() + ")", infoService.getListOfMembers(members, 20), false)
+                .setFooter("ID: " + role.getId())
+                .build();
 
             slashCommandEvent.replyEmbeds(messageEmbed).queue();
         });
@@ -145,16 +147,16 @@ public class Info {
     @SuppressWarnings("ConstantConditions")
     @Executable
     @SubCommand(
-            name = "channel",
-            description = "Retrieve the current channel or another channel's information",
-            options = {
-                    @Option(
-                            optionType = OptionType.CHANNEL,
-                            name = "channel",
-                            description = "A channel within the server",
-                            isRequired = false
-                    )
-            }
+        name = "channel",
+        description = "Retrieve the current channel or another channel's information",
+        options = {
+            @Option(
+                optionType = OptionType.CHANNEL,
+                name = "channel",
+                description = "A channel within the server",
+                isRequired = false
+            )
+        }
     )
     public void channelCommand(@NotNull SlashCommandEvent slashCommandEvent) {
         OptionMapping optionalChannel = slashCommandEvent.getOption("channel");
@@ -189,8 +191,8 @@ public class Info {
     @SuppressWarnings("ConstantConditions")
     @Executable
     @SubCommand(
-            name = "server",
-            description = "Retrieve information about the current server you are in"
+        name = "server",
+        description = "Retrieve information about the current server you are in"
     )
     public void serverCommand(@NotNull SlashCommandEvent slashCommandEvent) {
         Guild guild = slashCommandEvent.getGuild();
@@ -204,9 +206,9 @@ public class Info {
         long dndMemberCount = infoService.getMemberStatusCount(guild, OnlineStatus.DO_NOT_DISTURB);
         long offlineMemberCount = infoService.getMemberStatusCount(guild, OnlineStatus.OFFLINE);
         String statuses = Constants.STATUS_ONLINE + onlineMemberCount
-                + Constants.STATUS_IDLE + idleMemberCount
-                + Constants.STATUS_DND + dndMemberCount
-                + Constants.STATUS_OFFLINE + offlineMemberCount;
+            + Constants.STATUS_IDLE + idleMemberCount
+            + Constants.STATUS_DND + dndMemberCount
+            + Constants.STATUS_OFFLINE + offlineMemberCount;
 
         String humanCount = String.valueOf(memberCache.stream().filter(member -> !member.getUser().isBot()).count());
         String botCount = String.valueOf(memberCache.stream().filter(member -> member.getUser().isBot()).count());
@@ -215,25 +217,25 @@ public class Info {
             bannedUsersCount = String.valueOf(guild.retrieveBanList().complete().size());
         }
         String membersString = """
-                Humans: $humans
-                Bots: $bots
-                Banned: $banned
-                """
-                .replace("$humans", humanCount)
-                .replace("$bots", botCount)
-                .replace("$banned", bannedUsersCount);
+            Humans: $humans
+            Bots: $bots
+            Banned: $banned
+            """
+            .replace("$humans", humanCount)
+            .replace("$bots", botCount)
+            .replace("$banned", bannedUsersCount);
 
         String textChannelCount = String.valueOf(infoService.getChannelCount(guild, ChannelType.TEXT));
         String voiceChannelCount = String.valueOf(infoService.getChannelCount(guild, ChannelType.VOICE));
         String categoryChannelCount = String.valueOf(infoService.getChannelCount(guild, ChannelType.CATEGORY));
         String channelsString = """
-                Text: $text
-                Voice: $voice
-                Category: $category
-                """
-                .replace("$text", textChannelCount)
-                .replace("$voice", voiceChannelCount)
-                .replace("$category", categoryChannelCount);
+            Text: $text
+            Voice: $voice
+            Category: $category
+            """
+            .replace("$text", textChannelCount)
+            .replace("$voice", voiceChannelCount)
+            .replace("$category", categoryChannelCount);
 
         String boostingMembers = infoService.getListOfMembers(guild.getBoosters(), 10);
         String topRole = infoService.getTopRole(guild);
@@ -244,37 +246,37 @@ public class Info {
         String boostTier = String.valueOf(guild.getBoostTier().getKey());
         String verificationLevel = String.valueOf(guild.getVerificationLevel().getKey());
         String miscString = """
-                Boost Tier: $tier
-                No. of Boosters: $count
-                Verification Level: $verifLevel
-                """
-                .replace("$tier", boostTier)
-                .replace("$count", boostCount)
-                .replace("$verifLevel", verificationLevel);
+            Boost Tier: $tier
+            No. of Boosters: $count
+            Verification Level: $verifLevel
+            """
+            .replace("$tier", boostTier)
+            .replace("$count", boostCount)
+            .replace("$verifLevel", verificationLevel);
 
         MessageEmbed messageEmbed = embedService.getBaseEmbed()
-                .setTitle("Server Information")
-                .setThumbnail(guild.getIconUrl())
-                .addField("Owner", owner, false)
-                .addField("Created", infoService.getCreationDate(guild), false)
-                .addField("Statuses", statuses, false)
-                .addField("Members (" + memberCache.size() + ")", membersString, true)
-                .addField("Channels (" + guild.getChannels().size() + ")", channelsString, true)
-                .addField("Misc", miscString, true)
-                .addField("Boosting Members (" + boostCount + ")", boostingMembers, false)
-                .addField("Top Role", topRole, false)
-                .addField("Roles (" + guild.getRoleCache().size() + ")", allRoles, false)
-                .addField("Emotes (" + guild.getEmoteCache().size() + ")", allEmotes, false)
-                .setFooter("ID: " + guild.getId())
-                .build();
+            .setTitle("Server Information")
+            .setThumbnail(guild.getIconUrl())
+            .addField("Owner", owner, false)
+            .addField("Created", infoService.getCreationDate(guild), false)
+            .addField("Statuses", statuses, false)
+            .addField("Members (" + memberCache.size() + ")", membersString, true)
+            .addField("Channels (" + guild.getChannels().size() + ")", channelsString, true)
+            .addField("Misc", miscString, true)
+            .addField("Boosting Members (" + boostCount + ")", boostingMembers, false)
+            .addField("Top Role", topRole, false)
+            .addField("Roles (" + guild.getRoleCache().size() + ")", allRoles, false)
+            .addField("Emotes (" + guild.getEmoteCache().size() + ")", allEmotes, false)
+            .setFooter("ID: " + guild.getId())
+            .build();
 
         slashCommandEvent.replyEmbeds(messageEmbed).queue();
     }
 
     @Executable
     @SubCommand(
-            name = "bot",
-            description = "Retrieve information about Winston Bot"
+        name = "bot",
+        description = "Retrieve information about Winston Bot"
     )
     public void botCommand(@NotNull SlashCommandEvent slashCommandEvent) {
         Guild guild = slashCommandEvent.getGuild();
@@ -295,29 +297,29 @@ public class Info {
         String position = "#" + voiceChannel.getPosition();
         String miscString = "Synced: " + isSynced;
         String description = """
-                $channelMention
-                **Category:** $category
-                **Position:** $position
-                **Bitrate:** $bitrate
-                **User Limit:** $userLimit
-                **Region:** $region
-                """
-                .replace("$channelMention", voiceChannel.getAsMention())
-                .replace("$category", category)
-                .replace("$position", position)
-                .replace("$bitrate", bitrate)
-                .replace("$userLimit", userLimit)
-                .replace("$region", region);
+            $channelMention
+            **Category:** $category
+            **Position:** $position
+            **Bitrate:** $bitrate
+            **User Limit:** $userLimit
+            **Region:** $region
+            """
+            .replace("$channelMention", voiceChannel.getAsMention())
+            .replace("$category", category)
+            .replace("$position", position)
+            .replace("$bitrate", bitrate)
+            .replace("$userLimit", userLimit)
+            .replace("$region", region);
 
 
         return embedService.getBaseEmbed()
-                .setTitle("\uD83D\uDD08" + voiceChannel.getName() + " Information")
-                .setDescription(description)
-                .setThumbnail(voiceChannel.getGuild().getIconUrl())
-                .addField("Creation At", infoService.getCreationDate(voiceChannel), false)
-                .addField("Misc", miscString, false)
-                .setFooter("ID: " + voiceChannel.getId())
-                .build();
+            .setTitle("\uD83D\uDD08" + voiceChannel.getName() + " Information")
+            .setDescription(description)
+            .setThumbnail(voiceChannel.getGuild().getIconUrl())
+            .addField("Creation At", infoService.getCreationDate(voiceChannel), false)
+            .addField("Misc", miscString, false)
+            .setFooter("ID: " + voiceChannel.getId())
+            .build();
     }
 
     private @NotNull MessageEmbed handleTextChannel(@NotNull TextChannel textChannel) {
@@ -328,31 +330,31 @@ public class Info {
         String category = textChannel.getParent() == null ? "No Category" : textChannel.getParent().getName();
         String position = "#" + textChannel.getPosition();
         String miscString = """
-                Nsfw: $isNsfw
-                News: $isNews
-                Synced: $isSynced
-                """
-                .replace("$isNsfw", isNsfw)
-                .replace("$isNews", isNews)
-                .replace("$isSynced", isSynced);
+            Nsfw: $isNsfw
+            News: $isNews
+            Synced: $isSynced
+            """
+            .replace("$isNsfw", isNsfw)
+            .replace("$isNews", isNews)
+            .replace("$isSynced", isSynced);
         String description = """
-                $channelMention
-                **Category:** $category
-                **Position:** $position
-                **Topic:** $topic
-                """
-                .replace("$channelMention", textChannel.getAsMention())
-                .replace("$category", category)
-                .replace("$position", position)
-                .replace("$topic", topic);
+            $channelMention
+            **Category:** $category
+            **Position:** $position
+            **Topic:** $topic
+            """
+            .replace("$channelMention", textChannel.getAsMention())
+            .replace("$category", category)
+            .replace("$position", position)
+            .replace("$topic", topic);
 
         return embedService.getBaseEmbed()
-                .setTitle("#" + textChannel.getName() + " Information")
-                .setDescription(description)
-                .setThumbnail(textChannel.getGuild().getIconUrl())
-                .addField("Creation At", infoService.getCreationDate(textChannel), false)
-                .addField("Misc", miscString, false)
-                .setFooter("ID: " + textChannel.getId())
-                .build();
+            .setTitle("#" + textChannel.getName() + " Information")
+            .setDescription(description)
+            .setThumbnail(textChannel.getGuild().getIconUrl())
+            .addField("Creation At", infoService.getCreationDate(textChannel), false)
+            .addField("Misc", miscString, false)
+            .setFooter("ID: " + textChannel.getId())
+            .build();
     }
 }

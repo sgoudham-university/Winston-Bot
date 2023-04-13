@@ -16,9 +16,11 @@ public class WinstonBot implements Winston {
     private final CommandManager commandManager;
 
     @Inject
-    public WinstonBot(Guild guild,
-                      @Value("${bot.config.registerCommands}") boolean registerCommands,
-                      CommandManager commandManager) {
+    public WinstonBot(
+        Guild guild,
+        @Value("${bot.config.registerCommands}") boolean registerCommands,
+        CommandManager commandManager
+    ) {
         this.guild = guild;
         this.registerCommands = registerCommands;
         this.commandManager = commandManager;
